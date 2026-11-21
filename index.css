@@ -102,6 +102,11 @@
     visibility: hidden;
 }
 
+/* A product's details are for the full view only. */
+[data-pg-reels-detail] {
+    display: none !important;
+}
+
 /* The products: only the playing clip's shows. */
 [data-pg-reels-group] [data-pg-reels-product]:not([data-pg-reels-current]) {
     display: none !important;

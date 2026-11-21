@@ -148,7 +148,7 @@ function copyOf(el) {
         x.removeAttribute("id");
         [CURRENT, PLAYING, DONE].forEach((name) => x.removeAttribute(name));
     });
-    copy.querySelectorAll(`template[${DETAIL}]`).forEach((t) => t.remove());
+    copy.querySelectorAll(`[${DETAIL}]`).forEach((t) => t.remove());
     return copy;
 }
 const svg = (paths) => `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
@@ -521,9 +521,15 @@ export function initReels() {
         if (dir && !reduced())
             media.animate({ transform: [`translateY(${dir * 100}%)`, "none"] }, { duration: 320, easing: "cubic-bezier(0.2, 0, 0, 1)" });
         const product = g.products[view.ci];
-        const template = product?.querySelector(`template[${DETAIL}]`);
         part("panel-summary").replaceChildren(...(product ? [copyOf(product)] : []));
-        part("panel-detail").replaceChildren(...(template ? [template.content.cloneNode(true)] : []));
+        // The details: in the product, or in the clip — a <template>, or
+        // any element kept hidden (React: a <template>'s markup is not
+        // hydrated, and a link cannot sit inside the product's link but
+        // in a template). A template parsed from HTML keeps its markup in
+        // .content; one rendered by script holds it as children.
+        const detail = product?.querySelector(`[${DETAIL}]`) ?? clip.querySelector(`[${DETAIL}]`);
+        const from = detail instanceof HTMLTemplateElement && detail.content.childNodes.length ? detail.content : detail;
+        part("panel-detail").replaceChildren(...(from ? [...from.childNodes].map((n) => n.cloneNode(true)) : []));
         dialog.toggleAttribute(NO_PRODUCT, !product);
         upButton.disabled = view.gi === 0;
         downButton.disabled = view.gi === view.list.length - 1;

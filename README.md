@@ -72,7 +72,10 @@ product a clip, in the same order. A clip is a video — with its `poster` —
 or a picture shown for a while. The header, the buttons, the caption and
 the product's look are yours; the package only marks and moves. The
 `<template data-pg-reels-detail>` in a product is its details for the full
-view — not shown on the page.
+view — not shown on the page. It may be any element instead, in the
+product or in the clip — `<div data-pg-reels-detail hidden>`; `index.css`
+keeps it hidden and the full view copies what is inside. React's way (see
+below).
 
 ## What it does
 
@@ -151,7 +154,7 @@ and videos: the box has the shape, what is inside is 100% of it.
 | `data-pg-reels-head` | in the card | Copied to the full view's top |
 | `data-pg-reels-bars` | under the card, empty | Its bars are written here, one a clip |
 | `data-pg-reels-product` | one a clip | The clip's product |
-| `data-pg-reels-detail` | a `<template>` in a product | Its details, for the full view |
+| `data-pg-reels-detail` | a `<template>` in a product — or any element, hidden, in the product or the clip | Its details, for the full view |
 | `data-pg-reels-big`, `-thumb` | in the template | The big picture; the small ones that switch it |
 | `data-pg-reels-sound` | a button | Sound on and off, for the page |
 | `data-pg-reels-open` | a button | The full view |
@@ -161,6 +164,46 @@ and videos: the box has the shape, what is inside is 100% of it.
 | `data-pg-reels-start`, `-end` | the section | Written: the strip at either end |
 | `data-pg-reels-sound-on` | the section | Written: sound is on |
 | `data-pg-reels-viewer` | the `<dialog>` | The full view, built by the script; `-paused`, `-held`, `-details` (phone: details open) and `-no-product` on it |
+
+## React (Next)
+
+```tsx
+"use client";
+
+import { useEffect } from "react";
+import { initReels } from "@plusguard/reels";
+
+export function ReelsInit() {
+    useEffect(() => initReels(), []);
+    return null;
+}
+```
+
+Mount it once, high in the tree; sections and groups rendered later —
+a route change, a list that arrives — are taken up too. React's markup is
+never moved: the package writes its marks as attributes, fills the empty
+`data-pg-reels-bars` that React renders, and builds the full view on
+`<body>` from copies. If `initReels` is called again before the first
+cleanup runs (React remounting in development), only the newest call
+answers.
+
+The details: React does not hydrate what is inside a `<template>`, and the
+details' own link cannot sit inside the product's link but in a template.
+So in React they go in the clip, as an element kept hidden:
+
+```tsx
+<figure data-pg-reels-clip>
+    <video src={clip.video} poster={clip.poster} muted playsInline preload="none" />
+    <figcaption>{clip.caption}</figcaption>
+    <div data-pg-reels-detail hidden>
+        {/* title, data-pg-reels-big, data-pg-reels-thumb buttons, price, link */}
+    </div>
+</figure>
+```
+
+Give its pictures `loading="lazy"`: hidden, they load when the full view
+shows them. See [`examples/react/Example.tsx`](examples/react/Example.tsx)
+— the section from data, and `pg-reels:open` counted.
 
 ## Example
 
