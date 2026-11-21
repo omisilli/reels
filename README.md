@@ -50,7 +50,7 @@ initReels(); // every reels section on the page, those rendered later too
                 <a data-pg-reels-product href="/carafe">
                     <!-- picture, name, price, an arrow -->
                     <template data-pg-reels-detail>
-                        <h2>Glass pour-over carafe</h2>
+                        <h2 data-pg-reels-title>Glass pour-over carafe</h2>
                         <div class="pg-imageGroup" data-pg-reels-big><img src="carafe-1.jpg" alt="" /></div>
                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="carafe-1.jpg"><img src="carafe-1.jpg" alt="" /></button>
                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="carafe-2.jpg"><img src="carafe-2.jpg" alt="" /></button>
@@ -111,16 +111,25 @@ in it, copies of the site's markup: the clip, the group's
   the video's right or left third, → and ←. Its clips play on, a video to
   its end, a picture for its time; after the group's last clip, the next
   group — after the last group, the first.
-- **Between groups:** the ↑ ↓ buttons beside the video, a wheel or a
-  trackpad, ↑ and ↓ — on a phone, a swipe up or down. On a computer the
-  next group's top shows under the video (`--pg-reels-peek`), pressed it
-  is the next; going up or down, both slide by a video.
+- **Between groups:** a finger — or the mouse — dragging the video up or
+  down: it follows, the next group coming in under it (the one before
+  above it), and let go it goes on if pulled a fifth of its height or
+  flicked, or back if not; past the first or the last it gives a little
+  and comes back. The ↑ ↓ buttons beside the video (round, their name
+  beside them under the mouse), a wheel or a trackpad, ↑ and ↓ slide it
+  the same way. On a computer the next group's top shows under the video
+  (`--pg-reels-peek`); pressed, it is the next. The product panel changes
+  once the slide has landed. `data-pg-reels-sliding` on the view while
+  it moves.
 - **The clip's own links** — a product's tag on the video — are pressed as
   links; the rest of the clip passes presses to the taps under it.
 - **Held down** — a finger, the mouse — it stands still, the controls
   out of the way; let go and it goes on. Its play / pause button, Space.
-- **The product:** on a computer, a panel beside the video — the
-  product's `data-pg-reels-detail` template, the site's markup: a
+- **The product:** on a computer, a panel beside the video, as tall as
+  it: a head — the template's `data-pg-reels-title`, moved there, and the
+  close; a long name takes a second line, the close stays at the top —
+  a line under it, and the rest of the template under that, scrolling.
+  The template is the product's `data-pg-reels-detail`, the site's markup: a
   `data-pg-reels-thumb` pressed puts its picture (the attribute's value, or
   its own `<img>`) into `data-pg-reels-big`, and is
   `data-pg-reels-current`. On a phone the video fills the screen; the
@@ -163,7 +172,8 @@ and videos: the box has the shape, what is inside is 100% of it.
 | `data-pg-reels-bars` | under the card, empty | Its bars are written here, one a clip |
 | `data-pg-reels-product` | one a clip | The clip's product |
 | `data-pg-reels-detail` | a `<template>` in a product — or any element, hidden, in the product or the clip | Its details, for the full view |
-| `data-pg-reels-big`, `-thumb` | in the template | The big picture; the small ones that switch it |
+| `data-pg-reels-title` | in the template | The product's name: shown in the panel's head, beside the close |
+| `data-pg-reels-big`, `-thumb` | in the template | The big picture; the small ones that switch it — pressed, a small one is scrolled into sight |
 | `data-pg-reels-sound` | a button | Sound on and off, for the page |
 | `data-pg-reels-open` | a button | The full view |
 | `data-pg-reels-prev`, `-next` | buttons, `aria-controls` | The strip, a card back or on |
@@ -171,7 +181,7 @@ and videos: the box has the shape, what is inside is 100% of it.
 | `data-pg-reels-playing` | a group | Written: the one playing |
 | `data-pg-reels-start`, `-end` | the section | Written: the strip at either end |
 | `data-pg-reels-sound-on` | the section | Written: sound is on |
-| `data-pg-reels-viewer` | the `<dialog>` | The full view, built by the script; `-paused`, `-held`, `-details` (phone: details open) and `-no-product` on it |
+| `data-pg-reels-viewer` | the `<dialog>` | The full view, built by the script; `-paused`, `-held`, `-sliding`, `-details` (phone: details open) and `-no-product` on it |
 
 ## React (Next)
 
@@ -217,6 +227,11 @@ shows them. See [`examples/react/Example.tsx`](examples/react/Example.tsx)
 
 [`examples/static/index.html`](examples/static/index.html) — six groups of
 one to three clips, videos and pictures, each clip with a product and its
-details: its category (a link), a big picture at 4:3, three small ones,
-the price, a line about it, a link. Under the card the product shows its
-category; in the full view each clip has its product's tag on the video. The pictures are from stories' example; the video is stories' too.
+details: its category (a link), its name in the panel's head, a big
+picture at 4:3, small ones — nine for the first product, a row that
+scrolls — the price, a line about it, a link. Under the card the product
+shows its category; in the full view each clip has its product's tag on
+the video. The first group is three clips from a food shop with their
+products; the product photos beside them are from
+[Unsplash](https://unsplash.com/license) (free to use). The other
+pictures and the bubbles video are from stories' example.

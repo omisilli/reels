@@ -103,8 +103,12 @@ const PAUSED = "data-pg-reels-paused";
 const HELD = "data-pg-reels-held";
 const DETAILS = "data-pg-reels-details";
 const NO_PRODUCT = "data-pg-reels-no-product";
-/* A drag this long, up or down, is the next or the one before. */
-const SWIPE_PX = 60;
+const TITLE = "data-pg-reels-title";
+const SLIDING = "data-pg-reels-sliding";
+/* A finger this far up or down, more than across: the video follows it. */
+const DRAG_PX = 10;
+/* Let go this fast (px a ms) the way it was going: on, however short. */
+const FLICK = 0.45;
 /* Held this long, a press stops it — not a tap. */
 const HOLD_MS = 220;
 /* A wheel's turn this far is a step; then a pause before the next. */
@@ -155,8 +159,9 @@ const ICONS = {
     pause: '<path d="M8 5v14M16 5v14"/>',
     play: '<path d="M7 5v14l12-7z"/>',
     close: '<path d="M6 6l12 12M18 6 6 18"/>',
-    up: '<path d="m6 15 6-6 6 6"/>',
-    down: '<path d="m6 9 6 6 6-6"/>',
+    up: '<path d="M12 19V5M5 12l7-7 7 7"/>',
+    down: '<path d="M12 5v14M19 12l-7 7-7-7"/>',
+    chevron: '<path d="m6 15 6-6 6 6"/>',
 };
 /* ---------- One group ---------- */
 function partsOf(el, root) {
@@ -455,6 +460,7 @@ export function initReels() {
     dialog.innerHTML = `
         <div data-pg-reels-stage>
             <div data-pg-reels-feed>
+            <div data-pg-reels-view-peek="before" aria-hidden="true" hidden></div>
             <div data-pg-reels-screen>
                 <div data-pg-reels-view-media></div>
                 <button type="button" data-pg-reels-view-back tabindex="-1" aria-label="Previous clip"></button>
@@ -471,17 +477,20 @@ export function initReels() {
                     </div>
                 </div>
             </div>
-            <button type="button" data-pg-reels-view-peek tabindex="-1" aria-label="Next reel"></button>
+            <button type="button" data-pg-reels-view-peek="after" tabindex="-1" aria-label="Next reel" hidden></button>
             </div>
             <div data-pg-reels-view-steps>
                 <button type="button" data-pg-reels-view-up aria-label="Previous reel">${svg(ICONS.up)}</button>
                 <button type="button" data-pg-reels-view-down aria-label="Next reel">${svg(ICONS.down)}</button>
             </div>
             <aside data-pg-reels-panel>
-                <button type="button" data-pg-reels-panel-close aria-label="Close">${svg(ICONS.close)}</button>
+                <div data-pg-reels-panel-head>
+                    <div data-pg-reels-panel-title></div>
+                    <button type="button" data-pg-reels-panel-close aria-label="Close">${svg(ICONS.close)}</button>
+                </div>
                 <div data-pg-reels-panel-band>
                     <div data-pg-reels-panel-summary></div>
-                    <button type="button" data-pg-reels-panel-toggle aria-expanded="false">Details ${svg(ICONS.up)}</button>
+                    <button type="button" data-pg-reels-panel-toggle aria-expanded="false">Details ${svg(ICONS.chevron)}</button>
                 </div>
                 <div data-pg-reels-panel-detail></div>
             </aside>
@@ -489,7 +498,9 @@ export function initReels() {
     const part = (name) => dialog.querySelector(`[data-pg-reels-${name}]`);
     const media = part("view-media");
     const feed = part("feed");
-    const peek = part("view-peek");
+    const screen = part("screen");
+    const before = dialog.querySelector('[data-pg-reels-view-peek="before"]');
+    const after = dialog.querySelector('[data-pg-reels-view-peek="after"]');
     const viewBars = part("view-bars");
     const playButton = part("view-play");
     const upButton = part("view-up");
@@ -512,6 +523,7 @@ export function initReels() {
         gi: 0,
         ci: 0,
         paused: false,
+        // Held down, dragged, sliding: standing still for now.
         held: false,
         shown: 0,
         since: 0,
@@ -520,9 +532,20 @@ export function initReels() {
     };
     const viewVideo = () => media.querySelector("video");
     const current = () => view.list[view.gi];
-    // Show the view's clip — `dir` 1 or -1 slides it in from below or
-    // above — with its head, bars and product.
-    const render = (dir) => {
+    // A group's first clip, for the video above or under the one shown:
+    // a picture, or a video on its poster — never playing.
+    const peekOf = (holder, g) => {
+        holder.replaceChildren(...(g ? [copyOf(g.clips[0])] : []));
+        holder.hidden = !g;
+        holder.querySelectorAll("video").forEach((x) => {
+            x.muted = true;
+            x.preload = "none";
+            x.removeAttribute("autoplay");
+        });
+    };
+    // Show the view's clip, with its head, its bars, its product — and the
+    // groups above and under it, ready to slide in.
+    const render = () => {
         const g = current();
         const n = g.clips.length;
         const clip = g.clips[view.ci];
@@ -550,31 +573,24 @@ export function initReels() {
             v.loop = false;
         }
         media.replaceChildren(copy);
-        // The next group, its top under the video — on a computer.
-        const after = view.list[view.gi + 1];
-        peek.replaceChildren(...(after ? [copyOf(after.clips[0])] : []));
-        peek.hidden = !after;
-        peek.querySelectorAll("video").forEach((x) => {
-            x.muted = true;
-            x.preload = "none";
-            x.removeAttribute("autoplay");
-        });
-        // Between groups: the video and the one under it slide up — or
-        // down — by a video and its gap.
-        if (dir && !reduced()) {
-            const by = part("screen").offsetHeight + px(getComputedStyle(feed).rowGap);
-            feed.animate({ transform: [`translateY(${dir * by}px)`, "none"] }, { duration: 360, easing: "cubic-bezier(0.2, 0, 0, 1)" });
-        }
+        peekOf(before, view.list[view.gi - 1]);
+        peekOf(after, view.list[view.gi + 1]);
         const product = g.products[view.ci];
         part("panel-summary").replaceChildren(...(product ? [copyOf(product)] : []));
         // The details: in the product, or in the clip — a <template>, or
         // any element kept hidden (React: a <template>'s markup is not
         // hydrated, and a link cannot sit inside the product's link but
         // in a template). A template parsed from HTML keeps its markup in
-        // .content; one rendered by script holds it as children.
+        // .content; one rendered by script holds it as children. Its
+        // data-pg-reels-title goes to the panel's head, beside the close.
         const detail = product?.querySelector(`[${DETAIL}]`) ?? clip.querySelector(`[${DETAIL}]`);
         const from = detail instanceof HTMLTemplateElement && detail.content.childNodes.length ? detail.content : detail;
-        part("panel-detail").replaceChildren(...(from ? [...from.childNodes].map((n) => n.cloneNode(true)) : []));
+        const holder = document.createElement("div");
+        holder.append(...(from ? [...from.childNodes].map((x) => x.cloneNode(true)) : []));
+        const title = holder.querySelector(`[${TITLE}]`);
+        part("panel-title").replaceChildren(...(title ? [title] : []));
+        part("panel-detail").replaceChildren(...holder.childNodes);
+        part("panel-detail").scrollTop = 0;
         dialog.toggleAttribute(NO_PRODUCT, !product);
         upButton.disabled = view.gi === 0;
         downButton.disabled = view.gi === view.list.length - 1;
@@ -595,9 +611,18 @@ export function initReels() {
         v?.play().catch(() => { });
         tickView();
     };
+    // Still for now — held, dragged, sliding — its time kept.
     const holdView = () => {
+        if (view.held)
+            return;
+        if (!view.paused)
+            view.shown += performance.now() - view.since;
+        view.held = true;
         viewVideo()?.pause();
-        view.shown += performance.now() - view.since;
+    };
+    const letGo = () => {
+        view.held = false;
+        playView();
     };
     const tickView = () => {
         if (view.frame)
@@ -618,47 +643,93 @@ export function initReels() {
             view.frame = requestAnimationFrame(step);
         });
     };
+    /* Between groups: the video and the one above or under it move
+       together — after a finger, or by themselves — by a video and its
+       gap; landed, the one that came in is the one shown, its product in
+       the panel. */
+    let sliding = false;
+    const shift = () => screen.offsetHeight + px(getComputedStyle(feed).rowGap);
+    const setY = (y) => {
+        feed.style.transform = y ? `translateY(${y}px)` : "";
+    };
+    const can = (dir) => view.gi + dir >= 0 && view.gi + dir < view.list.length;
+    const EASE = "cubic-bezier(0.2, 0, 0, 1)";
+    // `last`: land on the group's last clip — going back from a first clip.
+    const slide = (dir, from = 0, last = false) => {
+        if (sliding)
+            return;
+        const land = () => {
+            view.gi += dir;
+            view.ci = last ? current().clips.length - 1 : 0;
+            view.held = false;
+            dialog.removeAttribute(SLIDING);
+            render();
+        };
+        if (!can(dir))
+            return settle(from);
+        if (reduced()) {
+            setY(0);
+            return land();
+        }
+        sliding = true;
+        holdView();
+        dialog.setAttribute(SLIDING, "");
+        const by = shift();
+        const to = -dir * by;
+        setY(0);
+        const run = feed.animate({ transform: [`translateY(${from}px)`, `translateY(${to}px)`] }, { duration: Math.max(140, (340 * Math.abs(to - from)) / by), easing: EASE, fill: "forwards" });
+        run.onfinish = () => {
+            land();
+            run.cancel();
+            sliding = false;
+        };
+    };
+    // Not far enough: back where it was.
+    const settle = (from) => {
+        const done = () => {
+            dialog.removeAttribute(SLIDING);
+            letGo();
+        };
+        setY(0);
+        if (!from || reduced())
+            return done();
+        sliding = true;
+        const run = feed.animate({ transform: [`translateY(${from}px)`, "none"] }, { duration: 220, easing: EASE });
+        run.onfinish = () => {
+            sliding = false;
+            done();
+        };
+    };
     // Within a group, and on to the next — after the last group, the first.
     const nextClip = (auto = false) => {
         if (view.ci < current().clips.length - 1) {
             view.ci += 1;
-            render(0);
+            render();
         }
-        else
-            nextGroup(auto);
+        else if (can(1))
+            slide(1);
+        else if (auto && view.list.length > 1) {
+            view.gi = 0;
+            view.ci = 0;
+            render();
+        }
+        else {
+            view.ci = 0;
+            render();
+        }
     };
     const prevClip = () => {
         if (view.ci > 0) {
             view.ci -= 1;
-            render(0);
+            render();
         }
-        else if (view.gi > 0) {
-            view.gi -= 1;
-            view.ci = current().clips.length - 1;
-            render(-1);
-        }
-        else {
-            view.ci = 0;
-            render(0);
-        }
-    };
-    const nextGroup = (wrap = false) => {
-        if (view.gi < view.list.length - 1)
-            view.gi += 1;
-        else if (wrap)
-            view.gi = 0;
+        else if (can(-1))
+            slide(-1, 0, true);
         else
-            return;
-        view.ci = 0;
-        render(1);
+            render();
     };
-    const prevGroup = () => {
-        if (view.gi === 0)
-            return;
-        view.gi -= 1;
-        view.ci = 0;
-        render(-1);
-    };
+    const nextGroup = () => slide(1);
+    const prevGroup = () => slide(-1);
     const openView = (g, clip) => {
         // Opened from a card the sound was not on: none.
         if (g !== playing)
@@ -676,6 +747,8 @@ export function initReels() {
         view.paused = reduced();
         view.held = false;
         dialog.removeAttribute(DETAILS);
+        dialog.removeAttribute(SLIDING);
+        setY(0);
         toggle.setAttribute("aria-expanded", "false");
         if (!dialog.open)
             dialog.showModal();
@@ -687,7 +760,7 @@ export function initReels() {
         catch {
             view.pushed = false;
         }
-        render(0);
+        render();
         applySound();
     };
     // Closed: the card it came from shows the clip last seen; the strip
@@ -701,6 +774,9 @@ export function initReels() {
         if (view.frame)
             cancelAnimationFrame(view.frame);
         view.frame = 0;
+        feed.getAnimations().forEach((a) => a.cancel());
+        sliding = false;
+        press = null;
         const g = current();
         if (g)
             show(g, view.ci);
@@ -729,32 +805,31 @@ export function initReels() {
             return closeView();
         if (t.closest("[data-pg-reels-view-close], [data-pg-reels-panel-close]"))
             return closeView();
+        if (sliding)
+            return;
         if (t.closest("[data-pg-reels-view-on]"))
             return nextClip();
         if (t.closest("[data-pg-reels-view-back]"))
             return prevClip();
         if (t.closest("[data-pg-reels-view-up]"))
             return prevGroup();
-        if (t.closest("[data-pg-reels-view-down], [data-pg-reels-view-peek]"))
+        if (t.closest('[data-pg-reels-view-down], [data-pg-reels-view-peek="after"]'))
             return nextGroup();
         const bar = t.closest(`[${VIEW_BAR}]`);
         if (bar) {
             view.ci = [...viewBars.children].indexOf(bar);
-            return render(0);
+            return render();
         }
-        if (t.closest("[data-pg-reels-view-play]")) {
-            view.paused = !view.paused;
-            if (view.paused)
-                holdView();
-            return playView();
-        }
+        if (t.closest("[data-pg-reels-view-play]"))
+            return togglePause();
         if (t.closest("[data-pg-reels-panel-toggle]")) {
             const open = !dialog.hasAttribute(DETAILS);
             dialog.toggleAttribute(DETAILS, open);
             toggle.setAttribute("aria-expanded", String(open));
             return;
         }
-        // A small picture of the product, pressed: shown big.
+        // A small picture of the product, pressed: shown big — and brought
+        // into sight, when the row of them scrolls.
         const thumb = t.closest(`[${THUMB}]`);
         if (thumb) {
             const detail = thumb.closest("[data-pg-reels-panel-detail]");
@@ -763,7 +838,14 @@ export function initReels() {
             if (big && src)
                 big.src = src;
             detail?.querySelectorAll(`[${THUMB}]`).forEach((x) => x.toggleAttribute(CURRENT, x === thumb));
+            thumb.scrollIntoView({ block: "nearest", inline: "nearest", behavior: reduced() ? "instant" : "smooth" });
         }
+    };
+    const togglePause = () => {
+        if (!view.paused && !view.held)
+            view.shown += performance.now() - view.since;
+        view.paused = !view.paused;
+        playView();
     };
     dialog.addEventListener("click", onViewClick);
     dialog.addEventListener("cancel", (event) => {
@@ -772,54 +854,79 @@ export function initReels() {
     });
     // A video that ends in the view: the next clip.
     media.addEventListener("ended", () => nextClip(true), true);
-    // Held down: still. Swiped up or down: the next group or the one
-    // before. A press that was either is no tap.
+    /* A press on the video. Held: still, the controls out of the way.
+       Dragged up or down: the video follows the finger — the next group
+       coming in under it, or the one before above it — and let go, goes
+       on to it if pulled far enough or flicked, or back if not. A press
+       that was either is no tap. */
     let press = null;
     let swallow = false;
-    const screen = part("screen");
+    const noTap = () => {
+        swallow = true;
+        setTimeout(() => (swallow = false));
+    };
+    // How far the video moves for a finger's `dy`: past the first or the
+    // last group, a quarter — it gives, and comes back.
+    const pulled = (dy) => (can(dy < 0 ? 1 : -1) ? dy : dy / 4);
     screen.addEventListener("pointerdown", (event) => {
-        if (event.button !== 0 || event.target.closest("button:not([data-pg-reels-view-on]):not([data-pg-reels-view-back]), a"))
+        if (event.button !== 0 || sliding || event.target.closest("button:not([data-pg-reels-view-on]):not([data-pg-reels-view-back]), a"))
             return;
         const timer = window.setTimeout(() => {
-            view.held = true;
+            if (!press || press.drag)
+                return;
             dialog.setAttribute(HELD, "");
             holdView();
-            playView();
         }, HOLD_MS);
-        press = { id: event.pointerId, x: event.clientX, y: event.clientY, t: event.timeStamp, timer };
+        press = { id: event.pointerId, x: event.clientX, y: event.clientY, timer, drag: false, lastY: event.clientY, lastT: event.timeStamp, speed: 0 };
+    });
+    screen.addEventListener("pointermove", (event) => {
+        if (!press || press.id !== event.pointerId)
+            return;
+        const dx = event.clientX - press.x;
+        const dy = event.clientY - press.y;
+        if (!press.drag) {
+            if (Math.hypot(dx, dy) > 10)
+                clearTimeout(press.timer);
+            if (dialog.hasAttribute(HELD) || Math.abs(dy) < DRAG_PX || Math.abs(dy) < Math.abs(dx))
+                return;
+            press.drag = true;
+            screen.setPointerCapture(event.pointerId);
+            holdView();
+            dialog.setAttribute(SLIDING, "");
+        }
+        // The finger's speed, px a ms, smoothed.
+        const dt = Math.max(1, event.timeStamp - press.lastT);
+        press.speed = press.speed * 0.6 + ((event.clientY - press.lastY) / dt) * 0.4;
+        press.lastY = event.clientY;
+        press.lastT = event.timeStamp;
+        setY(pulled(dy));
     });
     const release = (event) => {
         if (!press || press.id !== event.pointerId)
             return;
-        clearTimeout(press.timer);
-        const dx = event.clientX - press.x;
-        const dy = event.clientY - press.y;
-        const wasHeld = view.held;
+        const p = press;
         press = null;
-        if (wasHeld) {
-            view.held = false;
-            dialog.removeAttribute(HELD);
-            swallow = true;
-            setTimeout(() => (swallow = false));
-            playView();
+        clearTimeout(p.timer);
+        if (p.drag) {
+            noTap();
+            const dy = event.clientY - p.y;
+            const dir = dy < 0 ? 1 : -1;
+            const far = Math.abs(dy) > shift() * 0.2;
+            const flick = Math.abs(p.speed) > FLICK && Math.sign(p.speed) === Math.sign(dy);
+            if (event.type === "pointerup" && can(dir) && (far || flick))
+                slide(dir, pulled(dy));
+            else
+                settle(pulled(dy));
             return;
         }
-        if (event.type === "pointerup" && Math.abs(dy) > SWIPE_PX && Math.abs(dy) > Math.abs(dx)) {
-            swallow = true;
-            setTimeout(() => (swallow = false));
-            if (dy < 0)
-                nextGroup();
-            else
-                prevGroup();
+        if (dialog.hasAttribute(HELD)) {
+            dialog.removeAttribute(HELD);
+            noTap();
+            letGo();
         }
     };
     screen.addEventListener("pointerup", release);
     screen.addEventListener("pointercancel", release);
-    screen.addEventListener("pointermove", (event) => {
-        // A drag is no hold.
-        if (press && press.id === event.pointerId && Math.hypot(event.clientX - press.x, event.clientY - press.y) > 10)
-            clearTimeout(press.timer);
-    });
     // A wheel, a trackpad: a step per turn, then a rest.
     let wheelSum = 0;
     let wheelRest = 0;
@@ -827,7 +934,7 @@ export function initReels() {
         if (event.target.closest("[data-pg-reels-panel]"))
             return;
         event.preventDefault();
-        if (event.timeStamp < wheelRest)
+        if (event.timeStamp < wheelRest || sliding || press)
             return;
         wheelSum += event.deltaY;
         if (Math.abs(wheelSum) < WHEEL_PX)
@@ -843,6 +950,8 @@ export function initReels() {
         if (!view.open || event.altKey || event.ctrlKey || event.metaKey)
             return;
         const onControl = event.target.closest("button, a, input, textarea, select");
+        if (sliding && event.key.startsWith("Arrow"))
+            return event.preventDefault();
         if (event.key === "ArrowDown" || event.key === "PageDown")
             nextGroup();
         else if (event.key === "ArrowUp" || event.key === "PageUp")
@@ -851,12 +960,8 @@ export function initReels() {
             nextClip();
         else if (event.key === "ArrowLeft")
             prevClip();
-        else if ((event.key === " " || event.key === "k") && !onControl) {
-            view.paused = !view.paused;
-            if (view.paused)
-                holdView();
-            playView();
-        }
+        else if ((event.key === " " || event.key === "k") && !onControl)
+            togglePause();
         else
             return;
         event.preventDefault();
