@@ -5,22 +5,23 @@ a group of clips, each clip with its own product — that opens into a full
 view. No dependencies.
 
 ```sh
-npm install github:omisilli/reels#v1.0.2
+npm install github:omisilli/reels#v1.1.0
 ```
 
 ```ts
-import { initReels } from "@plusguard/reels";
+import { initReels, forgetReelsSeen } from "@plusguard/reels";
 import "@plusguard/reels/index.css";
 
 initReels(); // every reels section on the page, those rendered later too
+// forgetReelsSeen(); — every ring bright again
 ```
 
 ### Without a build step
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omisilli/reels@v1.0.2/index.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omisilli/reels@v1.1.0/index.css" />
 <script type="module">
-    import { initReels } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.0.2/dist/index.js";
+    import { initReels } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.1.0/dist/index.js";
     initReels();
 </script>
 ```
@@ -31,7 +32,7 @@ initReels(); // every reels section on the page, those rendered later too
 <section data-pg-reels>
     <button data-pg-reels-prev aria-controls="strip" aria-label="Previous">‹</button>
     <div data-pg-reels-strip id="strip">
-        <article data-pg-reels-group>
+        <article data-pg-reels-group data-pg-reels-id="enginar">
             <div data-pg-reels-card>
                 <figure data-pg-reels-clip>
                     <video src="a.mp4" poster="a.jpg" muted playsinline preload="none"></video>
@@ -102,6 +103,25 @@ below).
   event `pg-reels:open` on the section, with `detail.group` and
   `detail.clip`; `preventDefault()` on it and the site opens its own.
 - **Reduced motion:** nothing plays by itself; a bar pressed shows its clip.
+- **Seen.** A group shown in the full view is seen:
+  `data-pg-reels-seen="true"` on it (`"false"` until then), for the ring
+  round its avatar to go pale — stories' rings, in the site's CSS. With a
+  `data-pg-reels-id` it is remembered in this browser (`localStorage`,
+  `pg-reels-seen`); without, for this visit. In the full view the head's
+  copy keeps the ring as it was when the group came in, through all its
+  clips. `forgetReelsSeen()` forgets it all — every ring bright again, at
+  once, no reload.
+
+```css
+.avatar { position: relative; padding: 4px; border-radius: 50%; }
+.avatar::before {
+    content: ""; position: absolute; inset: 0; padding: 2px; border-radius: 50%;
+    background: linear-gradient(45deg, #f9c20c, #f95e1a, #f30863, #cc02c1);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+}
+[data-pg-reels-seen="true"] .avatar::before { background: rgb(255 255 255 / 0.5); }
+```
 
 ## The full view
 
@@ -170,6 +190,8 @@ and videos: the box has the shape, what is inside is 100% of it.
 | `data-pg-reels` | the section | |
 | `data-pg-reels-strip` | the row | Scrolls sideways |
 | `data-pg-reels-group` | each group | A card and what is under it |
+| `data-pg-reels-id` | a group | Its name, for what was seen to be remembered in this browser |
+| `data-pg-reels-seen` | a group, the full view's head | Written: `"true"` once seen in the full view, `"false"` before |
 | `data-pg-reels-card` | the card | The shape; its clips fill it |
 | `data-pg-reels-clip` | each clip | A video with its poster, or a picture |
 | `data-pg-reels-duration` | a clip | A picture's time — `5s`, `4000ms` |

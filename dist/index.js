@@ -68,6 +68,11 @@
  * on the group that plays; aria-current on its bar, data-pg-reels-done on
  * the bars before it, and --pg-reels-progress (0 to 1) on the bar playing.
  *
+ * Seen: a group shown in the full view is seen — data-pg-reels-seen="true"
+ * on it ("false" before), for its ring to go grey as stories' do. With a
+ * data-pg-reels-id on the group it is remembered in this browser;
+ * forgetReelsSeen() forgets it all — every ring bright again, at once.
+ *
  * CSS, per screen size: --pg-reels-show (cards across: 4; 1.5 on a phone
  * shows one and half the next), --pg-reels-gap, --pg-reels-duration (a
  * picture's time, 5s) — see index.css.
@@ -110,6 +115,9 @@ const DETAILS = "data-pg-reels-details";
 const NO_PRODUCT = "data-pg-reels-no-product";
 const TITLE = "data-pg-reels-title";
 const FOOT = "data-pg-reels-foot";
+const ID = "data-pg-reels-id";
+const SEEN = "data-pg-reels-seen";
+const SEEN_KEY = "pg-reels-seen";
 const SLIDING = "data-pg-reels-sliding";
 /* A finger this far up or down, more than across: the video follows it. */
 const DRAG_PX = 10;
@@ -219,6 +227,60 @@ function show(g, i) {
             b.removeAttribute("aria-current");
         b.style.setProperty(PROGRESS, k < g.at ? "1" : "0");
     });
+}
+/* ---------- Seen, kept in this browser ---------- */
+// Groups with a data-pg-reels-id: in localStorage. Without: this visit.
+const seenHere = new WeakSet();
+function seenSet() {
+    try {
+        return new Set(JSON.parse(localStorage.getItem(SEEN_KEY) || "[]"));
+    }
+    catch {
+        return new Set();
+    }
+}
+function isSeen(el, set = seenSet()) {
+    const id = el.getAttribute(ID);
+    return id ? set.has(id) : seenHere.has(el);
+}
+function markSeen(el) {
+    const id = el.getAttribute(ID);
+    if (!id)
+        seenHere.add(el);
+    else {
+        const set = seenSet();
+        if (!set.has(id)) {
+            set.add(id);
+            try {
+                localStorage.setItem(SEEN_KEY, JSON.stringify([...set]));
+            }
+            catch {
+                // Private mode, or storage full: seen for this visit only.
+                seenHere.add(el);
+            }
+        }
+    }
+    paintSeen();
+}
+function paintSeen() {
+    const set = seenSet();
+    document.querySelectorAll(`[${GROUP}]`).forEach((el) => {
+        const value = String(isSeen(el, set));
+        if (el.getAttribute(SEEN) !== value)
+            el.setAttribute(SEEN, value);
+    });
+}
+/* Forget what was seen, in this browser: every ring bright again, at once
+   — no reload. */
+export function forgetReelsSeen() {
+    try {
+        localStorage.removeItem(SEEN_KEY);
+    }
+    catch {
+        // Storage blocked: nothing kept, nothing to forget.
+    }
+    document.querySelectorAll(`[${GROUP}]`).forEach((el) => seenHere.delete(el));
+    paintSeen();
 }
 /* ---------- Everything on the page ---------- */
 let live = null;
@@ -389,6 +451,7 @@ export function initReels() {
             });
             ends(root);
         });
+        paintSeen();
         groups.forEach((g, el) => {
             if (now.has(el))
                 return;
@@ -554,6 +617,7 @@ export function initReels() {
     };
     const viewVideo = () => media.querySelector("video");
     const current = () => view.list[view.gi];
+    let headOf = null;
     // A group's first clip, for the video above or under the one shown:
     // a picture, or a video on its poster — never playing.
     const peekOf = (holder, g) => {
@@ -574,6 +638,14 @@ export function initReels() {
         viewVideo()?.pause();
         const head = g.el.querySelector(`[${HEAD}]`);
         part("view-head").replaceChildren(...(head ? [copyOf(head)] : []));
+        // The head as it was before this group was looked at — its ring
+        // bright the first time, through all its clips — and from now on,
+        // seen.
+        if (headOf !== g) {
+            headOf = g;
+            part("view-head").setAttribute(SEEN, String(isSeen(g.el)));
+        }
+        markSeen(g.el);
         viewBars.replaceChildren(...g.clips.map((_, i) => {
             const bar = document.createElement("button");
             bar.type = "button";
@@ -762,6 +834,7 @@ export function initReels() {
             sound = false;
         stopAll();
         // Every group of its section, in the page's order.
+        headOf = null;
         view.list = [...groups.values()].filter((x) => x.root === g.root).sort((a, b) => (a.el.compareDocumentPosition(b.el) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
         view.gi = view.list.indexOf(g);
         view.ci = clip;

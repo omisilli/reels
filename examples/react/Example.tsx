@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, type CSSProperties } from "react";
-import { initReels } from "@plusguard/reels";
+import { initReels, forgetReelsSeen } from "@plusguard/reels";
 import "@plusguard/reels/index.css";
 
 /*
@@ -34,6 +34,15 @@ export function ReelsInit() {
     }, []);
 
     return null;
+}
+
+/* Every ring bright again, at once — no reload. */
+export function ForgetSeen() {
+    return (
+        <button type="button" onClick={forgetReelsSeen}>
+            Forget what was seen
+        </button>
+    );
 }
 
 /*
@@ -73,7 +82,8 @@ export function Reels({ reels, label = "Reels" }: { reels: Reel[]; label?: strin
             </button>
             <div data-pg-reels-strip id="reels-strip">
                 {reels.map((reel) => (
-                    <article key={reel.id} data-pg-reels-group data-reel={reel.id}>
+                    // data-pg-reels-id: what was seen is remembered by it.
+                    <article key={reel.id} data-pg-reels-group data-pg-reels-id={reel.id} data-reel={reel.id}>
                         <div data-pg-reels-card>
                             {reel.clips.map((clip, i) => (
                                 <ClipView key={i} clip={clip} />

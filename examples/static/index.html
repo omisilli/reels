@@ -7,7 +7,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>reels — example</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omisilli/reels@v1.0.2/index.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omisilli/reels@v1.1.0/index.css" />
         <style>
             :root {
                 --bg: #f6f6f4;
@@ -180,12 +180,55 @@
                 align-items: center;
                 gap: 0.5rem;
             }
+            /* The ring round the avatar, as stories' rings: a band of
+               colour while the group is new, a pale one once it has been
+               seen in the full view (data-pg-reels-seen="true") — then a
+               gap the video shows through, then the photo. The band is
+               drawn round the box and cut out in its middle. */
             .reel-head .avatar {
+                --ring: 2px;
+                --gap: 2px;
+                position: relative;
                 flex: none;
-                height: 2.25rem;
+                height: 2.5rem;
                 aspect-ratio: 1;
+                padding: calc(var(--ring) + var(--gap));
                 border-radius: 50%;
-                border: 2px solid #fff;
+            }
+            .reel-head .avatar::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                padding: var(--ring);
+                border-radius: 50%;
+                background: linear-gradient(45deg, #f9c20c 15%, #f4a012 25%, #f95e1a 41%, #f30863 59%, #df03a8 75%, #cc02c1 85%);
+                mask:
+                    linear-gradient(#000 0 0) content-box,
+                    linear-gradient(#000 0 0);
+                mask-composite: exclude;
+                transition: background 0.3s;
+            }
+            .reel-head .avatar img {
+                border-radius: 50%;
+            }
+            [data-pg-reels-seen="true"] .reel-head .avatar::before {
+                background: rgb(255 255 255 / 0.5);
+            }
+
+            /* The reset: every ring bright again (forgetReelsSeen). */
+            .forget {
+                margin-top: 1rem;
+                padding: 0.5rem 0.9rem;
+                border: 1px solid var(--line);
+                border-radius: 999px;
+                background: var(--surface);
+                color: var(--fg);
+                font: inherit;
+                font-size: 0.85rem;
+                cursor: pointer;
+            }
+            .forget:hover {
+                border-color: var(--fg);
             }
             .who {
                 display: grid;
@@ -458,8 +501,10 @@
                     its clips one after another, the bars under it filling; press a bar for that clip. The product
                     under the card is the playing clip's. Press the card, or its corner button, for the full view: up
                     and down between the groups — drag the video, or the arrows — left and right within one, the
-                    product beside it; on a phone, under it.
+                    product beside it; on a phone, under it. A group seen in the full view has its ring go pale —
+                    remembered in this browser.
                 </p>
+                <button type="button" class="forget" id="forget">Forget what was seen</button>
             </header>
 
             <section data-pg-reels class="reels" aria-label="Reels">
@@ -467,7 +512,7 @@
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg>
                 </button>
                 <div data-pg-reels-strip id="strip">
-                <article data-pg-reels-group>
+                <article data-pg-reels-group data-pg-reels-id="enginar">
                     <div data-pg-reels-card>
                             <figure data-pg-reels-clip>
                                 <video src="./media/enginar-1.mp4" poster="./media/enginar-1-poster.jpg" muted playsinline preload="none"></video>
@@ -565,7 +610,7 @@
                         </a>
                     </div>
                 </article>
-                <article data-pg-reels-group>
+                <article data-pg-reels-group data-pg-reels-id="mavi-cafe">
                     <div data-pg-reels-card>
                             <!-- A picture's own time: 3 seconds. -->
                             <figure data-pg-reels-clip data-pg-reels-duration="3s">
@@ -631,7 +676,7 @@
                         </a>
                     </div>
                 </article>
-                <article data-pg-reels-group>
+                <article data-pg-reels-group data-pg-reels-id="kerem">
                     <div data-pg-reels-card>
                             <!-- A picture's own time: 8 seconds. -->
                             <figure data-pg-reels-clip data-pg-reels-duration="8s">
@@ -672,7 +717,7 @@
                         </a>
                     </div>
                 </article>
-                <article data-pg-reels-group>
+                <article data-pg-reels-group data-pg-reels-id="plusguard-field">
                     <div data-pg-reels-card>
                             <figure data-pg-reels-clip>
                                 <img src="./media/story-field.jpg" alt="" loading="lazy" />
@@ -737,7 +782,7 @@
                         </a>
                     </div>
                 </article>
-                <article data-pg-reels-group>
+                <article data-pg-reels-group data-pg-reels-id="plusguard-canyon">
                     <div data-pg-reels-card>
                             <figure data-pg-reels-clip>
                                 <video src="./media/bubbles.mp4" poster="./media/bubbles-poster.jpg" muted playsinline preload="none"></video>
@@ -777,7 +822,7 @@
                         </a>
                     </div>
                 </article>
-                <article data-pg-reels-group>
+                <article data-pg-reels-group data-pg-reels-id="kerem-night">
                     <div data-pg-reels-card>
                             <figure data-pg-reels-clip>
                                 <img src="./media/story-jellyfish.jpg" alt="" loading="lazy" />
@@ -876,7 +921,7 @@
         </main>
 
         <script type="module">
-            import { initReels } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.0.2/dist/index.js";
+            import { initReels, forgetReelsSeen } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.1.0/dist/index.js";
 
             // ?duration=2s — every picture without its own time, through
             // --pg-reels-duration (5s by default). Two clips here have their
@@ -885,6 +930,9 @@
             if (duration) document.querySelector("[data-pg-reels]").style.setProperty("--pg-reels-duration", duration);
 
             initReels();
+
+            // Every ring bright again, at once — no reload.
+            document.getElementById("forget").addEventListener("click", forgetReelsSeen);
         </script>
     </body>
 </html>
