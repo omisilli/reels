@@ -13,7 +13,7 @@
  *   --pg-reels-panel      the full view: the product panel's width on a
  *                         computer (default 22rem)
  *   --pg-reels-peek       the full view: how much of the next group shows
- *                         under the video on a computer (default 4rem)
+ *                         under the video on a computer (default 2rem)
  * Written by the script on the full view:
  *   --pg-reels-band       the band's height at a phone's foot, for a caption
  *                         to stay above it (0 on a computer)
@@ -120,7 +120,7 @@ html:has(dialog[data-pg-reels-viewer][open]) {
 }
 dialog[data-pg-reels-viewer] {
     --pg-reels-panel: 22rem;
-    --pg-reels-peek: 4rem;
+    --pg-reels-peek: 2rem;
     position: fixed;
     inset: 0;
     width: 100%;
@@ -380,7 +380,7 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-steps] svg {
     transition-delay: 0.4s;
 }
 
-/* The product: a panel as tall as the video — a head with the product's
+/* The product: a panel from the video's top to the window's foot — a head with the product's
    name (the template's data-pg-reels-title) and the close, a line under
    it, the rest of the template under that, scrolling. A long name goes
    onto a second line; the close stays at the top. */
@@ -392,7 +392,7 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-steps] svg {
     flex: none;
     box-sizing: border-box;
     width: var(--pg-reels-panel);
-    height: var(--h);
+    height: calc(100dvh - 2 * var(--gap));
     border-radius: 0.75rem;
     background: #fff;
     color: #111;

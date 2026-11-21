@@ -5,7 +5,7 @@ a group of clips, each clip with its own product — that opens into a full
 view. No dependencies.
 
 ```sh
-npm install github:omisilli/reels#v1.0.0
+npm install github:omisilli/reels#v1.0.1
 ```
 
 ```ts
@@ -18,9 +18,9 @@ initReels(); // every reels section on the page, those rendered later too
 ### Without a build step
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omisilli/reels@v1.0.0/index.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omisilli/reels@v1.0.1/index.css" />
 <script type="module">
-    import { initReels } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.0.0/dist/index.js";
+    import { initReels } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.0.1/dist/index.js";
     initReels();
 </script>
 ```
@@ -127,8 +127,8 @@ in it, copies of the site's markup: the clip, the group's
   links; the rest of the clip passes presses to the taps under it.
 - **Held down** — a finger, the mouse — it stands still, the controls
   out of the way; let go and it goes on. Its play / pause button, Space.
-- **The product:** on a computer, a panel beside the video, as tall as
-  it: a head — the template's `data-pg-reels-title`, moved there, and the
+- **The product:** on a computer, a panel beside the video, from its top
+  to the window's foot: a head — the template's `data-pg-reels-title`, moved there, and the
   close; a long name takes a second line, the close stays at the top —
   a line under it, and the rest of the template under that, scrolling.
   The template is the product's `data-pg-reels-detail`, the site's markup: a
@@ -154,7 +154,7 @@ in it, copies of the site's markup: the clip, the group's
 | `--pg-reels-ratio` | `9 / 16` | The card's shape |
 | `--pg-reels-duration` | `5s` | A picture's time |
 | `--pg-reels-panel` | `22rem` | The full view: the product panel's width on a computer |
-| `--pg-reels-peek` | `4rem` | The full view: how much of the next group shows under the video on a computer |
+| `--pg-reels-peek` | `2rem` | The full view: how much of the next group shows under the video on a computer |
 | `--pg-reels-band` | — | Written by the script on the view: the band's height at a phone's foot (0 on a computer) — to keep a caption above it |
 
 The card holds the shape, the clip fills it — the house way for pictures
