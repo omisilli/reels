@@ -11,7 +11,8 @@
  *   --pg-reels-ratio      the card's shape (default 9 / 16)
  *   --pg-reels-duration   a picture's time (default 5s)
  *   --pg-reels-panel      the full view: the product panel's width on a
- *                         computer (default 22rem)
+ *                         computer (default: 9:16 of its height, as the
+ *                         video; 20rem to 30rem)
  *   --pg-reels-peek       the full view: how much of the next group shows
  *                         under the video on a computer (default 2rem)
  * Written by the script on the full view:
@@ -119,7 +120,9 @@ html:has(dialog[data-pg-reels-viewer][open]) {
     overflow: hidden;
 }
 dialog[data-pg-reels-viewer] {
-    --pg-reels-panel: 22rem;
+    /* The panel 9:16, as the video: its width from its height — but at
+       most half the room beside the arrows, and 20rem to 30rem. */
+    --pg-reels-panel: clamp(20rem, min(calc((100dvh - 2rem) * 9 / 16), calc((100vw - 11rem) / 2)), 30rem);
     --pg-reels-peek: 2rem;
     position: fixed;
     inset: 0;

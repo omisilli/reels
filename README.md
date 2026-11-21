@@ -5,7 +5,7 @@ a group of clips, each clip with its own product — that opens into a full
 view. No dependencies.
 
 ```sh
-npm install github:omisilli/reels#v1.0.1
+npm install github:omisilli/reels#v1.0.2
 ```
 
 ```ts
@@ -18,9 +18,9 @@ initReels(); // every reels section on the page, those rendered later too
 ### Without a build step
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omisilli/reels@v1.0.1/index.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omisilli/reels@v1.0.2/index.css" />
 <script type="module">
-    import { initReels } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.0.1/dist/index.js";
+    import { initReels } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.0.2/dist/index.js";
     initReels();
 </script>
 ```
@@ -153,7 +153,7 @@ in it, copies of the site's markup: the clip, the group's
 | `--pg-reels-gap` | `1rem` | Between the cards |
 | `--pg-reels-ratio` | `9 / 16` | The card's shape |
 | `--pg-reels-duration` | `5s` | A picture's time |
-| `--pg-reels-panel` | `22rem` | The full view: the product panel's width on a computer |
+| `--pg-reels-panel` | 9:16 of its height, 20–30rem | The full view: the product panel's width on a computer |
 | `--pg-reels-peek` | `2rem` | The full view: how much of the next group shows under the video on a computer |
 | `--pg-reels-band` | — | Written by the script on the view: the band's height at a phone's foot (0 on a computer) — to keep a caption above it |
 
