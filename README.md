@@ -79,17 +79,19 @@ below).
 
 ## What it does
 
-- **The card most in sight plays** — only that one, muted. Its clips play
-  one after another, round and round, as stories do: a video to its end, a
-  picture for `data-pg-reels-duration` (or `--pg-reels-duration`, 5s). The
-  bars under the card fill as each plays; a bar pressed is that clip at
-  once — one bar even for a card of one clip. Out of sight, nothing plays;
-  the others wait on their posters.
+- **Every card in sight plays** — at least 60% of it on the screen —
+  muted. Its clips play one after another, round and round, as stories
+  do: a video to its end, a picture for its time —
+  `data-pg-reels-duration="4s"` on the clip, or `--pg-reels-duration` on
+  the group or above (5s by default). The bars under the card fill as each
+  plays; a bar pressed is that clip at once — one bar even for a card of
+  one clip. Out of sight it stops and waits on its poster; a hidden tab
+  stops them all.
 - **The product is the clip's.** The products under a card are one a clip;
   the playing one's shows (`data-pg-reels-current`).
 - **Sound is one card's.** A sound button pressed gives the sound to its
-  card — it plays at once, every other card is muted; pressed again, off.
-  Another card coming into sight takes the sound away. The full view takes
+  card — every other card is muted; pressed again, off. The card going out
+  of sight takes the sound with it. The full view takes
   it over while open, and gives it back on closing if the card last seen
   there is the one that plays.
 - **The strip scrolls sideways** — a finger, a wheel, its arrows, one card
@@ -226,7 +228,8 @@ shows them. See [`examples/react/Example.tsx`](examples/react/Example.tsx)
 ## Example
 
 [`examples/static/index.html`](examples/static/index.html) — six groups of
-one to three clips, videos and pictures, each clip with a product and its
+one to three clips, videos and pictures (two with their own time — the
+pug 8s, the canoe 3s; `?duration=2s` for the rest), each clip with a product and its
 details: its category (a link), its name in the panel's head, a big
 picture at 4:3, small ones — nine for the first product, a row that
 scrolls — the price, a line about it, a link. Under the card the product

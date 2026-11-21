@@ -533,7 +533,8 @@
                 </article>
                 <article data-pg-reels-group>
                     <div data-pg-reels-card>
-                            <figure data-pg-reels-clip>
+                            <!-- A picture's own time: 3 seconds. -->
+                            <figure data-pg-reels-clip data-pg-reels-duration="3s">
                                 <img src="./media/story-canoe.jpg" alt="" loading="lazy" />
                                 <figcaption><a class="tag" href="https://www.google.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" /></svg>Single-origin beans, 250 g</a><small>Tap to enlarge</small>Coffee on the water</figcaption>
                             </figure>
@@ -598,7 +599,8 @@
                 </article>
                 <article data-pg-reels-group>
                     <div data-pg-reels-card>
-                            <figure data-pg-reels-clip>
+                            <!-- A picture's own time: 8 seconds. -->
+                            <figure data-pg-reels-clip data-pg-reels-duration="8s">
                                 <img src="./media/story-pug.jpg" alt="" loading="lazy" />
                                 <figcaption><a class="tag" href="https://www.google.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" /></svg>Dog bed, small</a><small>Tap to enlarge</small>Nap time, tested</figcaption>
                             </figure>
@@ -841,6 +843,12 @@
 
         <script type="module">
             import { initReels } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.0.0/dist/index.js";
+
+            // ?duration=2s — every picture without its own time, through
+            // --pg-reels-duration (5s by default). Two clips here have their
+            // own: the pug 8s, the canoe 3s.
+            const duration = new URLSearchParams(location.search).get("duration");
+            if (duration) document.querySelector("[data-pg-reels]").style.setProperty("--pg-reels-duration", duration);
 
             initReels();
         </script>

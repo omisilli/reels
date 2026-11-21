@@ -26,11 +26,11 @@
  *       <button data-pg-reels-next aria-controls="strip">›</button>
  *   </section>
  *
- * On the page: the card most in sight plays — only that one, muted until
- * its sound button is pressed (sound is the playing card's alone: another
- * card's button pressed gives it to that card, which plays; another card
- * coming into sight takes it away) — its clips one after another, round
- * and round, as stories do;
+ * On the page: every card in sight plays, muted until its sound button is
+ * pressed (sound is one card's alone: another card's button pressed gives
+ * it to that card; the card going out of sight takes it away) — its clips
+ * one after another, round and round, as stories do, a picture for its
+ * data-pg-reels-duration;
  * the bars under it fill as each plays. A bar pressed is that clip at
  * once. The clip playing shows its product: the products under the card
  * are one per clip, and only the playing one's shows. The others wait on
@@ -258,10 +258,11 @@ export function initReels(): () => void {
     live = self;
 
     const groups = new Map<HTMLElement, Group>();
-    let playing: Group | null = null;
+    // The groups playing: every one in sight.
+    const playing = new Set<Group>();
     let frame = 0;
 
-    // Which group plays: the one most in sight, over IN_SIGHT.
+    // Which groups play: every one at least IN_SIGHT in sight.
     const sights =
         typeof IntersectionObserver === "undefined"
             ? null
@@ -278,18 +279,29 @@ export function initReels(): () => void {
 
     const choose = (): void => {
         if (live !== self || view.open) return;
-        let best: Group | null = null;
+        let changed = false;
         groups.forEach((g) => {
-            if (g.ratio >= IN_SIGHT && (!best || g.ratio > best.ratio)) best = g;
+            const on = g.ratio >= IN_SIGHT;
+            if (on === playing.has(g)) return;
+            changed = true;
+            if (on) {
+                playing.add(g);
+                start(g);
+            } else {
+                playing.delete(g);
+                stop(g);
+            }
         });
-        if (best !== playing) {
-            if (playing) stop(playing);
-            playing = best;
-            // Another card in sight: the sound was not its.
-            if (best && best !== owner) sound = false;
-            if (playing) start(playing);
-            applySound();
+        // The card with the sound gone out of sight: the sound goes too.
+        if (sound && (!owner || !playing.has(owner))) {
+            sound = false;
+            changed = true;
         }
+        if (changed) applySound();
+    };
+    const stopAll = (): void => {
+        playing.forEach(stop);
+        playing.clear();
     };
 
     // The group whose sound button turned it on — or the one last seen in
@@ -297,14 +309,14 @@ export function initReels(): () => void {
     let owner: Group | null = null;
     const applySound = (): void => {
         groups.forEach((g) => {
-            const on = sound && !view.open && g === playing;
+            const on = sound && !view.open && g === owner && playing.has(g);
             g.clips.forEach((c) => {
                 const v = videoOf(c);
                 if (v) v.muted = !on;
             });
             g.el.querySelectorAll<HTMLElement>(`[${SOUND}]`).forEach((b) => b.setAttribute("aria-pressed", String(on)));
         });
-        document.querySelectorAll<HTMLElement>(`[${ROOT}]`).forEach((r) => r.toggleAttribute(SOUND_ON, sound && !view.open && playing?.root === r));
+        document.querySelectorAll<HTMLElement>(`[${ROOT}]`).forEach((r) => r.toggleAttribute(SOUND_ON, sound && !view.open && !!owner && playing.has(owner) && owner.root === r));
         const v = viewVideo();
         if (v) v.muted = !sound;
         dialog.querySelector(`[${SOUND}]`)?.setAttribute("aria-pressed", String(sound && view.open));
@@ -317,7 +329,7 @@ export function initReels(): () => void {
         const v = videoOf(clip);
         g.since = performance.now();
         if (v) {
-            v.muted = !sound;
+            v.muted = !(sound && g === owner);
             v.preload = "auto";
             v.play().catch(() => {});
         }
@@ -331,28 +343,34 @@ export function initReels(): () => void {
         g.shown += performance.now() - g.since;
     };
 
-    // One frame loop, for the group that plays: its bar fills; a picture
-    // whose time is up, or a video ended, is the next clip.
+    // One frame loop for every group that plays: its bar fills; a picture
+    // whose time is up — data-pg-reels-duration, --pg-reels-duration — or
+    // a video ended, is the next clip.
     const tick = (): void => {
         if (frame) return;
         frame = requestAnimationFrame(function step(now) {
             frame = 0;
-            const g = playing;
-            if (live !== self || !g || reduced()) return;
-            const clip = g.clips[g.at];
-            const v = videoOf(clip);
-            let progress: number;
-            if (v) progress = v.duration ? v.currentTime / v.duration : 0;
-            else progress = (g.shown + now - g.since) / Math.max(1, pictureTime(g, clip));
-            g.bars[g.at]?.style.setProperty(PROGRESS, String(Math.min(1, progress)));
-            if (!v && progress >= 1) next(g);
+            if (live !== self || !playing.size || reduced()) return;
+            const due: Group[] = [];
+            playing.forEach((g) => {
+                const clip = g.clips[g.at];
+                const v = videoOf(clip);
+                let progress: number;
+                if (v) progress = v.duration ? v.currentTime / v.duration : 0;
+                else progress = (g.shown + now - g.since) / Math.max(1, pictureTime(g, clip));
+                g.bars[g.at]?.style.setProperty(PROGRESS, String(Math.min(1, progress)));
+                if (!v && progress >= 1) due.push(g);
+            });
+            // The loop goes on first: next() asks for it too, and is
+            // answered by this one.
             frame = requestAnimationFrame(step);
+            due.forEach(next);
         });
     };
 
     const next = (g: Group): void => {
         show(g, g.at + 1);
-        if (g === playing) start(g);
+        if (playing.has(g)) start(g);
     };
 
     // A video that ends: the next clip.
@@ -393,9 +411,9 @@ export function initReels(): () => void {
         });
         groups.forEach((g, el) => {
             if (now.has(el)) return;
-            if (g === playing) {
+            if (playing.has(g)) {
                 stop(g);
-                playing = null;
+                playing.delete(g);
             }
             groups.delete(el);
         });
@@ -403,7 +421,7 @@ export function initReels(): () => void {
         if (!sights) {
             // No observer: the first plays.
             const first = groups.values().next().value as Group | undefined;
-            if (first && !playing) {
+            if (first && !playing.size) {
                 first.ratio = 1;
                 choose();
             }
@@ -419,7 +437,7 @@ export function initReels(): () => void {
         if (bar) {
             const g = groups.get(bar.closest<HTMLElement>(`[${GROUP}]`)!);
             if (!g) return;
-            const was = g === playing;
+            const was = playing.has(g);
             show(g, g.bars.indexOf(bar));
             if (was) start(g);
             return;
@@ -429,13 +447,12 @@ export function initReels(): () => void {
         if (soundButton) {
             const g = groups.get(soundButton.closest<HTMLElement>(`[${GROUP}]`)!);
             if (!g || view.open) sound = !sound;
-            // The playing card's: off. Another card's: the sound is that
-            // card's — it plays, the others are muted.
-            else if (g === playing && sound) sound = false;
+            // The card with the sound: off. Another card's: the sound is
+            // that card's — it plays, the others are muted.
+            else if (g === owner && sound) sound = false;
             else {
-                if (g !== playing) {
-                    if (playing) stop(playing);
-                    playing = g;
+                if (!playing.has(g)) {
+                    playing.add(g);
                     start(g);
                 }
                 sound = true;
@@ -754,11 +771,8 @@ export function initReels(): () => void {
 
     const openView = (g: Group, clip: number): void => {
         // Opened from a card the sound was not on: none.
-        if (g !== playing) sound = false;
-        if (playing) {
-            stop(playing);
-            playing = null;
-        }
+        if (g !== owner) sound = false;
+        stopAll();
         // Every group of its section, in the page's order.
         view.list = [...groups.values()].filter((x) => x.root === g.root).sort((a, b) => (a.el.compareDocumentPosition(b.el) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
         view.gi = view.list.indexOf(g);
@@ -981,12 +995,10 @@ export function initReels(): () => void {
     const onHidden = (): void => {
         if (view.open) {
             if (document.hidden) holdView();
-            else playView();
+            else if (!press && !sliding) letGo();
             return;
         }
-        if (!playing) return;
-        if (document.hidden) stop(playing);
-        else start(playing);
+        playing.forEach(document.hidden ? stop : start);
     };
     document.addEventListener("visibilitychange", onHidden);
 
@@ -1001,7 +1013,7 @@ export function initReels(): () => void {
         removeEventListener("resize", onResize);
         document.removeEventListener("visibilitychange", onHidden);
         if (frame) cancelAnimationFrame(frame);
-        if (playing) stop(playing);
+        stopAll();
         removeEventListener("popstate", onPop);
         if (view.open) closeView();
         bandSize.disconnect();
