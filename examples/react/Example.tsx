@@ -109,7 +109,10 @@ export function Reels({ reels, label = "Reels" }: { reels: Reel[]; label?: strin
                                     </span>
                                     <span>
                                         <b>{product.name}</b>
-                                        <small>{product.category.name}</small>
+                                        {/* Two lines' room for the name in the site's CSS (line-clamp: 2). */}
+                                        <small>
+                                            {product.category.name} · <span className="price">{product.price}</span>
+                                        </small>
                                     </span>
                                     <span className="go" aria-hidden="true">
                                         →

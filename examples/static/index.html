@@ -82,10 +82,19 @@
                 --pg-reels-show: 4;
                 --pg-reels-gap: 1rem;
             }
+            /* On a phone: one card and half the next, the strip to the
+               screen's edges — the page's side padding inside it, so the
+               first card starts in line with the text and the next runs
+               off the edge. */
             @media (max-width: 47.99rem) {
                 .reels {
                     --pg-reels-show: 1.5;
                     --pg-reels-gap: 0.75rem;
+                }
+                [data-pg-reels-strip] {
+                    margin-inline: -1.25rem;
+                    padding-inline: 1.25rem;
+                    scroll-padding-inline: 1.25rem;
                 }
             }
             .arrow {
@@ -264,10 +273,21 @@
                 aspect-ratio: 1;
                 border-radius: 0.6rem;
             }
+            /* The name: always two lines' room, so every row is as tall
+               — a longer name ends in "…". */
             [data-pg-reels-product] b {
-                display: block;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                overflow: hidden;
+                min-height: 2.5em;
                 font-size: 0.85rem;
                 line-height: 1.25;
+            }
+            [data-pg-reels-product] .price {
+                color: var(--fg);
+                font-weight: 600;
             }
             [data-pg-reels-product] small {
                 color: var(--muted);
@@ -422,9 +442,11 @@
             <header>
                 <h1>From our feed</h1>
                 <p>
-                    Each card is a group of clips, each clip with its own product. The card most in sight plays, muted
-                    — its clips one after another, the bars under it filling; press a bar for that clip. The product
-                    under the card is the playing clip's. Press the card, or its corner button, for the full view: up and down between the groups, left and right within one, the product beside it — on a phone, under it.
+                    Each card is a group of clips, each clip with its own product. Every card in sight plays, muted —
+                    its clips one after another, the bars under it filling; press a bar for that clip. The product
+                    under the card is the playing clip's. Press the card, or its corner button, for the full view: up
+                    and down between the groups — drag the video, or the arrows — left and right within one, the
+                    product beside it; on a phone, under it.
                 </p>
             </header>
 
@@ -460,7 +482,7 @@
                     <div data-pg-reels-products>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/product-enginar.webp" alt="" loading="lazy" /></span>
-                            <span><b>Marine Enginar Salatası, 425 g</b><small>Preserves</small></span>
+                            <span><b>Marine Enginar Salatası, 425 g</b><small>Preserves · <span class="price">$9</span></small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
@@ -487,7 +509,7 @@
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/product-incir.webp" alt="" loading="lazy" /></span>
-                            <span><b>Nazilli Bebek Dağ İnciri (Natürel), 5 kg</b><small>Dried fruit</small></span>
+                            <span><b>Nazilli Bebek Dağ İnciri (Natürel), 5 kg</b><small>Dried fruit · <span class="price">$64</span></small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
@@ -509,7 +531,7 @@
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/product-domates-sosu.webp" alt="" loading="lazy" /></span>
-                            <span><b>Domates Sosu (Doğranmış), 400 g × 6</b><small>Sauces</small></span>
+                            <span><b>Domates Sosu (Doğranmış), 400 g × 6</b><small>Sauces · <span class="price">$21</span></small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
@@ -555,7 +577,7 @@
                     <div data-pg-reels-products>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-canoe.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Single-origin beans, 250 g</b><small>Coffee</small></span>
+                            <span><b>Single-origin beans, 250 g</b><small>Coffee · <span class="price">$16</span></small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
@@ -576,7 +598,7 @@
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/post-ada.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Ceramic mug, sea glass</b><small>Kitchen</small></span>
+                            <span><b>Ceramic mug, sea glass</b><small>Kitchen · <span class="price">$22</span></small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
@@ -617,7 +639,7 @@
                     <div data-pg-reels-products>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-pug.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Dog bed, small</b><small>Pets</small></span>
+                            <span><b>Dog bed, small</b><small>Pets · <span class="price">$45</span></small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
@@ -661,7 +683,7 @@
                     <div data-pg-reels-products>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-field.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Canvas tote</b><small>Bags</small></span>
+                            <span><b>Canvas tote</b><small>Bags · <span class="price">$29</span></small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
@@ -682,7 +704,7 @@
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-canyon.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Waxed jacket</b><small>Clothing</small></span>
+                            <span><b>Waxed jacket</b><small>Clothing · <span class="price">$149</span></small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
@@ -722,7 +744,7 @@
                     <div data-pg-reels-products>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/post-deniz.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Glass bottle, 1 l</b><small>Kitchen</small></span>
+                            <span><b>Glass bottle, 1 l</b><small>Kitchen · <span class="price">$18</span></small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
@@ -770,7 +792,7 @@
                     <div data-pg-reels-products>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-jellyfish.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Night light, jellyfish</b><small>Kids' room</small></span>
+                            <span><b>Night light, jellyfish</b><small>Kids' room · <span class="price">$39</span></small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
@@ -791,7 +813,7 @@
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-puppy.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Puppy harness</b><small>Pets</small></span>
+                            <span><b>Puppy harness</b><small>Pets · <span class="price">$27</span></small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
@@ -812,7 +834,7 @@
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/post-selin.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Wool throw, oat</b><small>Home textiles</small></span>
+                            <span><b>Wool throw, oat</b><small>Home textiles · <span class="price">$89</span></small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
