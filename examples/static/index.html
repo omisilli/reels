@@ -59,10 +59,6 @@
                 color: var(--muted);
                 max-width: 40rem;
             }
-            .status {
-                font: 0.85rem/1.4 ui-monospace, Menlo, monospace;
-                color: var(--muted);
-            }
 
             /* Pictures in their boxes, the house way: the box has the
                height and the shape, the picture fills it. */
@@ -287,6 +283,97 @@
                 background: var(--fg);
                 color: var(--bg);
             }
+            /* ---------- The full view: the site's part ----------
+               The head and the caption as on the card, without "Tap to
+               enlarge"; the product's details in the panel. */
+            [data-pg-reels-viewer] .reel-head {
+                position: static;
+            }
+            [data-pg-reels-viewer] figcaption small {
+                display: none;
+            }
+            [data-pg-reels-viewer] [data-pg-reels-clip] figcaption {
+                bottom: 1.5rem;
+            }
+            [data-pg-reels-viewer] [data-pg-reels-panel] {
+                background: var(--surface);
+                color: var(--fg);
+            }
+            [data-pg-reels-viewer] [data-pg-reels-panel-close] {
+                background: var(--bg);
+            }
+            .detail {
+                display: grid;
+                gap: 0.75rem;
+            }
+            .detail h2 {
+                padding-right: 3rem;
+                font-size: 1.05rem;
+                line-height: 1.3;
+            }
+            .detail-big {
+                aspect-ratio: 1;
+                border-radius: 0.75rem;
+                background: var(--bg);
+            }
+            .detail-thumbs {
+                display: flex;
+                gap: 0.5rem;
+            }
+            .detail-thumbs button {
+                height: 3.5rem;
+                aspect-ratio: 1;
+                padding: 0;
+                border: 2px solid transparent;
+                border-radius: 0.5rem;
+                cursor: pointer;
+            }
+            .detail-thumbs button[data-pg-reels-current] {
+                border-color: var(--fg);
+            }
+            .detail-price {
+                font-size: 1.4rem;
+                font-weight: 700;
+            }
+            .detail-name {
+                margin-top: -0.6rem;
+                font-weight: 600;
+            }
+            .detail-blurb {
+                color: var(--muted);
+                font-size: 0.9rem;
+            }
+            .detail-go {
+                display: block;
+                margin-top: 0.25rem;
+                padding: 0.8rem 1rem;
+                border-radius: 999px;
+                background: var(--fg);
+                color: var(--bg);
+                font-weight: 600;
+                text-align: center;
+                text-decoration: none;
+            }
+            /* On a phone: the band is the card's product; the panel is
+               already the band, so the product's own border goes. */
+            @media (max-width: 47.99rem) {
+                [data-pg-reels-viewer] [data-pg-reels-panel] [data-pg-reels-product] {
+                    padding: 0;
+                    border: 0;
+                    background: none;
+                }
+                .detail h2 {
+                    display: none;
+                }
+                /* The caption above the band, clear of its Details. */
+                [data-pg-reels-viewer] [data-pg-reels-clip] figcaption {
+                    right: 7rem;
+                    bottom: calc(var(--pg-reels-band, 0px) + 1rem);
+                }
+                .detail-big {
+                    aspect-ratio: 4 / 3;
+                }
+            }
         </style>
     </head>
     <body>
@@ -296,7 +383,7 @@
                 <p>
                     Each card is a group of clips, each clip with its own product. The card most in sight plays, muted
                     — its clips one after another, the bars under it filling; press a bar for that clip. The product
-                    under the card is the playing clip's. Press the card, or its corner button, for the full view.
+                    under the card is the playing clip's. Press the card, or its corner button, for the full view: up and down between the groups, left and right within one, the product beside it — on a phone, under it.
                 </p>
             </header>
 
@@ -319,7 +406,7 @@
                                 <img src="./media/story-river.jpg" alt="" loading="lazy" />
                                 <figcaption><small>Tap to enlarge</small>Packed for the river</figcaption>
                             </figure>
-                        <header class="reel-head">
+                        <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-plusguard.jpg" alt="" /></span>
                             <span class="who"><b>plusguard</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
@@ -334,16 +421,61 @@
                             <span class="pg-imageGroup"><img src="./media/story-mist.jpg" alt="" loading="lazy" /></span>
                             <span><b>Glass pour-over carafe</b><small>$34</small></span>
                             <span class="go" aria-hidden="true">→</span>
+                            <template data-pg-reels-detail>
+                                <div class="detail">
+                                    <h2>Glass pour-over carafe</h2>
+                                    <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-mist.jpg" alt="" /></div>
+                                    <div class="detail-thumbs">
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-mist.jpg" data-pg-reels-current aria-label="Picture 1"><img src="./media/story-mist.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-river.jpg" aria-label="Picture 2"><img src="./media/story-river.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-puppy.jpg" aria-label="Picture 3"><img src="./media/story-puppy.jpg" alt="" loading="lazy" /></button>
+                                    </div>
+                                    <p class="detail-price">$34</p>
+                                    <p class="detail-name">Glass pour-over carafe</p>
+                                    <p class="detail-blurb">Mouth-blown borosilicate, 600 ml. Takes boiling water straight from the kettle.</p>
+                                    <a class="detail-go" href="https://www.google.com" target="_blank" rel="noopener">Go to product →</a>
+                                </div>
+                            </template>
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-mist.jpg" alt="" loading="lazy" /></span>
                             <span><b>Wool throw, oat</b><small>$89</small></span>
                             <span class="go" aria-hidden="true">→</span>
+                            <template data-pg-reels-detail>
+                                <div class="detail">
+                                    <h2>Wool throw, oat</h2>
+                                    <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-mist.jpg" alt="" /></div>
+                                    <div class="detail-thumbs">
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-mist.jpg" data-pg-reels-current aria-label="Picture 1"><img src="./media/story-mist.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-canoe.jpg" aria-label="Picture 2"><img src="./media/story-canoe.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/post-ada.jpg" aria-label="Picture 3"><img src="./media/post-ada.jpg" alt="" loading="lazy" /></button>
+                                    </div>
+                                    <p class="detail-price">$89</p>
+                                    <p class="detail-name">Wool throw, oat</p>
+                                    <p class="detail-blurb">Woven from undyed lambswool, 130 × 180 cm. Soft from the first wash.</p>
+                                    <a class="detail-go" href="https://www.google.com" target="_blank" rel="noopener">Go to product →</a>
+                                </div>
+                            </template>
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-river.jpg" alt="" loading="lazy" /></span>
                             <span><b>Linen shirt, relaxed</b><small>$58</small></span>
                             <span class="go" aria-hidden="true">→</span>
+                            <template data-pg-reels-detail>
+                                <div class="detail">
+                                    <h2>Linen shirt, relaxed</h2>
+                                    <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-river.jpg" alt="" /></div>
+                                    <div class="detail-thumbs">
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-river.jpg" data-pg-reels-current aria-label="Picture 1"><img src="./media/story-river.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-pug.jpg" aria-label="Picture 2"><img src="./media/story-pug.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/post-selin.jpg" aria-label="Picture 3"><img src="./media/post-selin.jpg" alt="" loading="lazy" /></button>
+                                    </div>
+                                    <p class="detail-price">$58</p>
+                                    <p class="detail-name">Linen shirt, relaxed</p>
+                                    <p class="detail-blurb">Stonewashed European linen, a loose cut that gets better with wear.</p>
+                                    <a class="detail-go" href="https://www.google.com" target="_blank" rel="noopener">Go to product →</a>
+                                </div>
+                            </template>
                         </a>
                     </div>
                 </article>
@@ -357,7 +489,7 @@
                                 <video src="./media/bubbles.mp4" poster="./media/bubbles-poster.jpg" muted playsinline preload="none"></video>
                                 <figcaption><small>Tap to enlarge</small>Our new mug, in motion</figcaption>
                             </figure>
-                        <header class="reel-head">
+                        <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-mavi-cafe.jpg" alt="" /></span>
                             <span class="who"><b>mavi.cafe</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
@@ -372,11 +504,41 @@
                             <span class="pg-imageGroup"><img src="./media/story-canoe.jpg" alt="" loading="lazy" /></span>
                             <span><b>Single-origin beans, 250 g</b><small>$16</small></span>
                             <span class="go" aria-hidden="true">→</span>
+                            <template data-pg-reels-detail>
+                                <div class="detail">
+                                    <h2>Single-origin beans, 250 g</h2>
+                                    <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-canoe.jpg" alt="" /></div>
+                                    <div class="detail-thumbs">
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-canoe.jpg" data-pg-reels-current aria-label="Picture 1"><img src="./media/story-canoe.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-jellyfish.jpg" aria-label="Picture 2"><img src="./media/story-jellyfish.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-river.jpg" aria-label="Picture 3"><img src="./media/story-river.jpg" alt="" loading="lazy" /></button>
+                                    </div>
+                                    <p class="detail-price">$16</p>
+                                    <p class="detail-name">Single-origin beans, 250 g</p>
+                                    <p class="detail-blurb">Washed Ethiopian, roasted light. Notes of bergamot and stone fruit.</p>
+                                    <a class="detail-go" href="https://www.google.com" target="_blank" rel="noopener">Go to product →</a>
+                                </div>
+                            </template>
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/post-ada.jpg" alt="" loading="lazy" /></span>
                             <span><b>Ceramic mug, sea glass</b><small>$22</small></span>
                             <span class="go" aria-hidden="true">→</span>
+                            <template data-pg-reels-detail>
+                                <div class="detail">
+                                    <h2>Ceramic mug, sea glass</h2>
+                                    <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/post-ada.jpg" alt="" /></div>
+                                    <div class="detail-thumbs">
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/post-ada.jpg" data-pg-reels-current aria-label="Picture 1"><img src="./media/post-ada.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/post-deniz.jpg" aria-label="Picture 2"><img src="./media/post-deniz.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-canoe.jpg" aria-label="Picture 3"><img src="./media/story-canoe.jpg" alt="" loading="lazy" /></button>
+                                    </div>
+                                    <p class="detail-price">$22</p>
+                                    <p class="detail-name">Ceramic mug, sea glass</p>
+                                    <p class="detail-blurb">Thrown by hand, glazed in a soft green. 300 ml, dishwasher safe.</p>
+                                    <a class="detail-go" href="https://www.google.com" target="_blank" rel="noopener">Go to product →</a>
+                                </div>
+                            </template>
                         </a>
                     </div>
                 </article>
@@ -386,7 +548,7 @@
                                 <img src="./media/story-pug.jpg" alt="" loading="lazy" />
                                 <figcaption><small>Tap to enlarge</small>Nap time, tested</figcaption>
                             </figure>
-                        <header class="reel-head">
+                        <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-kerem.jpg" alt="" /></span>
                             <span class="who"><b>kerem</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
@@ -401,6 +563,21 @@
                             <span class="pg-imageGroup"><img src="./media/story-pug.jpg" alt="" loading="lazy" /></span>
                             <span><b>Dog bed, small</b><small>$45</small></span>
                             <span class="go" aria-hidden="true">→</span>
+                            <template data-pg-reels-detail>
+                                <div class="detail">
+                                    <h2>Dog bed, small</h2>
+                                    <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-pug.jpg" alt="" /></div>
+                                    <div class="detail-thumbs">
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-pug.jpg" data-pg-reels-current aria-label="Picture 1"><img src="./media/story-pug.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-mist.jpg" aria-label="Picture 2"><img src="./media/story-mist.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-puppy.jpg" aria-label="Picture 3"><img src="./media/story-puppy.jpg" alt="" loading="lazy" /></button>
+                                    </div>
+                                    <p class="detail-price">$45</p>
+                                    <p class="detail-name">Dog bed, small</p>
+                                    <p class="detail-blurb">Washable cover, a firm foam base, for dogs up to 10 kg.</p>
+                                    <a class="detail-go" href="https://www.google.com" target="_blank" rel="noopener">Go to product →</a>
+                                </div>
+                            </template>
                         </a>
                     </div>
                 </article>
@@ -414,7 +591,7 @@
                                 <img src="./media/story-canyon.jpg" alt="" loading="lazy" />
                                 <figcaption><small>Tap to enlarge</small>Light that lasts</figcaption>
                             </figure>
-                        <header class="reel-head">
+                        <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-plusguard.jpg" alt="" /></span>
                             <span class="who"><b>plusguard</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
@@ -429,11 +606,41 @@
                             <span class="pg-imageGroup"><img src="./media/story-field.jpg" alt="" loading="lazy" /></span>
                             <span><b>Canvas tote</b><small>$29</small></span>
                             <span class="go" aria-hidden="true">→</span>
+                            <template data-pg-reels-detail>
+                                <div class="detail">
+                                    <h2>Canvas tote</h2>
+                                    <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-field.jpg" alt="" /></div>
+                                    <div class="detail-thumbs">
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-field.jpg" data-pg-reels-current aria-label="Picture 1"><img src="./media/story-field.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-canoe.jpg" aria-label="Picture 2"><img src="./media/story-canoe.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/post-ada.jpg" aria-label="Picture 3"><img src="./media/post-ada.jpg" alt="" loading="lazy" /></button>
+                                    </div>
+                                    <p class="detail-price">$29</p>
+                                    <p class="detail-name">Canvas tote</p>
+                                    <p class="detail-blurb">Heavy cotton canvas with a leather-reinforced strap and an inner pocket.</p>
+                                    <a class="detail-go" href="https://www.google.com" target="_blank" rel="noopener">Go to product →</a>
+                                </div>
+                            </template>
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-canyon.jpg" alt="" loading="lazy" /></span>
                             <span><b>Waxed jacket</b><small>$149</small></span>
                             <span class="go" aria-hidden="true">→</span>
+                            <template data-pg-reels-detail>
+                                <div class="detail">
+                                    <h2>Waxed jacket</h2>
+                                    <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-canyon.jpg" alt="" /></div>
+                                    <div class="detail-thumbs">
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-canyon.jpg" data-pg-reels-current aria-label="Picture 1"><img src="./media/story-canyon.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-pug.jpg" aria-label="Picture 2"><img src="./media/story-pug.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/post-selin.jpg" aria-label="Picture 3"><img src="./media/post-selin.jpg" alt="" loading="lazy" /></button>
+                                    </div>
+                                    <p class="detail-price">$149</p>
+                                    <p class="detail-name">Waxed jacket</p>
+                                    <p class="detail-blurb">Waxed cotton, tartan lining, four pockets. Rain runs off it.</p>
+                                    <a class="detail-go" href="https://www.google.com" target="_blank" rel="noopener">Go to product →</a>
+                                </div>
+                            </template>
                         </a>
                     </div>
                 </article>
@@ -443,7 +650,7 @@
                                 <video src="./media/bubbles.mp4" poster="./media/bubbles-poster.jpg" muted playsinline preload="none"></video>
                                 <figcaption><small>Tap to enlarge</small>Sparkling, from the tap</figcaption>
                             </figure>
-                        <header class="reel-head">
+                        <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-mavi-cafe.jpg" alt="" /></span>
                             <span class="who"><b>mavi.cafe</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
@@ -458,6 +665,21 @@
                             <span class="pg-imageGroup"><img src="./media/post-deniz.jpg" alt="" loading="lazy" /></span>
                             <span><b>Glass bottle, 1 l</b><small>$18</small></span>
                             <span class="go" aria-hidden="true">→</span>
+                            <template data-pg-reels-detail>
+                                <div class="detail">
+                                    <h2>Glass bottle, 1 l</h2>
+                                    <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/post-deniz.jpg" alt="" /></div>
+                                    <div class="detail-thumbs">
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/post-deniz.jpg" data-pg-reels-current aria-label="Picture 1"><img src="./media/post-deniz.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-puppy.jpg" aria-label="Picture 2"><img src="./media/story-puppy.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-river.jpg" aria-label="Picture 3"><img src="./media/story-river.jpg" alt="" loading="lazy" /></button>
+                                    </div>
+                                    <p class="detail-price">$18</p>
+                                    <p class="detail-name">Glass bottle, 1 l</p>
+                                    <p class="detail-blurb">Thick soda-lime glass with a stainless cap. Keeps water tasting of water.</p>
+                                    <a class="detail-go" href="https://www.google.com" target="_blank" rel="noopener">Go to product →</a>
+                                </div>
+                            </template>
                         </a>
                     </div>
                 </article>
@@ -475,7 +697,7 @@
                                 <img src="./media/story-mist.jpg" alt="" loading="lazy" />
                                 <figcaption><small>Tap to enlarge</small>Home again</figcaption>
                             </figure>
-                        <header class="reel-head">
+                        <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-kerem.jpg" alt="" /></span>
                             <span class="who"><b>kerem</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
@@ -490,16 +712,61 @@
                             <span class="pg-imageGroup"><img src="./media/story-jellyfish.jpg" alt="" loading="lazy" /></span>
                             <span><b>Night light, jellyfish</b><small>$39</small></span>
                             <span class="go" aria-hidden="true">→</span>
+                            <template data-pg-reels-detail>
+                                <div class="detail">
+                                    <h2>Night light, jellyfish</h2>
+                                    <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-jellyfish.jpg" alt="" /></div>
+                                    <div class="detail-thumbs">
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-jellyfish.jpg" data-pg-reels-current aria-label="Picture 1"><img src="./media/story-jellyfish.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/post-deniz.jpg" aria-label="Picture 2"><img src="./media/post-deniz.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-canoe.jpg" aria-label="Picture 3"><img src="./media/story-canoe.jpg" alt="" loading="lazy" /></button>
+                                    </div>
+                                    <p class="detail-price">$39</p>
+                                    <p class="detail-name">Night light, jellyfish</p>
+                                    <p class="detail-blurb">A slow colour drift for a child's room, USB-C, twelve hours a charge.</p>
+                                    <a class="detail-go" href="https://www.google.com" target="_blank" rel="noopener">Go to product →</a>
+                                </div>
+                            </template>
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-puppy.jpg" alt="" loading="lazy" /></span>
                             <span><b>Puppy harness</b><small>$27</small></span>
                             <span class="go" aria-hidden="true">→</span>
+                            <template data-pg-reels-detail>
+                                <div class="detail">
+                                    <h2>Puppy harness</h2>
+                                    <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-puppy.jpg" alt="" /></div>
+                                    <div class="detail-thumbs">
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-puppy.jpg" data-pg-reels-current aria-label="Picture 1"><img src="./media/story-puppy.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-mist.jpg" aria-label="Picture 2"><img src="./media/story-mist.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-pug.jpg" aria-label="Picture 3"><img src="./media/story-pug.jpg" alt="" loading="lazy" /></button>
+                                    </div>
+                                    <p class="detail-price">$27</p>
+                                    <p class="detail-name">Puppy harness</p>
+                                    <p class="detail-blurb">Padded mesh, two adjustment points, a ring on the back for the lead.</p>
+                                    <a class="detail-go" href="https://www.google.com" target="_blank" rel="noopener">Go to product →</a>
+                                </div>
+                            </template>
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/post-selin.jpg" alt="" loading="lazy" /></span>
                             <span><b>Wool throw, oat</b><small>$89</small></span>
                             <span class="go" aria-hidden="true">→</span>
+                            <template data-pg-reels-detail>
+                                <div class="detail">
+                                    <h2>Wool throw, oat</h2>
+                                    <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/post-selin.jpg" alt="" /></div>
+                                    <div class="detail-thumbs">
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/post-selin.jpg" data-pg-reels-current aria-label="Picture 1"><img src="./media/post-selin.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-field.jpg" aria-label="Picture 2"><img src="./media/story-field.jpg" alt="" loading="lazy" /></button>
+                                        <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/story-jellyfish.jpg" aria-label="Picture 3"><img src="./media/story-jellyfish.jpg" alt="" loading="lazy" /></button>
+                                    </div>
+                                    <p class="detail-price">$89</p>
+                                    <p class="detail-name">Wool throw, oat</p>
+                                    <p class="detail-blurb">Woven from undyed lambswool, 130 × 180 cm. Soft from the first wash.</p>
+                                    <a class="detail-go" href="https://www.google.com" target="_blank" rel="noopener">Go to product →</a>
+                                </div>
+                            </template>
                         </a>
                     </div>
                 </article>
@@ -509,20 +776,12 @@
                 </button>
             </section>
 
-            <p class="status" id="status">Press a card: the full view comes in the next step — here, what it would open.</p>
         </main>
 
         <script type="module">
             import { initReels } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.0.0/dist/index.js";
 
             initReels();
-
-            // The full view comes next; for now, what it would open.
-            const status = document.getElementById("status");
-            document.addEventListener("pg-reels:open", (event) => {
-                const groups = [...document.querySelectorAll("[data-pg-reels-group]")];
-                status.textContent = `pg-reels:open — group ${groups.indexOf(event.detail.group) + 1}, clip ${event.detail.clip + 1}`;
-            });
         </script>
     </body>
 </html>
