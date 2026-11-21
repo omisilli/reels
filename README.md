@@ -35,7 +35,7 @@ initReels(); // every reels section on the page, those rendered later too
             <div data-pg-reels-card>
                 <figure data-pg-reels-clip>
                     <video src="a.mp4" poster="a.jpg" muted playsinline preload="none"></video>
-                    <figcaption><small>Tap to enlarge</small>Blown by hand</figcaption>
+                    <figcaption><small>Kitchen</small>Blown by hand</figcaption>
                 </figure>
                 <figure data-pg-reels-clip data-pg-reels-duration="5s">
                     <img src="b.jpg" alt="" />
@@ -123,7 +123,7 @@ in it, copies of the site's markup: the clip, the group's
   (`--pg-reels-peek`); pressed, it is the next. The product panel changes
   once the slide has landed. `data-pg-reels-sliding` on the view while
   it moves.
-- **The clip's own links** — a product's tag on the video — are pressed as
+- **The clip's own links** — a category's tag on the video — are pressed as
   links; the rest of the clip passes presses to the taps under it.
 - **Held down** — a finger, the mouse — it stands still, the controls
   out of the way; let go and it goes on. Its play / pause button, Space.
@@ -233,8 +233,8 @@ pug 8s, the canoe 3s; `?duration=2s` for the rest), each clip with a product and
 details: its category (a link), its name in the panel's head, a big
 picture at 4:3, small ones — nine for the first product, a row that
 scrolls — the price, a line about it, a link. Under the card the product
-shows its category; in the full view each clip has its product's tag on
-the video. The first group is three clips from a food shop with their
+shows its category, and so does the line over each clip's caption; in
+the full view the category is a tag on the video. The first group is three clips from a food shop with their
 products; the product photos beside them are from
 [Unsplash](https://unsplash.com/license) (free to use). The other
 pictures and the bubbles video are from stories' example.

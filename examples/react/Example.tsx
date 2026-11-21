@@ -144,12 +144,13 @@ function ClipView({ clip }: { clip: Clip }) {
                 <img src={clip.image} alt="" loading="lazy" />
             )}
             <figcaption>
-                {/* The product's tag on the video — shown in the full view only (the site's CSS). */}
-                <a className="tag" href={product.href}>
+                {/* The product's category: a tag on the video in the full view, a
+                    line over the caption on the card (the site's CSS). */}
+                <a className="tag" href={product.category.href}>
                     <Icon d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" />
-                    {product.name}
+                    {product.category.name}
                 </a>
-                <small>Tap to enlarge</small>
+                <small>{product.category.name}</small>
                 {clip.caption}
             </figcaption>
             <div data-pg-reels-detail hidden>
