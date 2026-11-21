@@ -59,8 +59,9 @@
  * <template data-pg-reels-detail>, the site's markup: a title (its
  * data-pg-reels-title goes to the panel's head, beside the close), a big
  * picture (data-pg-reels-big), small ones (data-pg-reels-thumb, a press
- * shows it big), the price, a link — on a phone under the video, the
- * product as on the card, and its details opened by a button.
+ * shows it big), the price, a link (its data-pg-reels-foot is pinned to
+ * the panel's foot, the rest scrolling above it) — on a phone under the
+ * video, the product as on the card, and its details opened by a button.
  *
  * Marks written here: data-pg-reels-current on the playing clip and its
  * product, on each group's own clip and product too; data-pg-reels-playing
@@ -108,6 +109,7 @@ const HELD = "data-pg-reels-held";
 const DETAILS = "data-pg-reels-details";
 const NO_PRODUCT = "data-pg-reels-no-product";
 const TITLE = "data-pg-reels-title";
+const FOOT = "data-pg-reels-foot";
 const SLIDING = "data-pg-reels-sliding";
 /* A finger this far up or down, more than across: the video follows it. */
 const DRAG_PX = 10;
@@ -512,6 +514,7 @@ export function initReels() {
                     <button type="button" data-pg-reels-panel-toggle aria-expanded="false">Details ${svg(ICONS.chevron)}</button>
                 </div>
                 <div data-pg-reels-panel-detail></div>
+                <div data-pg-reels-panel-foot></div>
             </aside>
         </div>`;
     const part = (name) => dialog.querySelector(`[data-pg-reels-${name}]`);
@@ -608,6 +611,10 @@ export function initReels() {
         holder.append(...(from ? [...from.childNodes].map((x) => x.cloneNode(true)) : []));
         const title = holder.querySelector(`[${TITLE}]`);
         part("panel-title").replaceChildren(...(title ? [title] : []));
+        // Its data-pg-reels-foot — the link to the product — to the
+        // panel's foot, always in sight under what scrolls.
+        const foot = holder.querySelector(`[${FOOT}]`);
+        part("panel-foot").replaceChildren(...(foot ? [foot] : []));
         part("panel-detail").replaceChildren(...holder.childNodes);
         part("panel-detail").scrollTop = 0;
         dialog.toggleAttribute(NO_PRODUCT, !product);

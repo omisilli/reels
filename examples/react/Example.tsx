@@ -43,6 +43,7 @@ export function ReelsInit() {
  */
 type Product = {
     name: string;
+    size?: string; // "425 g" — under the price, not in the panel's head
     category: { name: string; href: string };
     price: string;
     href: string;
@@ -177,9 +178,13 @@ function ClipView({ clip }: { clip: Clip }) {
                         ))}
                     </div>
                     <p className="detail-price">{product.price}</p>
-                    <p className="detail-name">{product.name}</p>
+                    <p className="detail-name">
+                        {product.name}
+                        {product.size && `, ${product.size}`}
+                    </p>
                     {product.about && <p className="detail-blurb">{product.about}</p>}
-                    <a className="detail-go" href={product.href}>
+                    {/* Pinned to the panel's foot, under what scrolls. */}
+                    <a className="detail-go" data-pg-reels-foot href={product.href}>
                         Go to product →
                     </a>
                 </div>

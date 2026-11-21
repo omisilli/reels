@@ -55,7 +55,7 @@ initReels(); // every reels section on the page, those rendered later too
                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="carafe-1.jpg"><img src="carafe-1.jpg" alt="" /></button>
                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="carafe-2.jpg"><img src="carafe-2.jpg" alt="" /></button>
                         <p>$34</p>
-                        <a href="/carafe">Go to product</a>
+                        <a href="/carafe" data-pg-reels-foot>Go to product</a>
                     </template>
                 </a>
                 <a data-pg-reels-product href="/throw">…</a>
@@ -128,9 +128,12 @@ in it, copies of the site's markup: the clip, the group's
 - **Held down** — a finger, the mouse — it stands still, the controls
   out of the way; let go and it goes on. Its play / pause button, Space.
 - **The product:** on a computer, a panel beside the video, from its top
-  to the window's foot: a head — the template's `data-pg-reels-title`, moved there, and the
-  close; a long name takes a second line, the close stays at the top —
-  a line under it, and the rest of the template under that, scrolling.
+  to the window's foot, 9:16 like it: a head — the template's
+  `data-pg-reels-title`, moved there, and the close; a long name takes a
+  second line, the close stays at the top — a line under it; at the
+  bottom a foot — the template's `data-pg-reels-foot`, the link to the
+  product, always in sight; and between them the rest of the template,
+  scrolling.
   The template is the product's `data-pg-reels-detail`, the site's markup: a
   `data-pg-reels-thumb` pressed puts its picture (the attribute's value, or
   its own `<img>`) into `data-pg-reels-big`, and is
@@ -174,7 +177,8 @@ and videos: the box has the shape, what is inside is 100% of it.
 | `data-pg-reels-bars` | under the card, empty | Its bars are written here, one a clip |
 | `data-pg-reels-product` | one a clip | The clip's product |
 | `data-pg-reels-detail` | a `<template>` in a product — or any element, hidden, in the product or the clip | Its details, for the full view |
-| `data-pg-reels-title` | in the template | The product's name: shown in the panel's head, beside the close |
+| `data-pg-reels-title` | in the template | The product's name: shown in the panel's head, beside the close — short; the size or weight is better on a line below |
+| `data-pg-reels-foot` | in the template | The link to the product: pinned to the panel's foot; on a phone, under the opened details |
 | `data-pg-reels-big`, `-thumb` | in the template | The big picture; the small ones that switch it — pressed, a small one is scrolled into sight |
 | `data-pg-reels-sound` | a button | Sound on and off, for the page |
 | `data-pg-reels-open` | a button | The full view |

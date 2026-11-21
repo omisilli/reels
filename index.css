@@ -436,6 +436,16 @@ dialog[data-pg-reels-viewer] [data-pg-reels-panel-close] svg {
     overflow: auto;
     overscroll-behavior: contain;
 }
+/* The foot: the template's data-pg-reels-foot — the link to the product
+   — always in sight under what scrolls, a line above it. */
+[data-pg-reels-panel-foot] {
+    flex: none;
+    padding: 1rem 1.25rem;
+    border-top: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+}
+[data-pg-reels-panel-foot]:empty {
+    display: none;
+}
 [data-pg-reels-panel-band] {
     display: none;
 }
@@ -532,7 +542,16 @@ dialog[data-pg-reels-viewer] [data-pg-reels-panel-close] svg {
     }
     [data-pg-reels-details] [data-pg-reels-panel-detail] {
         display: block;
-        max-height: 60dvh;
+        max-height: 55dvh;
         margin-top: 0.75rem;
+    }
+    /* The foot: with the details only, under them. */
+    [data-pg-reels-panel-foot] {
+        display: none;
+        padding: 0.75rem 0 0;
+        border: 0;
+    }
+    [data-pg-reels-details] [data-pg-reels-panel-foot]:not(:empty) {
+        display: block;
     }
 }
