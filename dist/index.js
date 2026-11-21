@@ -871,7 +871,7 @@ export function initReels() {
     // A video that ends in the view: the next clip.
     media.addEventListener("ended", () => nextClip(true), true);
     /* A press on the video. Held: still, the controls out of the way.
-       Dragged up or down: the video follows the finger — the next group
+       Dragged up or down — at once, or after holding it: the video follows the finger — the next group
        coming in under it, or the one before above it — and let go, goes
        on to it if pulled far enough or flicked, or back if not. A press
        that was either is no tap. */
@@ -903,9 +903,11 @@ export function initReels() {
         if (!press.drag) {
             if (Math.hypot(dx, dy) > 10)
                 clearTimeout(press.timer);
-            if (dialog.hasAttribute(HELD) || Math.abs(dy) < DRAG_PX || Math.abs(dy) < Math.abs(dx))
+            if (Math.abs(dy) < DRAG_PX || Math.abs(dy) < Math.abs(dx))
                 return;
+            // Held first, then dragged: a drag all the same.
             press.drag = true;
+            dialog.removeAttribute(HELD);
             screen.setPointerCapture(event.pointerId);
             holdView();
             dialog.setAttribute(SLIDING, "");

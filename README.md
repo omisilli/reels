@@ -114,7 +114,7 @@ in it, copies of the site's markup: the clip, the group's
   its end, a picture for its time; after the group's last clip, the next
   group — after the last group, the first.
 - **Between groups:** a finger — or the mouse — dragging the video up or
-  down: it follows, the next group coming in under it (the one before
+  down, at once or after holding it: it follows, the next group coming in under it (the one before
   above it), and let go it goes on if pulled a fifth of its height or
   flicked, or back if not; past the first or the last it gives a little
   and comes back. The ↑ ↓ buttons beside the video (round, their name
