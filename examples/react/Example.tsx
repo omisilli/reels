@@ -43,6 +43,7 @@ export function ReelsInit() {
  */
 type Product = {
     name: string;
+    category: { name: string; href: string };
     price: string;
     href: string;
     image: string;
@@ -107,7 +108,7 @@ export function Reels({ reels, label = "Reels" }: { reels: Reel[]; label?: strin
                                     </span>
                                     <span>
                                         <b>{product.name}</b>
-                                        <small>{product.price}</small>
+                                        <small>{product.category.name}</small>
                                     </span>
                                     <span className="go" aria-hidden="true">
                                         →
@@ -143,11 +144,19 @@ function ClipView({ clip }: { clip: Clip }) {
                 <img src={clip.image} alt="" loading="lazy" />
             )}
             <figcaption>
+                {/* The product's tag on the video — shown in the full view only (the site's CSS). */}
+                <a className="tag" href={product.href}>
+                    <Icon d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" />
+                    {product.name}
+                </a>
                 <small>Tap to enlarge</small>
                 {clip.caption}
             </figcaption>
             <div data-pg-reels-detail hidden>
                 <div className="detail">
+                    <a className="detail-cat" href={product.category.href}>
+                        {product.category.name}
+                    </a>
                     <h2>{product.name}</h2>
                     <div className="pg-imageGroup detail-big" data-pg-reels-big>
                         <img src={product.images[0]} alt="" loading="lazy" />
@@ -198,6 +207,7 @@ export const reels: Reel[] = [
                 caption: "Blown by hand, one at a time",
                 product: {
                     name: "Glass pour-over carafe",
+                    category: { name: "Kitchen", href: "/kitchen" },
                     price: "$34",
                     href: "/products/carafe",
                     image: "/media/story-mist.jpg",
@@ -211,6 +221,7 @@ export const reels: Reel[] = [
                 caption: "Packed for the river",
                 product: {
                     name: "Linen shirt, relaxed",
+                    category: { name: "Clothing", href: "/clothing" },
                     price: "$58",
                     href: "/products/linen-shirt",
                     image: "/media/story-river.jpg",

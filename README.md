@@ -83,11 +83,15 @@ below).
   one after another, round and round, as stories do: a video to its end, a
   picture for `data-pg-reels-duration` (or `--pg-reels-duration`, 5s). The
   bars under the card fill as each plays; a bar pressed is that clip at
-  once. Out of sight, nothing plays; the others wait on their posters.
+  once — one bar even for a card of one clip. Out of sight, nothing plays;
+  the others wait on their posters.
 - **The product is the clip's.** The products under a card are one a clip;
   the playing one's shows (`data-pg-reels-current`).
-- **Sound is the page's.** A sound button pressed turns sound on for every
-  card; the card it is on plays at once.
+- **Sound is one card's.** A sound button pressed gives the sound to its
+  card — it plays at once, every other card is muted; pressed again, off.
+  Another card coming into sight takes the sound away. The full view takes
+  it over while open, and gives it back on closing if the card last seen
+  there is the one that plays.
 - **The strip scrolls sideways** — a finger, a wheel, its arrows, one card
   a press. It never moves by itself. `data-pg-reels-start` / `-end` on the
   section while it stands at either end, for the arrows.
@@ -108,10 +112,13 @@ in it, copies of the site's markup: the clip, the group's
   its end, a picture for its time; after the group's last clip, the next
   group — after the last group, the first.
 - **Between groups:** the ↑ ↓ buttons beside the video, a wheel or a
-  trackpad, ↑ and ↓ — on a phone, a swipe up or down.
+  trackpad, ↑ and ↓ — on a phone, a swipe up or down. On a computer the
+  next group's top shows under the video (`--pg-reels-peek`), pressed it
+  is the next; going up or down, both slide by a video.
+- **The clip's own links** — a product's tag on the video — are pressed as
+  links; the rest of the clip passes presses to the taps under it.
 - **Held down** — a finger, the mouse — it stands still, the controls
   out of the way; let go and it goes on. Its play / pause button, Space.
-  Sound is the page's: one press for the strip and the view.
 - **The product:** on a computer, a panel beside the video — the
   product's `data-pg-reels-detail` template, the site's markup: a
   `data-pg-reels-thumb` pressed puts its picture (the attribute's value, or
@@ -136,6 +143,7 @@ in it, copies of the site's markup: the clip, the group's
 | `--pg-reels-ratio` | `9 / 16` | The card's shape |
 | `--pg-reels-duration` | `5s` | A picture's time |
 | `--pg-reels-panel` | `22rem` | The full view: the product panel's width on a computer |
+| `--pg-reels-peek` | `4rem` | The full view: how much of the next group shows under the video on a computer |
 | `--pg-reels-band` | — | Written by the script on the view: the band's height at a phone's foot (0 on a computer) — to keep a caption above it |
 
 The card holds the shape, the clip fills it — the house way for pictures
@@ -209,5 +217,6 @@ shows them. See [`examples/react/Example.tsx`](examples/react/Example.tsx)
 
 [`examples/static/index.html`](examples/static/index.html) — six groups of
 one to three clips, videos and pictures, each clip with a product and its
-details: a big picture, three small ones, the price, a line about it, a
-link. The pictures are from stories' example; the video is stories' too.
+details: its category (a link), a big picture at 4:3, three small ones,
+the price, a line about it, a link. Under the card the product shows its
+category; in the full view each clip has its product's tag on the video. The pictures are from stories' example; the video is stories' too.

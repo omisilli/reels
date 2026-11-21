@@ -152,7 +152,7 @@
                 right: 1rem;
                 bottom: 1rem;
                 display: grid;
-                gap: 0.2rem;
+                gap: 0.45rem;
                 font-weight: 700;
                 line-height: 1.25;
                 text-shadow: 0 1px 4px rgb(0 0 0 / 0.4);
@@ -306,13 +306,55 @@
                 display: grid;
                 gap: 0.75rem;
             }
+            .detail-cat {
+                justify-self: start;
+                margin-bottom: -0.5rem;
+                color: var(--muted);
+                font-size: 0.8rem;
+                font-weight: 600;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+                text-decoration: none;
+            }
+            .detail-cat:hover {
+                color: var(--fg);
+                text-decoration: underline;
+            }
+            /* The product's tag on the video — in the full view only; on
+               the card the product is under it. */
+            .tag {
+                display: none;
+            }
+            [data-pg-reels-viewer] .tag {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.375rem;
+                justify-self: start;
+                padding: 0.35rem 0.75rem 0.35rem 0.55rem;
+                border-radius: 999px;
+                background: rgb(255 255 255 / 0.92);
+                color: #111;
+                font-size: 0.8rem;
+                font-weight: 600;
+                text-decoration: none;
+                text-shadow: none;
+            }
+            .tag svg {
+                width: 1rem;
+                height: 1rem;
+                fill: none;
+                stroke: currentColor;
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+            }
             .detail h2 {
                 padding-right: 3rem;
                 font-size: 1.05rem;
                 line-height: 1.3;
             }
             .detail-big {
-                aspect-ratio: 1;
+                aspect-ratio: 4 / 3;
                 border-radius: 0.75rem;
                 background: var(--bg);
             }
@@ -370,9 +412,6 @@
                     right: 7rem;
                     bottom: calc(var(--pg-reels-band, 0px) + 1rem);
                 }
-                .detail-big {
-                    aspect-ratio: 4 / 3;
-                }
             }
         </style>
     </head>
@@ -396,15 +435,15 @@
                     <div data-pg-reels-card>
                             <figure data-pg-reels-clip>
                                 <video src="./media/bubbles.mp4" poster="./media/bubbles-poster.jpg" muted playsinline preload="none"></video>
-                                <figcaption><small>Tap to enlarge</small>Blown by hand, one at a time</figcaption>
+                                <figcaption><a class="tag" href="https://www.google.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" /></svg>Glass pour-over carafe</a><small>Tap to enlarge</small>Blown by hand, one at a time</figcaption>
                             </figure>
                             <figure data-pg-reels-clip>
                                 <img src="./media/story-mist.jpg" alt="" loading="lazy" />
-                                <figcaption><small>Tap to enlarge</small>Morning in the studio</figcaption>
+                                <figcaption><a class="tag" href="https://www.google.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" /></svg>Wool throw, oat</a><small>Tap to enlarge</small>Morning in the studio</figcaption>
                             </figure>
                             <figure data-pg-reels-clip>
                                 <img src="./media/story-river.jpg" alt="" loading="lazy" />
-                                <figcaption><small>Tap to enlarge</small>Packed for the river</figcaption>
+                                <figcaption><a class="tag" href="https://www.google.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" /></svg>Linen shirt, relaxed</a><small>Tap to enlarge</small>Packed for the river</figcaption>
                             </figure>
                         <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-plusguard.jpg" alt="" /></span>
@@ -419,10 +458,11 @@
                     <div data-pg-reels-products>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-mist.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Glass pour-over carafe</b><small>$34</small></span>
+                            <span><b>Glass pour-over carafe</b><small>Kitchen</small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
+                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Kitchen</a>
                                     <h2>Glass pour-over carafe</h2>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-mist.jpg" alt="" /></div>
                                     <div class="detail-thumbs">
@@ -439,10 +479,11 @@
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-mist.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Wool throw, oat</b><small>$89</small></span>
+                            <span><b>Wool throw, oat</b><small>Home textiles</small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
+                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Home textiles</a>
                                     <h2>Wool throw, oat</h2>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-mist.jpg" alt="" /></div>
                                     <div class="detail-thumbs">
@@ -459,10 +500,11 @@
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-river.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Linen shirt, relaxed</b><small>$58</small></span>
+                            <span><b>Linen shirt, relaxed</b><small>Clothing</small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
+                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Clothing</a>
                                     <h2>Linen shirt, relaxed</h2>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-river.jpg" alt="" /></div>
                                     <div class="detail-thumbs">
@@ -483,11 +525,11 @@
                     <div data-pg-reels-card>
                             <figure data-pg-reels-clip>
                                 <img src="./media/story-canoe.jpg" alt="" loading="lazy" />
-                                <figcaption><small>Tap to enlarge</small>Coffee on the water</figcaption>
+                                <figcaption><a class="tag" href="https://www.google.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" /></svg>Single-origin beans, 250 g</a><small>Tap to enlarge</small>Coffee on the water</figcaption>
                             </figure>
                             <figure data-pg-reels-clip>
                                 <video src="./media/bubbles.mp4" poster="./media/bubbles-poster.jpg" muted playsinline preload="none"></video>
-                                <figcaption><small>Tap to enlarge</small>Our new mug, in motion</figcaption>
+                                <figcaption><a class="tag" href="https://www.google.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" /></svg>Ceramic mug, sea glass</a><small>Tap to enlarge</small>Our new mug, in motion</figcaption>
                             </figure>
                         <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-mavi-cafe.jpg" alt="" /></span>
@@ -502,10 +544,11 @@
                     <div data-pg-reels-products>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-canoe.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Single-origin beans, 250 g</b><small>$16</small></span>
+                            <span><b>Single-origin beans, 250 g</b><small>Coffee</small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
+                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Coffee</a>
                                     <h2>Single-origin beans, 250 g</h2>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-canoe.jpg" alt="" /></div>
                                     <div class="detail-thumbs">
@@ -522,10 +565,11 @@
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/post-ada.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Ceramic mug, sea glass</b><small>$22</small></span>
+                            <span><b>Ceramic mug, sea glass</b><small>Kitchen</small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
+                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Kitchen</a>
                                     <h2>Ceramic mug, sea glass</h2>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/post-ada.jpg" alt="" /></div>
                                     <div class="detail-thumbs">
@@ -546,7 +590,7 @@
                     <div data-pg-reels-card>
                             <figure data-pg-reels-clip>
                                 <img src="./media/story-pug.jpg" alt="" loading="lazy" />
-                                <figcaption><small>Tap to enlarge</small>Nap time, tested</figcaption>
+                                <figcaption><a class="tag" href="https://www.google.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" /></svg>Dog bed, small</a><small>Tap to enlarge</small>Nap time, tested</figcaption>
                             </figure>
                         <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-kerem.jpg" alt="" /></span>
@@ -561,10 +605,11 @@
                     <div data-pg-reels-products>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-pug.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Dog bed, small</b><small>$45</small></span>
+                            <span><b>Dog bed, small</b><small>Pets</small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
+                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Pets</a>
                                     <h2>Dog bed, small</h2>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-pug.jpg" alt="" /></div>
                                     <div class="detail-thumbs">
@@ -585,11 +630,11 @@
                     <div data-pg-reels-card>
                             <figure data-pg-reels-clip>
                                 <img src="./media/story-field.jpg" alt="" loading="lazy" />
-                                <figcaption><small>Tap to enlarge</small>Out in the field</figcaption>
+                                <figcaption><a class="tag" href="https://www.google.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" /></svg>Canvas tote</a><small>Tap to enlarge</small>Out in the field</figcaption>
                             </figure>
                             <figure data-pg-reels-clip>
                                 <img src="./media/story-canyon.jpg" alt="" loading="lazy" />
-                                <figcaption><small>Tap to enlarge</small>Light that lasts</figcaption>
+                                <figcaption><a class="tag" href="https://www.google.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" /></svg>Waxed jacket</a><small>Tap to enlarge</small>Light that lasts</figcaption>
                             </figure>
                         <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-plusguard.jpg" alt="" /></span>
@@ -604,10 +649,11 @@
                     <div data-pg-reels-products>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-field.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Canvas tote</b><small>$29</small></span>
+                            <span><b>Canvas tote</b><small>Bags</small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
+                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Bags</a>
                                     <h2>Canvas tote</h2>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-field.jpg" alt="" /></div>
                                     <div class="detail-thumbs">
@@ -624,10 +670,11 @@
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-canyon.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Waxed jacket</b><small>$149</small></span>
+                            <span><b>Waxed jacket</b><small>Clothing</small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
+                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Clothing</a>
                                     <h2>Waxed jacket</h2>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-canyon.jpg" alt="" /></div>
                                     <div class="detail-thumbs">
@@ -648,7 +695,7 @@
                     <div data-pg-reels-card>
                             <figure data-pg-reels-clip>
                                 <video src="./media/bubbles.mp4" poster="./media/bubbles-poster.jpg" muted playsinline preload="none"></video>
-                                <figcaption><small>Tap to enlarge</small>Sparkling, from the tap</figcaption>
+                                <figcaption><a class="tag" href="https://www.google.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" /></svg>Glass bottle, 1 l</a><small>Tap to enlarge</small>Sparkling, from the tap</figcaption>
                             </figure>
                         <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-mavi-cafe.jpg" alt="" /></span>
@@ -663,10 +710,11 @@
                     <div data-pg-reels-products>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/post-deniz.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Glass bottle, 1 l</b><small>$18</small></span>
+                            <span><b>Glass bottle, 1 l</b><small>Kitchen</small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
+                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Kitchen</a>
                                     <h2>Glass bottle, 1 l</h2>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/post-deniz.jpg" alt="" /></div>
                                     <div class="detail-thumbs">
@@ -687,15 +735,15 @@
                     <div data-pg-reels-card>
                             <figure data-pg-reels-clip>
                                 <img src="./media/story-jellyfish.jpg" alt="" loading="lazy" />
-                                <figcaption><small>Tap to enlarge</small>Blue hour</figcaption>
+                                <figcaption><a class="tag" href="https://www.google.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" /></svg>Night light, jellyfish</a><small>Tap to enlarge</small>Blue hour</figcaption>
                             </figure>
                             <figure data-pg-reels-clip>
                                 <img src="./media/story-puppy.jpg" alt="" loading="lazy" />
-                                <figcaption><small>Tap to enlarge</small>First walk</figcaption>
+                                <figcaption><a class="tag" href="https://www.google.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" /></svg>Puppy harness</a><small>Tap to enlarge</small>First walk</figcaption>
                             </figure>
                             <figure data-pg-reels-clip>
                                 <img src="./media/story-mist.jpg" alt="" loading="lazy" />
-                                <figcaption><small>Tap to enlarge</small>Home again</figcaption>
+                                <figcaption><a class="tag" href="https://www.google.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" /></svg>Wool throw, oat</a><small>Tap to enlarge</small>Home again</figcaption>
                             </figure>
                         <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-kerem.jpg" alt="" /></span>
@@ -710,10 +758,11 @@
                     <div data-pg-reels-products>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-jellyfish.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Night light, jellyfish</b><small>$39</small></span>
+                            <span><b>Night light, jellyfish</b><small>Kids' room</small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
+                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Kids' room</a>
                                     <h2>Night light, jellyfish</h2>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-jellyfish.jpg" alt="" /></div>
                                     <div class="detail-thumbs">
@@ -730,10 +779,11 @@
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/story-puppy.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Puppy harness</b><small>$27</small></span>
+                            <span><b>Puppy harness</b><small>Pets</small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
+                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Pets</a>
                                     <h2>Puppy harness</h2>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/story-puppy.jpg" alt="" /></div>
                                     <div class="detail-thumbs">
@@ -750,10 +800,11 @@
                         </a>
                         <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
                             <span class="pg-imageGroup"><img src="./media/post-selin.jpg" alt="" loading="lazy" /></span>
-                            <span><b>Wool throw, oat</b><small>$89</small></span>
+                            <span><b>Wool throw, oat</b><small>Home textiles</small></span>
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
+                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Home textiles</a>
                                     <h2>Wool throw, oat</h2>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/post-selin.jpg" alt="" /></div>
                                     <div class="detail-thumbs">
