@@ -66,6 +66,7 @@ type Clip = ({ video: string; poster: string } | { image: string; duration?: num
 };
 type Reel = {
     id: string;
+    views: { short: string; full: string }; // "12.4K", "12,400" — your own count
     account: { name: string; avatar: string; profile: string };
     clips: Clip[];
 };
@@ -99,13 +100,18 @@ export function Reels({ reels, label = "Reels" }: { reels: Reel[]; label?: strin
                                     </a>
                                 </span>
                             </header>
+                            {/* The top right: the view count, the full view's button, the sound under it. */}
                             <div className="reel-tools">
+                                <span className="views" data-pg-reels-views aria-label={`${reel.views.full} views`}>
+                                    <Icon d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
+                                    {reel.views.short}
+                                </span>
+                                <button type="button" data-pg-reels-open aria-label="Enlarge">
+                                    <Icon d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+                                </button>
                                 <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound">
                                     <Icon className="is-off" d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" />
                                     <Icon className="is-on" d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" />
-                                </button>
-                                <button type="button" data-pg-reels-open aria-label="Enlarge">
-                                    <Icon d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
                                 </button>
                             </div>
                         </div>
@@ -218,6 +224,7 @@ function Icon({ d, className }: { d: string; className?: string }) {
 export const reels: Reel[] = [
     {
         id: "studio",
+        views: { short: "12.4K", full: "12,400" },
         account: { name: "plusguard", avatar: "/media/avatar-plusguard.jpg", profile: "https://www.instagram.com/" },
         clips: [
             {

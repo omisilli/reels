@@ -7,7 +7,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>reels — example</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omisilli/reels@v1.1.0/index.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omisilli/reels@v1.2.0/index.css" />
         <style>
             :root {
                 --bg: #f6f6f4;
@@ -241,7 +241,7 @@
                 margin-top: 0.25rem;
                 padding: 0.15rem 0.6rem;
                 border: 1px solid rgb(255 255 255 / 0.7);
-                border-radius: 999px;
+                border-radius: 0.375rem;
                 font-size: 0.7rem;
                 font-weight: 600;
                 text-decoration: none;
@@ -251,13 +251,51 @@
                 background: #fff;
                 color: #000;
             }
+            /* The top right: the full view's button, the sound under it,
+               the view count on its left. */
             .reel-tools {
                 position: absolute;
                 z-index: 1;
                 top: 0.75rem;
                 right: 0.75rem;
-                display: flex;
+                display: grid;
+                grid-template-columns: auto auto;
                 gap: 0.375rem;
+                pointer-events: none;
+            }
+            .reel-tools > * {
+                pointer-events: auto;
+            }
+            .reel-tools button {
+                grid-column: 2;
+            }
+            /* The view count — the site's number (data-pg-reels-views) — in
+               the card's corner and, copied, in the full view's. */
+            .views {
+                grid-column: 1;
+                grid-row: 1;
+                align-self: center;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.3rem;
+                padding: 0.3rem 0.55rem;
+                border-radius: 0.375rem;
+                background: rgb(0 0 0 / 0.35);
+                color: #fff;
+                font-size: 0.75rem;
+                font-weight: 600;
+                line-height: 1;
+                white-space: nowrap;
+            }
+            .views svg,
+            .reel-tools .views svg {
+                width: 0.95rem;
+                height: 0.95rem;
+                fill: none;
+                stroke: currentColor;
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-linejoin: round;
             }
             .reel-tools button {
                 display: grid;
@@ -531,8 +569,9 @@
                             <span class="who"><b>plusguard</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
                         <div class="reel-tools">
-                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
+                            <span class="views" data-pg-reels-views aria-label="12,400 views"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>12.4K</span>
                             <button type="button" data-pg-reels-open aria-label="Enlarge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg></button>
+                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
                         </div>
                     </div>
                     <div data-pg-reels-bars></div>
@@ -626,8 +665,9 @@
                             <span class="who"><b>mavi.cafe</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
                         <div class="reel-tools">
-                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
+                            <span class="views" data-pg-reels-views aria-label="3,100 views"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>3.1K</span>
                             <button type="button" data-pg-reels-open aria-label="Enlarge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg></button>
+                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
                         </div>
                     </div>
                     <div data-pg-reels-bars></div>
@@ -688,8 +728,9 @@
                             <span class="who"><b>kerem</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
                         <div class="reel-tools">
-                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
+                            <span class="views" data-pg-reels-views aria-label="860 views"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>860</span>
                             <button type="button" data-pg-reels-open aria-label="Enlarge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg></button>
+                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
                         </div>
                     </div>
                     <div data-pg-reels-bars></div>
@@ -732,8 +773,9 @@
                             <span class="who"><b>plusguard</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
                         <div class="reel-tools">
-                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
+                            <span class="views" data-pg-reels-views aria-label="27,000 views"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>27K</span>
                             <button type="button" data-pg-reels-open aria-label="Enlarge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg></button>
+                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
                         </div>
                     </div>
                     <div data-pg-reels-bars></div>
@@ -793,8 +835,9 @@
                             <span class="who"><b>mavi.cafe</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
                         <div class="reel-tools">
-                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
+                            <span class="views" data-pg-reels-views aria-label="5,200 views"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>5.2K</span>
                             <button type="button" data-pg-reels-open aria-label="Enlarge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg></button>
+                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
                         </div>
                     </div>
                     <div data-pg-reels-bars></div>
@@ -841,8 +884,9 @@
                             <span class="who"><b>kerem</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
                         <div class="reel-tools">
-                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
+                            <span class="views" data-pg-reels-views aria-label="1,900 views"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>1.9K</span>
                             <button type="button" data-pg-reels-open aria-label="Enlarge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg></button>
+                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
                         </div>
                     </div>
                     <div data-pg-reels-bars></div>
@@ -921,7 +965,7 @@
         </main>
 
         <script type="module">
-            import { initReels, forgetReelsSeen } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.1.0/dist/index.js";
+            import { initReels, forgetReelsSeen } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.2.0/dist/index.js";
 
             // ?duration=2s — every picture without its own time, through
             // --pg-reels-duration (5s by default). Two clips here have their

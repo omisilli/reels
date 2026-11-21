@@ -54,7 +54,9 @@
  * group's last clip, the next group. The product changes once it has
  * landed. Held
  * down — a finger, the mouse — it stands still; its own play / pause, its
- * sound, its close. Esc, Back, the dark around it close it too. The
+ * sound, its close — under the close; left of it, the group's view count
+ * (its data-pg-reels-views, the site's). Esc, Back, the dark around it
+ * close it too. The
  * product: on a computer a panel beside the video — the product's
  * <template data-pg-reels-detail>, the site's markup: a title (its
  * data-pg-reels-title goes to the panel's head, beside the close), a big
@@ -117,6 +119,7 @@ const NO_PRODUCT = "data-pg-reels-no-product";
 const TITLE = "data-pg-reels-title";
 const FOOT = "data-pg-reels-foot";
 const ID = "data-pg-reels-id";
+const VIEWS = "data-pg-reels-views";
 const SEEN = "data-pg-reels-seen";
 const SEEN_KEY = "pg-reels-seen";
 const SLIDING = "data-pg-reels-sliding";
@@ -575,9 +578,10 @@ export function initReels(): () => void {
                     <div data-pg-reels-view-row>
                         <div data-pg-reels-view-head></div>
                         <div data-pg-reels-view-tools>
+                            <div data-pg-reels-view-views></div>
+                            <button type="button" data-pg-reels-view-close aria-label="Close">${svg(ICONS.close)}</button>
                             <button type="button" ${SOUND} aria-pressed="false" aria-label="Sound">${svg(ICONS.soundOff)}${svg(ICONS.soundOn)}</button>
                             <button type="button" data-pg-reels-view-play aria-label="Pause">${svg(ICONS.pause)}${svg(ICONS.play)}</button>
-                            <button type="button" data-pg-reels-view-close aria-label="Close">${svg(ICONS.close)}</button>
                         </div>
                     </div>
                 </div>
@@ -664,6 +668,10 @@ export function initReels(): () => void {
 
         const head = g.el.querySelector(`[${HEAD}]`);
         part("view-head").replaceChildren(...(head ? [copyOf(head)] : []));
+        // The group's view count — the site's, written in its card — left
+        // of the close.
+        const views = g.el.querySelector(`[${VIEWS}]`);
+        part("view-views").replaceChildren(...(views ? [copyOf(views)] : []));
         // The head as it was before this group was looked at — its ring
         // bright the first time, through all its clips — and from now on,
         // seen.

@@ -5,7 +5,7 @@ a group of clips, each clip with its own product — that opens into a full
 view. No dependencies.
 
 ```sh
-npm install github:omisilli/reels#v1.1.0
+npm install github:omisilli/reels#v1.2.0
 ```
 
 ```ts
@@ -19,9 +19,9 @@ initReels(); // every reels section on the page, those rendered later too
 ### Without a build step
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omisilli/reels@v1.1.0/index.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omisilli/reels@v1.2.0/index.css" />
 <script type="module">
-    import { initReels } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.1.0/dist/index.js";
+    import { initReels } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.2.0/dist/index.js";
     initReels();
 </script>
 ```
@@ -147,6 +147,10 @@ in it, copies of the site's markup: the clip, the group's
   links; the rest of the clip passes presses to the taps under it.
 - **Held down** — a finger, the mouse — it stands still, the controls
   out of the way; let go and it goes on. Its play / pause button, Space.
+- **Its corner:** the close at the top right, the sound and play / pause
+  under it; on the close's left the group's view count — the card's
+  `data-pg-reels-views` element, copied, so it looks as in the card. The
+  number is the site's (from its own counting); the package shows it.
 - **The product:** on a computer, a panel beside the video, from its top
   to the window's foot, 9:16 like it: a head — the template's
   `data-pg-reels-title`, moved there, and the close; a long name takes a
@@ -191,6 +195,7 @@ and videos: the box has the shape, what is inside is 100% of it.
 | `data-pg-reels-strip` | the row | Scrolls sideways |
 | `data-pg-reels-group` | each group | A card and what is under it |
 | `data-pg-reels-id` | a group | Its name, for what was seen to be remembered in this browser |
+| `data-pg-reels-views` | in the card | The group's view count, the site's — copied into the full view, left of the close |
 | `data-pg-reels-seen` | a group, the full view's head | Written: `"true"` once seen in the full view, `"false"` before |
 | `data-pg-reels-card` | the card | The shape; its clips fill it |
 | `data-pg-reels-clip` | each clip | A video with its poster, or a picture |
