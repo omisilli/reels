@@ -1,0 +1,528 @@
+<!doctype html>
+<!-- Open by double-clicking: the package loads from jsDelivr, pinned to a
+     release, so the page and the code always match; the clips sit beside
+     this file, in media/. -->
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>reels — example</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omisilli/reels@v1.0.0/index.css" />
+        <style>
+            :root {
+                --bg: #f6f6f4;
+                --surface: #ffffff;
+                --fg: #18181b;
+                --muted: #6b6b72;
+                --line: #e4e4e0;
+                --red: #ff0033;
+                color-scheme: light dark;
+            }
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --bg: #111113;
+                    --surface: #1b1b1f;
+                    --fg: #ededef;
+                    --muted: #9a9aa3;
+                    --line: #2c2c31;
+                }
+            }
+            * {
+                box-sizing: border-box;
+                margin: 0;
+            }
+            body {
+                font:
+                    16px/1.5 system-ui,
+                    -apple-system,
+                    "Segoe UI",
+                    Roboto,
+                    sans-serif;
+                color: var(--fg);
+                background: var(--bg);
+            }
+            a {
+                color: inherit;
+            }
+            main {
+                max-width: 76rem;
+                margin: 0 auto;
+                padding: 3rem 1.25rem 6rem;
+                display: grid;
+                gap: 2rem;
+            }
+            h1 {
+                font-size: clamp(1.6rem, 3vw, 2.2rem);
+                letter-spacing: -0.02em;
+            }
+            header > p {
+                color: var(--muted);
+                max-width: 40rem;
+            }
+            .status {
+                font: 0.85rem/1.4 ui-monospace, Menlo, monospace;
+                color: var(--muted);
+            }
+
+            /* Pictures in their boxes, the house way: the box has the
+               height and the shape, the picture fills it. */
+            .pg-imageGroup {
+                width: auto;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+            }
+            .pg-imageGroup > img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            /* The section: the strip between its arrows. */
+            .reels {
+                position: relative;
+                --pg-reels-show: 4;
+                --pg-reels-gap: 1rem;
+            }
+            @media (max-width: 47.99rem) {
+                .reels {
+                    --pg-reels-show: 1.5;
+                    --pg-reels-gap: 0.75rem;
+                }
+            }
+            .arrow {
+                position: absolute;
+                top: calc(50% - 4rem);
+                z-index: 2;
+                display: grid;
+                place-items: center;
+                width: 2.75rem;
+                height: 2.75rem;
+                border: 1px solid var(--line);
+                border-radius: 50%;
+                background: var(--surface);
+                color: var(--fg);
+                box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 0.12);
+                cursor: pointer;
+                transition: opacity 0.2s;
+            }
+            .arrow svg {
+                width: 1.1rem;
+                height: 1.1rem;
+                fill: none;
+                stroke: currentColor;
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+            }
+            [data-pg-reels-prev] {
+                left: -1.375rem;
+            }
+            [data-pg-reels-next] {
+                right: -1.375rem;
+            }
+            /* At either end, its arrow away. */
+            [data-pg-reels-start] [data-pg-reels-prev],
+            [data-pg-reels-end] [data-pg-reels-next] {
+                opacity: 0;
+                pointer-events: none;
+            }
+            @media (max-width: 47.99rem) {
+                .arrow {
+                    display: none;
+                }
+            }
+
+            /* A card: rounded, dark under the clips, shade at the top and
+               the bottom for the words on it. */
+            [data-pg-reels-card] {
+                border-radius: 1.25rem;
+                background: #000;
+                color: #fff;
+            }
+            [data-pg-reels-card]::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                pointer-events: none;
+                background: linear-gradient(rgb(0 0 0 / 0.45), transparent 25%, transparent 60%, rgb(0 0 0 / 0.6));
+            }
+            [data-pg-reels-clip] figcaption {
+                position: absolute;
+                z-index: 1;
+                left: 1rem;
+                right: 1rem;
+                bottom: 1rem;
+                display: grid;
+                gap: 0.2rem;
+                font-weight: 700;
+                line-height: 1.25;
+                text-shadow: 0 1px 4px rgb(0 0 0 / 0.4);
+            }
+            [data-pg-reels-clip] figcaption small {
+                font-weight: 500;
+                font-size: 0.75rem;
+                opacity: 0.8;
+            }
+            .reel-head {
+                position: absolute;
+                z-index: 1;
+                top: 0.875rem;
+                left: 0.875rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .reel-head .avatar {
+                flex: none;
+                height: 2.25rem;
+                aspect-ratio: 1;
+                border-radius: 50%;
+                border: 2px solid #fff;
+            }
+            .who {
+                display: grid;
+                justify-items: start;
+                line-height: 1.2;
+                font-size: 0.85rem;
+                text-shadow: 0 1px 4px rgb(0 0 0 / 0.4);
+            }
+            .follow {
+                margin-top: 0.25rem;
+                padding: 0.15rem 0.6rem;
+                border: 1px solid rgb(255 255 255 / 0.7);
+                border-radius: 999px;
+                font-size: 0.7rem;
+                font-weight: 600;
+                text-decoration: none;
+                text-shadow: none;
+            }
+            .follow:hover {
+                background: #fff;
+                color: #000;
+            }
+            .reel-tools {
+                position: absolute;
+                z-index: 1;
+                top: 0.75rem;
+                right: 0.75rem;
+                display: flex;
+                gap: 0.375rem;
+            }
+            .reel-tools button {
+                display: grid;
+                place-items: center;
+                width: 2.25rem;
+                height: 2.25rem;
+                padding: 0;
+                border: 0;
+                border-radius: 50%;
+                background: rgb(0 0 0 / 0.35);
+                color: #fff;
+                cursor: pointer;
+            }
+            .reel-tools svg {
+                width: 1.1rem;
+                height: 1.1rem;
+                fill: none;
+                stroke: currentColor;
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+            }
+            [data-pg-reels-sound][aria-pressed="true"] .is-off,
+            [data-pg-reels-sound]:not([aria-pressed="true"]) .is-on {
+                display: none;
+            }
+
+            /* The bars under the card, the page's colour. */
+            [data-pg-reels-bars] {
+                margin-top: 0.625rem;
+                color: var(--fg);
+            }
+
+            /* The product under the card: its picture, name, price, an
+               arrow. The playing clip's. */
+            [data-pg-reels-products] {
+                margin-top: 0.375rem;
+            }
+            [data-pg-reels-product] {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                padding: 0.5rem;
+                border: 1px solid var(--line);
+                border-radius: 1rem;
+                background: var(--surface);
+                text-decoration: none;
+                transition: border-color 0.2s;
+            }
+            [data-pg-reels-product]:hover {
+                border-color: var(--fg);
+            }
+            [data-pg-reels-product] .pg-imageGroup {
+                flex: none;
+                height: 3rem;
+                aspect-ratio: 1;
+                border-radius: 0.6rem;
+            }
+            [data-pg-reels-product] b {
+                display: block;
+                font-size: 0.85rem;
+                line-height: 1.25;
+            }
+            [data-pg-reels-product] small {
+                color: var(--muted);
+            }
+            [data-pg-reels-product] .go {
+                margin-left: auto;
+                display: grid;
+                place-items: center;
+                flex: none;
+                width: 2rem;
+                height: 2rem;
+                border-radius: 50%;
+                background: var(--fg);
+                color: var(--bg);
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <header>
+                <h1>From our feed</h1>
+                <p>
+                    Each card is a group of clips, each clip with its own product. The card most in sight plays, muted
+                    — its clips one after another, the bars under it filling; press a bar for that clip. The product
+                    under the card is the playing clip's. Press the card, or its corner button, for the full view.
+                </p>
+            </header>
+
+            <section data-pg-reels class="reels" aria-label="Reels">
+                <button type="button" class="arrow" data-pg-reels-prev aria-controls="strip" aria-label="Previous">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg>
+                </button>
+                <div data-pg-reels-strip id="strip">
+                <article data-pg-reels-group>
+                    <div data-pg-reels-card>
+                            <figure data-pg-reels-clip>
+                                <video src="./media/bubbles.mp4" poster="./media/bubbles-poster.jpg" muted playsinline preload="none"></video>
+                                <figcaption><small>Tap to enlarge</small>Blown by hand, one at a time</figcaption>
+                            </figure>
+                            <figure data-pg-reels-clip>
+                                <img src="./media/story-mist.jpg" alt="" loading="lazy" />
+                                <figcaption><small>Tap to enlarge</small>Morning in the studio</figcaption>
+                            </figure>
+                            <figure data-pg-reels-clip>
+                                <img src="./media/story-river.jpg" alt="" loading="lazy" />
+                                <figcaption><small>Tap to enlarge</small>Packed for the river</figcaption>
+                            </figure>
+                        <header class="reel-head">
+                            <span class="pg-imageGroup avatar"><img src="./media/avatar-plusguard.jpg" alt="" /></span>
+                            <span class="who"><b>plusguard</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
+                        </header>
+                        <div class="reel-tools">
+                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
+                            <button type="button" data-pg-reels-open aria-label="Enlarge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg></button>
+                        </div>
+                    </div>
+                    <div data-pg-reels-bars></div>
+                    <div data-pg-reels-products>
+                        <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
+                            <span class="pg-imageGroup"><img src="./media/story-mist.jpg" alt="" loading="lazy" /></span>
+                            <span><b>Glass pour-over carafe</b><small>$34</small></span>
+                            <span class="go" aria-hidden="true">→</span>
+                        </a>
+                        <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
+                            <span class="pg-imageGroup"><img src="./media/story-mist.jpg" alt="" loading="lazy" /></span>
+                            <span><b>Wool throw, oat</b><small>$89</small></span>
+                            <span class="go" aria-hidden="true">→</span>
+                        </a>
+                        <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
+                            <span class="pg-imageGroup"><img src="./media/story-river.jpg" alt="" loading="lazy" /></span>
+                            <span><b>Linen shirt, relaxed</b><small>$58</small></span>
+                            <span class="go" aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </article>
+                <article data-pg-reels-group>
+                    <div data-pg-reels-card>
+                            <figure data-pg-reels-clip>
+                                <img src="./media/story-canoe.jpg" alt="" loading="lazy" />
+                                <figcaption><small>Tap to enlarge</small>Coffee on the water</figcaption>
+                            </figure>
+                            <figure data-pg-reels-clip>
+                                <video src="./media/bubbles.mp4" poster="./media/bubbles-poster.jpg" muted playsinline preload="none"></video>
+                                <figcaption><small>Tap to enlarge</small>Our new mug, in motion</figcaption>
+                            </figure>
+                        <header class="reel-head">
+                            <span class="pg-imageGroup avatar"><img src="./media/avatar-mavi-cafe.jpg" alt="" /></span>
+                            <span class="who"><b>mavi.cafe</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
+                        </header>
+                        <div class="reel-tools">
+                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
+                            <button type="button" data-pg-reels-open aria-label="Enlarge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg></button>
+                        </div>
+                    </div>
+                    <div data-pg-reels-bars></div>
+                    <div data-pg-reels-products>
+                        <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
+                            <span class="pg-imageGroup"><img src="./media/story-canoe.jpg" alt="" loading="lazy" /></span>
+                            <span><b>Single-origin beans, 250 g</b><small>$16</small></span>
+                            <span class="go" aria-hidden="true">→</span>
+                        </a>
+                        <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
+                            <span class="pg-imageGroup"><img src="./media/post-ada.jpg" alt="" loading="lazy" /></span>
+                            <span><b>Ceramic mug, sea glass</b><small>$22</small></span>
+                            <span class="go" aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </article>
+                <article data-pg-reels-group>
+                    <div data-pg-reels-card>
+                            <figure data-pg-reels-clip>
+                                <img src="./media/story-pug.jpg" alt="" loading="lazy" />
+                                <figcaption><small>Tap to enlarge</small>Nap time, tested</figcaption>
+                            </figure>
+                        <header class="reel-head">
+                            <span class="pg-imageGroup avatar"><img src="./media/avatar-kerem.jpg" alt="" /></span>
+                            <span class="who"><b>kerem</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
+                        </header>
+                        <div class="reel-tools">
+                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
+                            <button type="button" data-pg-reels-open aria-label="Enlarge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg></button>
+                        </div>
+                    </div>
+                    <div data-pg-reels-bars></div>
+                    <div data-pg-reels-products>
+                        <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
+                            <span class="pg-imageGroup"><img src="./media/story-pug.jpg" alt="" loading="lazy" /></span>
+                            <span><b>Dog bed, small</b><small>$45</small></span>
+                            <span class="go" aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </article>
+                <article data-pg-reels-group>
+                    <div data-pg-reels-card>
+                            <figure data-pg-reels-clip>
+                                <img src="./media/story-field.jpg" alt="" loading="lazy" />
+                                <figcaption><small>Tap to enlarge</small>Out in the field</figcaption>
+                            </figure>
+                            <figure data-pg-reels-clip>
+                                <img src="./media/story-canyon.jpg" alt="" loading="lazy" />
+                                <figcaption><small>Tap to enlarge</small>Light that lasts</figcaption>
+                            </figure>
+                        <header class="reel-head">
+                            <span class="pg-imageGroup avatar"><img src="./media/avatar-plusguard.jpg" alt="" /></span>
+                            <span class="who"><b>plusguard</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
+                        </header>
+                        <div class="reel-tools">
+                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
+                            <button type="button" data-pg-reels-open aria-label="Enlarge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg></button>
+                        </div>
+                    </div>
+                    <div data-pg-reels-bars></div>
+                    <div data-pg-reels-products>
+                        <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
+                            <span class="pg-imageGroup"><img src="./media/story-field.jpg" alt="" loading="lazy" /></span>
+                            <span><b>Canvas tote</b><small>$29</small></span>
+                            <span class="go" aria-hidden="true">→</span>
+                        </a>
+                        <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
+                            <span class="pg-imageGroup"><img src="./media/story-canyon.jpg" alt="" loading="lazy" /></span>
+                            <span><b>Waxed jacket</b><small>$149</small></span>
+                            <span class="go" aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </article>
+                <article data-pg-reels-group>
+                    <div data-pg-reels-card>
+                            <figure data-pg-reels-clip>
+                                <video src="./media/bubbles.mp4" poster="./media/bubbles-poster.jpg" muted playsinline preload="none"></video>
+                                <figcaption><small>Tap to enlarge</small>Sparkling, from the tap</figcaption>
+                            </figure>
+                        <header class="reel-head">
+                            <span class="pg-imageGroup avatar"><img src="./media/avatar-mavi-cafe.jpg" alt="" /></span>
+                            <span class="who"><b>mavi.cafe</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
+                        </header>
+                        <div class="reel-tools">
+                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
+                            <button type="button" data-pg-reels-open aria-label="Enlarge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg></button>
+                        </div>
+                    </div>
+                    <div data-pg-reels-bars></div>
+                    <div data-pg-reels-products>
+                        <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
+                            <span class="pg-imageGroup"><img src="./media/post-deniz.jpg" alt="" loading="lazy" /></span>
+                            <span><b>Glass bottle, 1 l</b><small>$18</small></span>
+                            <span class="go" aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </article>
+                <article data-pg-reels-group>
+                    <div data-pg-reels-card>
+                            <figure data-pg-reels-clip>
+                                <img src="./media/story-jellyfish.jpg" alt="" loading="lazy" />
+                                <figcaption><small>Tap to enlarge</small>Blue hour</figcaption>
+                            </figure>
+                            <figure data-pg-reels-clip>
+                                <img src="./media/story-puppy.jpg" alt="" loading="lazy" />
+                                <figcaption><small>Tap to enlarge</small>First walk</figcaption>
+                            </figure>
+                            <figure data-pg-reels-clip>
+                                <img src="./media/story-mist.jpg" alt="" loading="lazy" />
+                                <figcaption><small>Tap to enlarge</small>Home again</figcaption>
+                            </figure>
+                        <header class="reel-head">
+                            <span class="pg-imageGroup avatar"><img src="./media/avatar-kerem.jpg" alt="" /></span>
+                            <span class="who"><b>kerem</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
+                        </header>
+                        <div class="reel-tools">
+                            <button type="button" data-pg-reels-sound aria-pressed="false" aria-label="Sound"><svg class="is-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" /></svg><svg class="is-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12" /></svg></button>
+                            <button type="button" data-pg-reels-open aria-label="Enlarge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg></button>
+                        </div>
+                    </div>
+                    <div data-pg-reels-bars></div>
+                    <div data-pg-reels-products>
+                        <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
+                            <span class="pg-imageGroup"><img src="./media/story-jellyfish.jpg" alt="" loading="lazy" /></span>
+                            <span><b>Night light, jellyfish</b><small>$39</small></span>
+                            <span class="go" aria-hidden="true">→</span>
+                        </a>
+                        <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
+                            <span class="pg-imageGroup"><img src="./media/story-puppy.jpg" alt="" loading="lazy" /></span>
+                            <span><b>Puppy harness</b><small>$27</small></span>
+                            <span class="go" aria-hidden="true">→</span>
+                        </a>
+                        <a data-pg-reels-product href="https://www.google.com" target="_blank" rel="noopener">
+                            <span class="pg-imageGroup"><img src="./media/post-selin.jpg" alt="" loading="lazy" /></span>
+                            <span><b>Wool throw, oat</b><small>$89</small></span>
+                            <span class="go" aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </article>
+                </div>
+                <button type="button" class="arrow" data-pg-reels-next aria-controls="strip" aria-label="Next">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg>
+                </button>
+            </section>
+
+            <p class="status" id="status">Press a card: the full view comes in the next step — here, what it would open.</p>
+        </main>
+
+        <script type="module">
+            import { initReels } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.0.0/dist/index.js";
+
+            initReels();
+
+            // The full view comes next; for now, what it would open.
+            const status = document.getElementById("status");
+            document.addEventListener("pg-reels:open", (event) => {
+                const groups = [...document.querySelectorAll("[data-pg-reels-group]")];
+                status.textContent = `pg-reels:open — group ${groups.indexOf(event.detail.group) + 1}, clip ${event.detail.clip + 1}`;
+            });
+        </script>
+    </body>
+</html>

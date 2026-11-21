@@ -1,0 +1,101 @@
+/*
+ * reels — the CSS half: the strip that scrolls sideways, the 9:16 card, its
+ * clips one on another, the bars, the products. The look — corners,
+ * colours, the header over the card, the buttons — is the site's.
+ *
+ * Set on the section or above, per screen size with media queries:
+ *   --pg-reels-show       cards across the strip (default 4). A fraction
+ *                         shows part of the next: 1.5 on a phone is one
+ *                         card and half the next
+ *   --pg-reels-gap        between the cards (default 1rem)
+ *   --pg-reels-ratio      the card's shape (default 9 / 16)
+ *   --pg-reels-duration   a picture's time (default 5s)
+ */
+
+/* The strip: a row that scrolls sideways — a finger, a wheel, the arrows
+   — and stops with a card at its start. No bar to see. */
+[data-pg-reels-strip] {
+    --show: var(--pg-reels-show, 4);
+    --gap: var(--pg-reels-gap, 1rem);
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - var(--gap) * (var(--show) - 1)) / var(--show));
+    gap: var(--gap);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+[data-pg-reels-strip]::-webkit-scrollbar {
+    display: none;
+}
+[data-pg-reels-group] {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    scroll-snap-align: start;
+}
+
+/* The card holds the shape — 9:16 by default — and its clips fill it, the
+   house way: the box has the shape, what is inside is 100% of it. */
+[data-pg-reels-card] {
+    position: relative;
+    aspect-ratio: var(--pg-reels-ratio, 9 / 16);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+[data-pg-reels-clip] {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    visibility: hidden;
+}
+[data-pg-reels-clip][data-pg-reels-current] {
+    visibility: visible;
+}
+[data-pg-reels-clip] > video,
+[data-pg-reels-clip] > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* The bars: one a clip, side by side; the one playing fills with
+   --pg-reels-progress, those before it are full. Their look — height,
+   colours — the site's: here a plain line. */
+[data-pg-reels-bars] {
+    display: flex;
+    gap: 0.25rem;
+}
+[data-pg-reels-bar] {
+    flex: 1 1 0%;
+    min-width: 0;
+    height: 0.75rem;
+    padding: 0.3125rem 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+[data-pg-reels-bar] > span {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(currentColor, currentColor) no-repeat left / calc(var(--pg-reels-progress, 0) * 100%) 100%, color-mix(in srgb, currentColor 25%, transparent);
+}
+[data-pg-reels-bar][data-pg-reels-done] > span {
+    background-size: 100% 100%;
+}
+/* One clip: no bars to show. */
+[data-pg-reels-bars]:has(> [data-pg-reels-bar]:only-child) {
+    visibility: hidden;
+}
+
+/* The products: only the playing clip's shows. */
+[data-pg-reels-product]:not([data-pg-reels-current]) {
+    display: none !important;
+}

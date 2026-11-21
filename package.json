@@ -1,0 +1,21 @@
+{
+    "name": "@plusguard/reels",
+    "version": "1.0.0",
+    "description": "Shoppable reels for a store: a strip of video cards — each a group of clips, each clip with its own product — that opens into a full view. Up and down between groups, left and right within one, the product beside the video on a computer and under it on a phone. No dependencies.",
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
+        "./index.css": "./index.css"
+    },
+    "files": ["dist", "index.ts", "index.css", "README.md", "LICENSE"],
+    "sideEffects": ["*.css"],
+    "scripts": {
+        "build": "npx -p typescript tsc index.ts --outDir dist --declaration --target es2020 --module es2020 --lib dom,dom.iterable,es2020 --strict"
+    },
+    "license": "MIT",
+    "author": "PlusGuard",
+    "repository": { "type": "git", "url": "git+https://github.com/omisilli/reels.git" },
+    "keywords": ["reels", "shoppable-video", "video-commerce", "stories", "ecommerce", "vanilla"]
+}
