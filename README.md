@@ -90,7 +90,7 @@ below).
   `data-pg-reels-duration="4s"` on the clip, or `--pg-reels-duration` on
   the group or above (5s by default). The bars under the card fill as each
   plays; a bar pressed is that clip at once — one bar even for a card of
-  one clip. Out of sight it stops and waits on its poster; a hidden tab
+  one clip. Under the mouse they thicken, to be pressed easily. Out of sight it stops and waits on its poster; a hidden tab
   stops them all.
 - **The product is the clip's.** The products under a card are one a clip;
   the playing one's shows (`data-pg-reels-current`).
