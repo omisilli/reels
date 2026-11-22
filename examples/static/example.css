@@ -322,6 +322,12 @@ header > p {
     line-height: 1;
     white-space: nowrap;
 }
+/* In the full view, as tall as the buttons over it. */
+[data-pg-reels-viewer] .views {
+    height: 2.5rem;
+    padding: 0 0.75rem 0 0.875rem;
+    font-size: 0.8125rem;
+}
 /* The eye: filled, as the icon is drawn. */
 .views svg,
 .reel-tools .views svg {
