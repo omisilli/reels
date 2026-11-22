@@ -23,9 +23,9 @@ From npm, through jsDelivr — the npm package is the code alone (about
 jsDelivr's GitHub route.
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@plusguard/reels@1.8.0/index.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@plusguard/reels@1.9.0/index.css" />
 <script type="module">
-    import { initReels } from "https://cdn.jsdelivr.net/npm/@plusguard/reels@1.8.0/dist/index.js";
+    import { initReels } from "https://cdn.jsdelivr.net/npm/@plusguard/reels@1.9.0/dist/index.js";
     initReels();
 </script>
 ```
