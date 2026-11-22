@@ -12,7 +12,7 @@
     --line: #e4e4e0;
     /* A line under the mouse: a shade darker than --line, not black. */
     --line-hover: #c8c8c2;
-    --link: #00376b;
+    --link: #0064e0;
     --red: #ff0033;
     color-scheme: light;
 }
@@ -24,7 +24,7 @@
     --muted: #9a9aa3;
     --line: #2c2c31;
     --line-hover: #4a4a52;
-    --link: #a8c7fa;
+    --link: #78b4ff;
     color-scheme: dark;
 }
 * {
@@ -748,19 +748,33 @@ header > p {
     border-radius: 0.5rem;
     cursor: pointer;
 }
+/* The chosen one: a thicker grey line, not black. */
 .detail-thumbs button[data-pg-reels-current] {
-    border-color: var(--fg);
+    border: 2px solid var(--muted);
 }
 .detail-price {
+    margin-top: 0.5rem;
     font-size: 1.4rem;
     font-weight: 700;
 }
-/* The name heads the panel, in place of a category. */
+/* The name heads the panel, in place of a category: a link to the
+   product, on one line — a longer one ends in "…" — as tall as the
+   head's room, so it sits in its middle. */
 [data-pg-reels-panel-title] .detail-name {
+    display: block;
+    overflow: hidden;
     color: var(--fg);
     font-size: 1rem;
     font-weight: 700;
-    line-height: 1.3;
+    line-height: 1.5rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-decoration: none;
+}
+@media (hover: hover) {
+    [data-pg-reels-panel-title] .detail-name:hover {
+        text-decoration: underline;
+    }
 }
 /* The post's text, a paragraph a block; its #tags links. */
 .detail-post {

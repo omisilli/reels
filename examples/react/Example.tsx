@@ -220,9 +220,9 @@ function Detail({ product, post, postFrom }: { product: Product; post?: string; 
                     {product.name}
                 </a>
             ) : (
-                <p className="detail-name" data-pg-reels-title>
+                <a className="detail-name" data-pg-reels-title href={product.href} target="_blank" rel="noopener">
                     {product.fullName ?? product.name}
-                </p>
+                </a>
             )}
             {list && <p className="detail-count">{list.count}</p>}
             {variants ? (
