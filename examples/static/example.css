@@ -244,9 +244,18 @@ header > p {
     white-space: nowrap;
     color: inherit;
     text-decoration: none;
+    transition: color 0.2s;
 }
+/* Under the mouse the name greys a little, the picture fades a little:
+   they can be pressed. */
 .who .name:hover {
-    text-decoration: underline;
+    color: rgb(255 255 255 / 0.75);
+}
+.reel-head .avatar {
+    transition: opacity 0.2s;
+}
+.reel-head .avatar:hover {
+    opacity: 0.85;
 }
 .follow {
     margin-top: 0.25rem;
