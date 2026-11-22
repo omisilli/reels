@@ -286,8 +286,8 @@ shows them. See [`examples/react/Example.tsx`](examples/react/Example.tsx)
 ## Example
 
 [`examples/static/index.html`](examples/static/index.html) — six groups of
-one to five clips, videos and pictures (two with their own time — the
-jellyfish 8s, the mist 3s; `?duration=2s` for the rest), each clip with a product and its
+one to five clips, videos and a picture (its own time, 4s; `?duration=2s` for
+pictures without one), each clip with a product and its
 details: its category (a link), its name in the panel's head, a big
 picture at 4:3, small ones — nine for the first product, a row that
 scrolls — the price, a line about it, a link. Under the card the product
@@ -299,6 +299,7 @@ three clips from a food shop, the second five from a scarf shop, the
 third four from a pasta and mantı maker, the fourth four from a
 jeweller, the fifth four from a nut and sweet shop — a coffee with four
 weights (variants, each its pictures and price) and three categories,
-each listing a few of its products — each with its product; the food products' further photos are from
-[Unsplash](https://unsplash.com/license) (free to use). The other pictures
-and the bubbles video are from stories' example.
+each listing a few of its products — the sixth three from a pastırma and
+sucuk shop and a picture — each with its product. The food products'
+further photos are from [Unsplash](https://unsplash.com/license) (free to
+use).
