@@ -320,8 +320,10 @@ header > p {
     stroke-linecap: round;
     stroke-linejoin: round;
 }
-.views svg circle {
+/* The pupil: filled, a glint left in it. */
+.views svg .pupil {
     fill: currentColor;
+    fill-rule: evenodd;
     stroke: none;
 }
 .reel-tools button {
