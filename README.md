@@ -5,7 +5,7 @@ a group of clips, each clip with its own product — that opens into a full
 view. No dependencies.
 
 ```sh
-npm install github:omisilli/reels#v1.3.0
+npm install @plusguard/reels
 ```
 
 ```ts
@@ -18,10 +18,14 @@ initReels(); // every reels section on the page, those rendered later too
 
 ### Without a build step
 
+From npm, through jsDelivr — the npm package is the code alone (about
+36 KB); the examples' videos stay in the GitHub repo, which is too big for
+jsDelivr's GitHub route.
+
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omisilli/reels@v1.3.0/index.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@plusguard/reels@1.3.1/index.css" />
 <script type="module">
-    import { initReels } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.3.0/dist/index.js";
+    import { initReels } from "https://cdn.jsdelivr.net/npm/@plusguard/reels@1.3.1/dist/index.js";
     initReels();
 </script>
 ```
