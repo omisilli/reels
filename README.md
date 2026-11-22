@@ -260,14 +260,15 @@ shows them. See [`examples/react/Example.tsx`](examples/react/Example.tsx)
 
 [`examples/static/index.html`](examples/static/index.html) — six groups of
 one to three clips, videos and pictures (two with their own time — the
-pug 8s, the canoe 3s; `?duration=2s` for the rest), each clip with a product and its
+pug 8s, the field 3s; `?duration=2s` for the rest), each clip with a product and its
 details: its category (a link), its name in the panel's head, a big
 picture at 4:3, small ones — nine for the first product, a row that
 scrolls — the price, a line about it, a link. Under the card the product
 shows its category and price, its name in two lines' room (longer ends in
 "…"), so every row is as tall; the line over each clip's caption is the
 category too; in
-the full view the category is a tag on the video. The first group is three clips from a food shop with their
-products; the product photos beside them are from
-[Unsplash](https://unsplash.com/license) (free to use). The other
-pictures and the bubbles video are from stories' example.
+the full view the category is a tag on the video. The first group is
+three clips from a food shop, the second five from a scarf shop, each with
+its product; the food products' further photos are from
+[Unsplash](https://unsplash.com/license) (free to use). The other pictures
+and the bubbles video are from stories' example.
