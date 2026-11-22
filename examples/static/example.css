@@ -109,7 +109,15 @@ header > p {
     color: var(--fg);
     box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 0.12);
     cursor: pointer;
-    transition: opacity 0.2s;
+    transition:
+        opacity 0.2s,
+        background 0.2s;
+}
+/* Under the mouse a light grey — a shade of the text over the white. */
+@media (hover: hover) {
+    .arrow:hover {
+        background: color-mix(in srgb, var(--fg) 7%, var(--surface));
+    }
 }
 .arrow svg {
     width: 1.1rem;
