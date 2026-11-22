@@ -48,7 +48,8 @@
  * The full view — a <dialog>, built here on <body>, its contents copies:
  * the clip playing, the group's data-pg-reels-head, the clip's product.
  * Within a group: the bars on top, a press on the video's right or left,
- * → and ←. Between groups: a finger (or the mouse) dragging the video up
+ * the ‹ › beside it (none before the first clip or after the last), → and
+ * ←. Between groups: a finger (or the mouse) dragging the video up
  * or down — it follows, the next group coming in under it, and let go
  * goes on or back — its ↑ and ↓ buttons, a wheel, ↑ and ↓; after a
  * group's last clip, the next group. The product changes once it has
@@ -212,6 +213,8 @@ const ICONS = {
     up: '<path d="M12 19V5M5 12l7-7 7 7"/>',
     down: '<path d="M12 5v14M19 12l-7 7-7-7"/>',
     chevron: '<path d="m6 15 6-6 6 6"/>',
+    prev: '<path d="m15 6-6 6 6 6"/>',
+    next: '<path d="m9 6 6 6-6 6"/>',
 };
 
 /* ---------- One group ---------- */
@@ -612,6 +615,12 @@ export function initReels(): () => void {
     dialog.tabIndex = -1;
     dialog.innerHTML = `
         <div data-pg-reels-stage>
+            <div data-pg-reels-view-steps>
+                <button type="button" data-pg-reels-view-up aria-label="Previous reel">${svg(ICONS.up)}</button>
+                <button type="button" data-pg-reels-view-down aria-label="Next reel">${svg(ICONS.down)}</button>
+            </div>
+            <div data-pg-reels-column>
+            <button type="button" data-pg-reels-view-side="prev" aria-label="Previous">${svg(ICONS.prev)}</button>
             <div data-pg-reels-feed>
             <div data-pg-reels-view-peek="before" aria-hidden="true" hidden></div>
             <div data-pg-reels-screen>
@@ -633,9 +642,7 @@ export function initReels(): () => void {
             </div>
             <button type="button" data-pg-reels-view-peek="after" tabindex="-1" aria-label="Next reel" hidden></button>
             </div>
-            <div data-pg-reels-view-steps>
-                <button type="button" data-pg-reels-view-up aria-label="Previous reel">${svg(ICONS.up)}</button>
-                <button type="button" data-pg-reels-view-down aria-label="Next reel">${svg(ICONS.down)}</button>
+            <button type="button" data-pg-reels-view-side="next" aria-label="Next">${svg(ICONS.next)}</button>
             </div>
             <aside data-pg-reels-panel>
                 <div data-pg-reels-panel-head>
@@ -659,6 +666,8 @@ export function initReels(): () => void {
     const viewBars = part("view-bars");
     const playButton = part("view-play");
     const upButton = part("view-up") as HTMLButtonElement;
+    const sidePrev = dialog.querySelector<HTMLElement>('[data-pg-reels-view-side="prev"]')!;
+    const sideNext = dialog.querySelector<HTMLElement>('[data-pg-reels-view-side="next"]')!;
     const downButton = part("view-down") as HTMLButtonElement;
     const toggle = part("panel-toggle");
     document.body.append(dialog);
@@ -783,6 +792,10 @@ export function initReels(): () => void {
 
         upButton.disabled = view.gi === 0;
         downButton.disabled = view.gi === view.list.length - 1;
+        // The arrows beside the video: none before the very first clip,
+        // none after the very last.
+        sidePrev.hidden = view.gi === 0 && view.ci === 0;
+        sideNext.hidden = view.gi === view.list.length - 1 && view.ci === n - 1;
         view.shown = 0;
         view.since = performance.now();
         playView();
@@ -976,8 +989,8 @@ export function initReels(): () => void {
         if (t === dialog || t.hasAttribute("data-pg-reels-stage")) return closeView();
         if (t.closest("[data-pg-reels-view-close], [data-pg-reels-panel-close]")) return closeView();
         if (sliding) return;
-        if (t.closest("[data-pg-reels-view-on]")) return nextClip();
-        if (t.closest("[data-pg-reels-view-back]")) return prevClip();
+        if (t.closest('[data-pg-reels-view-on], [data-pg-reels-view-side="next"]')) return nextClip();
+        if (t.closest('[data-pg-reels-view-back], [data-pg-reels-view-side="prev"]')) return prevClip();
         if (t.closest("[data-pg-reels-view-up]")) return prevGroup();
         if (t.closest('[data-pg-reels-view-down], [data-pg-reels-view-peek="after"]')) return nextGroup();
         const bar = t.closest<HTMLElement>(`[${VIEW_BAR}]`);

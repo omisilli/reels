@@ -23,9 +23,9 @@ From npm, through jsDelivr — the npm package is the code alone (about
 jsDelivr's GitHub route.
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@plusguard/reels@1.4.1/index.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@plusguard/reels@1.5.0/index.css" />
 <script type="module">
-    import { initReels } from "https://cdn.jsdelivr.net/npm/@plusguard/reels@1.4.1/dist/index.js";
+    import { initReels } from "https://cdn.jsdelivr.net/npm/@plusguard/reels@1.5.0/dist/index.js";
     initReels();
 </script>
 ```
@@ -139,14 +139,16 @@ in it, copies of the site's markup: the clip, the group's
 `data-pg-reels-head`, the clip's product and its details.
 
 - **Within a group:** the bars on top (none for a single clip), a press on
-  the video's right or left third, → and ←. Its clips play on, a video to
+  the video's right or left third, the ‹ › on either side of the video on
+  a computer — none before the very first clip, none after the very last
+  — → and ←. Its clips play on, a video to
   its end, a picture for its time; after the group's last clip, the next
   group — after the last group, the first.
 - **Between groups:** a finger — or the mouse — dragging the video up or
   down, at once or after holding it: it follows, the next group coming in under it (the one before
   above it), and let go it goes on if pulled a fifth of its height or
   flicked, or back if not; past the first or the last it gives a little
-  and comes back. The ↑ ↓ buttons beside the video (round, their name
+  and comes back. The ↑ ↓ buttons left of the video (round, their name
   beside them under the mouse), a wheel or a trackpad, ↑ and ↓ slide it
   the same way. On a computer the next group's top shows under the video
   (`--pg-reels-peek`); pressed, it is the next. The product panel changes
@@ -293,8 +295,8 @@ shows them. See [`examples/react/Example.tsx`](examples/react/Example.tsx)
 ## Example
 
 [`examples/static/index.html`](examples/static/index.html) — six groups of
-one to five clips, videos and a picture (its own time, 4s; `?duration=2s` for
-pictures without one; `?seen=off`, `?seen-for=1h` for the rings), each clip with a product and its
+three to five clips, videos (`?duration=2s` sets a picture's time; `?seen=off`,
+`?seen-for=1h` for the rings), each clip with a product and its
 details: its category (a link), its name in the panel's head, a big
 picture at 4:3, small ones — nine for the first product, a row that
 scrolls — the price, a line about it, a link. Under the card the product
@@ -307,6 +309,6 @@ third four from a pasta and mantı maker, the fourth four from a
 jeweller, the fifth four from a nut and sweet shop — a coffee with four
 weights (variants, each its pictures and price) and three categories,
 each listing a few of its products — the sixth three from a pastırma and
-sucuk shop and a picture — each with its product. The food products'
+sucuk shop — each with its product. The food products'
 further photos are from [Unsplash](https://unsplash.com/license) (free to
 use).
