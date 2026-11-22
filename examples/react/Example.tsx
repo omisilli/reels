@@ -110,7 +110,11 @@ export function Reels({ reels, label = "Reels", style }: { reels: Reel[]; label?
                             {/* The top right: the sound and the full view's button, the view count under them. */}
                             <div className="reel-tools">
                                 <span className="views" data-pg-reels-views aria-label={`${reel.views.full} views`}>
-                                    <Icon d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
+                                    {/* Instagram's eye: the pupil filled. */}
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
                                     {reel.views.short}
                                 </span>
                                 <button type="button" data-pg-reels-open aria-label="Enlarge">

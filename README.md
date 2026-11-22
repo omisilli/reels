@@ -166,7 +166,7 @@ in it, copies of the site's markup: the clip, the group's
   the ↑ ↓ at the window's left, their names on their right under the
   mouse.
 - **The product:** on a computer, a panel beside the video, touching it
-  as a post opened on Instagram (no corners where they meet, small ones
+  as a post opened on Instagram (no corners where they meet, rounded ones
   outside), from its top to the window's foot, about a third of the
   window wide: a head — the template's `data-pg-reels-title`, moved there
   (the example puts the category there) — a line under it; at the
@@ -233,7 +233,7 @@ and videos: the box has the shape, what is inside is 100% of it.
 | `data-pg-reels-strip` | the row | Scrolls sideways |
 | `data-pg-reels-group` | each group | A card and what is under it |
 | `data-pg-reels-id` | a group | Its name, for what was seen to be remembered in this browser |
-| `data-pg-reels-views` | in the card | The group's view count, the site's — copied into the full view, left of the close |
+| `data-pg-reels-views` | in the card | The group's view count, the site's — copied into the full view, under the close |
 | `data-pg-reels-seen` | a group, the full view's head | Written: `"true"` once seen in the full view, `"false"` before |
 | `data-pg-reels-card` | the card | The shape; its clips fill it |
 | `data-pg-reels-clip` | each clip | A video with its poster, or a picture |

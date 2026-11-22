@@ -254,7 +254,7 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-side] svg {
     flex: none;
     height: var(--h);
     aspect-ratio: var(--pg-reels-ratio, 9 / 16);
-    border-radius: 0.25rem;
+    border-radius: 0.75rem;
     overflow: hidden;
     background: #000;
     isolation: isolate;
@@ -288,7 +288,7 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-side] svg {
     aspect-ratio: var(--pg-reels-ratio, 9 / 16);
     padding: 0;
     border: 0;
-    border-radius: 0.25rem;
+    border-radius: 0.75rem;
     overflow: hidden;
     background: #000;
     color: #fff;
@@ -509,7 +509,7 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-steps] svg {
     box-sizing: border-box;
     width: var(--pg-reels-panel);
     height: calc(100dvh - 2 * var(--gap));
-    border-radius: 0.25rem;
+    border-radius: 0.75rem;
     background: #fff;
     color: #111;
     overflow: hidden;
