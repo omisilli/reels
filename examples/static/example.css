@@ -534,7 +534,7 @@ header > p {
     height: 2rem;
     border-radius: 50%;
     /* A light grey until the mouse comes, a darker one under it. */
-    background: color-mix(in srgb, var(--fg) 40%, var(--bg));
+    background: color-mix(in srgb, var(--fg) 50%, var(--bg));
     color: var(--bg);
     transition:
         background 0.2s,
