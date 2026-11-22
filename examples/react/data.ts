@@ -507,8 +507,7 @@ export const reels: Reel[] = [
                                 "/media/peskur-kahve-100g-3.jpg"
                             ]
                         }
-                    ],
-                    "fromPrice": "from ₺110"
+                    ]
                 },
                 "views": {
                     "short": "5.2K",

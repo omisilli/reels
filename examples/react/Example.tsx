@@ -63,7 +63,6 @@ export type Product = {
     images?: string[]; // the details' pictures, the first shown big
     // Weights, colours: each its own pictures, price and page.
     variants?: Variant[];
-    fromPrice?: string; // under the card, when there are variants: "from ₺110"
     // A category in the product's place: a few of its products.
     list?: { count: string; items: { name: string; price: string; image: string; href: string }[] };
 };
@@ -141,9 +140,6 @@ export function Reels({ reels, label = "Reels", style }: { reels: Reel[]; label?
                                         <span className="label">In the video</span>
                                         {/* Two lines' room for the name in the site's CSS (line-clamp: 2). */}
                                         <b>{product.name}</b>
-                                        <small>
-                                            <span className="price">{product.list ? product.list.count : (product.fromPrice ?? product.price)}</span>
-                                        </small>
                                     </span>
                                     <span className="go" aria-hidden="true">
                                         →

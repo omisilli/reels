@@ -399,11 +399,12 @@ header > p {
         translate: none;
     }
 }
-/* The picture: as tall as the words — "In the video" (1rem),
-   two lines of name (2 × 1.0625rem), a line of price (1.25rem). */
+/* The picture: as tall as the words — "In the video" (1rem) and
+   two lines of name (2 × 1.0625rem). No price: it is in the full
+   view, one press away. */
 [data-pg-reels-product] .pg-imageGroup {
     flex: none;
-    height: 4.375rem;
+    height: 3.125rem;
     aspect-ratio: 1;
     border-radius: 0.375rem;
 }
@@ -434,19 +435,6 @@ header > p {
     min-height: 2.5em;
     font-size: 0.85rem;
     line-height: 1.25;
-}
-[data-pg-reels-product] .price {
-    color: var(--fg);
-    font-weight: 600;
-}
-[data-pg-reels-product] small {
-    display: block;
-    font-size: 0.8125rem;
-    line-height: 1.25rem;
-    color: var(--muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 [data-pg-reels-product] .go {
     margin-left: auto;
