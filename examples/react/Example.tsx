@@ -178,7 +178,7 @@ function ClipView({ clip }: { clip: Clip }) {
             )}
             <figcaption>
                 {/* The category, a link to it in a new tab: a dark pill over the
-                    caption on the card, a white tag in the full view (the site's CSS). */}
+                    caption, on the card and in the full view (the site's CSS). */}
                 <a className="tag" href={product.category.href} target="_blank" rel="noopener">
                     {/* A category: four squares, as a shop's categories menu draws it. */}
                     <svg viewBox="0 0 24 24" aria-hidden="true">

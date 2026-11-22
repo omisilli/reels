@@ -324,7 +324,7 @@ scrolls — the price, a line about it, a link. Under the card the product
 shows "In the video" over its name, the name in two lines' room (longer
 ends in "…"), so every row is as tall — no price: it is one press away,
 in the full view; over each clip's caption its category, a link to it
-in a new tab — a dark pill on the card, a white tag in the full view. The first group is
+in a new tab — a dark pill, on the card and in the full view. The first group is
 three clips from a food shop, the second five from a scarf shop, the
 third four from a pasta and mantı maker, the fourth four from a
 jeweller, the fifth four from a nut and sweet shop — a coffee with four

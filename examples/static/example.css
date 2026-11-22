@@ -468,8 +468,8 @@ header > p {
         color 0.2s;
 }
 /* ---------- The full view: the site's part ----------
-   The head and the caption as on the card, the category a white
-   tag; the product's details in the panel. */
+   The head, the caption and the category as on the card; the
+   product's details in the panel. */
 [data-pg-reels-viewer] .reel-head {
     position: static;
     max-width: none;
@@ -500,9 +500,8 @@ header > p {
         text-decoration: underline;
     }
 }
-/* The category over the caption, a link to it (a new tab): on the
-   card a dark pill, as the view count's; in the full view a white
-   tag. */
+/* The category over the caption, a link to it (a new tab): a dark
+   pill, as the view count's — on the card and in the full view. */
 .tag {
     display: inline-flex;
     align-items: center;
@@ -522,18 +521,6 @@ header > p {
 @media (hover: hover) {
     .tag:hover {
         background: rgb(0 0 0 / 0.55);
-    }
-}
-[data-pg-reels-viewer] .tag {
-    height: auto;
-    padding: 0.35rem 0.75rem 0.35rem 0.55rem;
-    background: rgb(255 255 255 / 0.92);
-    color: #111;
-    font-size: 0.8rem;
-}
-@media (hover: hover) {
-    [data-pg-reels-viewer] .tag:hover {
-        background: #fff;
     }
 }
 .tag svg {
