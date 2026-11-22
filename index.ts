@@ -61,7 +61,9 @@
  * <template data-pg-reels-detail>, the site's markup: a title (its
  * data-pg-reels-title goes to the panel's head, beside the close), a big
  * picture (data-pg-reels-big), small ones (data-pg-reels-thumb, a press
- * shows it big), the price, a link (its data-pg-reels-foot is pinned to
+ * shows it big), variants (data-pg-reels-variant buttons: each its
+ * price, its gallery — data-pg-reels-gallery of the same name — and its
+ * link), the price, a link (its data-pg-reels-foot is pinned to
  * the panel's foot, the rest scrolling above it) — on a phone under the
  * video, the product as on the card, and its details opened by a button.
  *
@@ -120,6 +122,11 @@ const TITLE = "data-pg-reels-title";
 const FOOT = "data-pg-reels-foot";
 const ID = "data-pg-reels-id";
 const VIEWS = "data-pg-reels-views";
+const VARIANT = "data-pg-reels-variant";
+const VARIANT_PRICE = "data-pg-reels-variant-price";
+const VARIANT_HREF = "data-pg-reels-variant-href";
+const GALLERY = "data-pg-reels-gallery";
+const PRICE = "data-pg-reels-price";
 const SEEN = "data-pg-reels-seen";
 const SEEN_KEY = "pg-reels-seen";
 const SLIDING = "data-pg-reels-sliding";
@@ -727,6 +734,9 @@ export function initReels(): () => void {
         part("panel-foot").replaceChildren(...(foot ? [foot] : []));
         part("panel-detail").replaceChildren(...holder.childNodes);
         part("panel-detail").scrollTop = 0;
+        // Its variants: the one marked current, or the first, chosen.
+        const variants = panel.querySelectorAll<HTMLElement>(`[${VARIANT}]`);
+        if (variants.length) chooseVariant([...variants].find((x) => x.hasAttribute(CURRENT)) ?? variants[0]);
         dialog.toggleAttribute(NO_PRODUCT, !product);
 
         upButton.disabled = view.gi === 0;
@@ -939,17 +949,38 @@ export function initReels(): () => void {
             toggle.setAttribute("aria-expanded", String(open));
             return;
         }
-        // A small picture of the product, pressed: shown big — and brought
-        // into sight, when the row of them scrolls.
+        // A variant pressed: its price, its pictures, its link.
+        const variant = t.closest<HTMLElement>(`[${VARIANT}]`);
+        if (variant && panel.contains(variant)) return chooseVariant(variant);
+        // A small picture of the product, pressed: shown big — in its own
+        // gallery, when each variant has one — and brought into sight,
+        // when the row of them scrolls.
         const thumb = t.closest<HTMLElement>(`[${THUMB}]`);
         if (thumb) {
-            const detail = thumb.closest("[data-pg-reels-panel-detail]");
+            const detail = thumb.closest(`[${GALLERY}]`) ?? thumb.closest("[data-pg-reels-panel-detail]");
             const big = detail?.querySelector<HTMLImageElement>(`[${BIG}] img, img[${BIG}]`);
             const src = thumb.getAttribute(THUMB) || thumb.querySelector("img")?.src;
             if (big && src) big.src = src;
             detail?.querySelectorAll(`[${THUMB}]`).forEach((x) => x.toggleAttribute(CURRENT, x === thumb));
             thumb.scrollIntoView({ block: "nearest", inline: "nearest", behavior: reduced() ? "instant" : "smooth" });
         }
+    };
+    /* A variant chosen — 1 kg, 500 g; a colour — in the panel: it is
+       data-pg-reels-current (aria-pressed too); the gallery of the same
+       name shows, the others hide; data-pg-reels-price shows its price;
+       the foot's link goes to its page. */
+    const chooseVariant = (variant: HTMLElement): void => {
+        const name = variant.getAttribute(VARIANT);
+        panel.querySelectorAll<HTMLElement>(`[${VARIANT}]`).forEach((x) => {
+            x.toggleAttribute(CURRENT, x === variant);
+            if (x.tagName === "BUTTON") x.setAttribute("aria-pressed", String(x === variant));
+        });
+        const galleries = panel.querySelectorAll<HTMLElement>(`[${GALLERY}]`);
+        if ([...galleries].some((x) => x.getAttribute(GALLERY) === name)) galleries.forEach((x) => x.toggleAttribute(CURRENT, x.getAttribute(GALLERY) === name));
+        const price = variant.getAttribute(VARIANT_PRICE);
+        if (price !== null) panel.querySelectorAll(`[${PRICE}]`).forEach((x) => (x.textContent = price));
+        const href = variant.getAttribute(VARIANT_HREF);
+        if (href) panel.querySelectorAll<HTMLAnchorElement>(`a[${FOOT}]`).forEach((x) => (x.href = href));
     };
     const togglePause = (): void => {
         if (!view.paused && !view.held) view.shown += performance.now() - view.since;

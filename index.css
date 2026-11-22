@@ -453,6 +453,11 @@ dialog[data-pg-reels-viewer] [data-pg-reels-panel-close] svg {
     overflow: auto;
     overscroll-behavior: contain;
 }
+/* Variants: only the chosen one's gallery shows. */
+[data-pg-reels-panel] [data-pg-reels-gallery]:not([data-pg-reels-current]) {
+    display: none;
+}
+
 /* The foot: the template's data-pg-reels-foot — the link to the product
    — always in sight under what scrolls, a line above it. */
 [data-pg-reels-panel-foot] {

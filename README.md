@@ -5,7 +5,7 @@ a group of clips, each clip with its own product — that opens into a full
 view. No dependencies.
 
 ```sh
-npm install github:omisilli/reels#v1.2.0
+npm install github:omisilli/reels#v1.3.0
 ```
 
 ```ts
@@ -19,9 +19,9 @@ initReels(); // every reels section on the page, those rendered later too
 ### Without a build step
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omisilli/reels@v1.2.0/index.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omisilli/reels@v1.3.0/index.css" />
 <script type="module">
-    import { initReels } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.2.0/dist/index.js";
+    import { initReels } from "https://cdn.jsdelivr.net/gh/omisilli/reels@v1.3.0/dist/index.js";
     initReels();
 </script>
 ```
@@ -165,6 +165,26 @@ in it, copies of the site's markup: the clip, the group's
   product, as on the card, is a band at its foot, and a Details button
   above the band's right opens the template under it. A clip without a
   product: no panel.
+- **Variants** — 1 kg, 500 g; a colour — in the template: buttons with
+  `data-pg-reels-variant="1kg"`, each with its `data-pg-reels-variant-price`
+  and `-href`. Pressed, it is `data-pg-reels-current` (and `aria-pressed`);
+  the `data-pg-reels-gallery="1kg"` of the same name shows — its big
+  picture and small ones — the others hide; `data-pg-reels-price` shows
+  its price; the foot's link goes to its page. The one marked current in
+  the markup, or the first, is chosen when the clip shows.
+
+```html
+<div data-pg-reels-gallery="1kg" data-pg-reels-current>…big, thumbs…</div>
+<div data-pg-reels-gallery="500g">…big, thumbs…</div>
+<p data-pg-reels-price>₺850</p>
+<button type="button" data-pg-reels-variant="1kg" data-pg-reels-variant-price="₺850" data-pg-reels-variant-href="/kahve?g=1kg" data-pg-reels-current>1 Kg</button>
+<button type="button" data-pg-reels-variant="500g" data-pg-reels-variant-price="₺450" data-pg-reels-variant-href="/kahve?g=500g">500 Gr</button>
+```
+
+- **A category instead of a product:** the clip's "product" is the
+  site's markup, so it can be a category — its picture and name under the
+  card, and in the template a few of its products and a foot link to the
+  category. Nothing changes in the package.
 - **Closing:** its ✕, Esc, the dark around it, the browser's Back (opened,
   it adds a step to the history). The card it came from shows the clip
   last seen; the strip plays again.
@@ -206,6 +226,9 @@ and videos: the box has the shape, what is inside is 100% of it.
 | `data-pg-reels-detail` | a `<template>` in a product — or any element, hidden, in the product or the clip | Its details, for the full view |
 | `data-pg-reels-title` | in the template | The product's name: shown in the panel's head, beside the close — short; the size or weight is better on a line below |
 | `data-pg-reels-foot` | in the template | The link to the product: pinned to the panel's foot; on a phone, under the opened details |
+| `data-pg-reels-variant`, `-variant-price`, `-variant-href` | buttons in the template | A variant: chosen, its gallery, price and link |
+| `data-pg-reels-gallery` | in the template | A variant's pictures: shown while its variant is chosen |
+| `data-pg-reels-price` | in the template | The price, written with the chosen variant's |
 | `data-pg-reels-big`, `-thumb` | in the template | The big picture; the small ones that switch it — pressed, a small one is scrolled into sight |
 | `data-pg-reels-sound` | a button | Sound on and off, for the page |
 | `data-pg-reels-open` | a button | The full view |
@@ -270,6 +293,8 @@ category too; in
 the full view the category is a tag on the video. The first group is
 three clips from a food shop, the second five from a scarf shop, the
 third four from a pasta and mantı maker, the fourth four from a
-jeweller, each with its product; the food products' further photos are from
+jeweller, the fifth four from a nut and sweet shop — a coffee with four
+weights (variants, each its pictures and price) and three categories,
+each listing a few of its products — each with its product; the food products' further photos are from
 [Unsplash](https://unsplash.com/license) (free to use). The other pictures
 and the bubbles video are from stories' example.
