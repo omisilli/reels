@@ -12,6 +12,8 @@
     --line: #e4e4e0;
     /* A line under the mouse: a shade darker than --line, not black. */
     --line-hover: #c8c8c2;
+    /* Under a lifted row. */
+    --lift-shadow: 0 6px 16px rgb(0 0 0 / 0.08);
     --red: #ff0033;
     color-scheme: light;
 }
@@ -23,6 +25,7 @@
     --muted: #9a9aa3;
     --line: #2c2c31;
     --line-hover: #4a4a52;
+    --lift-shadow: 0 6px 16px rgb(0 0 0 / 0.4);
     color-scheme: dark;
 }
 * {
@@ -367,10 +370,32 @@ header > p {
     border-radius: 0.75rem;
     background: var(--surface);
     text-decoration: none;
-    transition: border-color 0.2s;
+    transition:
+        border-color 0.2s,
+        translate 0.2s ease,
+        box-shadow 0.2s ease;
 }
-[data-pg-reels-product]:hover {
-    border-color: var(--line-hover);
+/* Under the mouse it lifts a little and its arrow turns red — it can be
+   pressed; pressed, it settles back. */
+@media (hover: hover) {
+    [data-pg-reels-product]:hover {
+        translate: 0 -2px;
+        border-color: var(--line-hover);
+        box-shadow: var(--lift-shadow);
+    }
+    [data-pg-reels-product]:hover .go {
+        background: var(--red);
+        color: #fff;
+    }
+}
+[data-pg-reels-product]:active {
+    translate: 0;
+    box-shadow: none;
+}
+@media (prefers-reduced-motion: reduce) {
+    [data-pg-reels-product]:hover {
+        translate: none;
+    }
 }
 /* The picture: as tall as the words — two lines of name
    (2 × 1.0625rem), a gap (0.125rem), a line of category and
@@ -423,6 +448,9 @@ header > p {
     border-radius: 50%;
     background: var(--fg);
     color: var(--bg);
+    transition:
+        background 0.2s,
+        color 0.2s;
 }
 /* ---------- The full view: the site's part ----------
    The head and the caption as on the card, the category as a
