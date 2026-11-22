@@ -379,6 +379,12 @@ header > p {
     aspect-ratio: 1;
     border-radius: 0.375rem;
 }
+/* The words: what is left between the picture and the arrow, and no
+   more — a long line ends in "…", the arrow stays where it is. */
+[data-pg-reels-product] > span:not(.pg-imageGroup, .go) {
+    flex: 1 1 0%;
+    min-width: 0;
+}
 /* The name: always two lines' room, so every row is as tall
    — a longer name ends in "…". */
 [data-pg-reels-product] b {
