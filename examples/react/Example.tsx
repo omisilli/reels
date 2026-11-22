@@ -66,9 +66,11 @@ export type Product = {
     // A category in the product's place: a few of its products.
     list?: { count: string; items: { name: string; price: string; image: string; href: string }[] };
 };
+export type Platform = "instagram" | "tiktok" | "youtube";
 export type Clip = ({ video: string; poster: string } | { image: string; duration?: number }) & {
     caption: string;
     post?: string; // the post's text, in the panel: paragraphs by blank lines, #tags linked
+    postFrom?: Platform; // where the post is: its #tags link there (Instagram by default)
     views: { short: string; full: string }; // "12.4K", "12,400" — this clip's, your own count
     product: Product;
 };
@@ -98,11 +100,11 @@ export function Reels({ reels, label = "Reels", style }: { reels: Reel[]; label?
                             ))}
                             <header className="reel-head" data-pg-reels-head>
                                 {/* The picture, the name and Follow: each the profile, in a new tab. */}
-                                <a className="pg-imageGroup avatar" href={reel.account.profile} target="_blank" rel="noopener" aria-label={`${reel.account.name} on Instagram`}>
+                                <a className="pg-imageGroup avatar" href={reel.account.profile} target="_blank" rel="nofollow noopener" aria-label={`${reel.account.name} on Instagram`}>
                                     <img src={reel.account.avatar} alt="" />
                                 </a>
                                 <span className="who">
-                                    <a className="name" href={reel.account.profile} target="_blank" rel="noopener">
+                                    <a className="name" href={reel.account.profile} target="_blank" rel="nofollow noopener">
                                         <b>{reel.account.name}</b>
                                         {reel.account.verified && (
                                             <svg className="verified" viewBox="0 0 40 40" role="img" aria-label="Verified">
@@ -112,7 +114,7 @@ export function Reels({ reels, label = "Reels", style }: { reels: Reel[]; label?
                                             </svg>
                                         )}
                                     </a>
-                                    <a href={reel.account.profile} target="_blank" rel="noopener" className="follow">
+                                    <a href={reel.account.profile} target="_blank" rel="nofollow noopener" className="follow">
                                         Follow
                                     </a>
                                 </span>
@@ -200,14 +202,14 @@ function ClipView({ clip }: { clip: Clip }) {
                 {clip.caption}
             </figcaption>
             <div data-pg-reels-detail hidden>
-                <Detail product={product} post={clip.post} />
+                <Detail product={product} post={clip.post} postFrom={clip.postFrom} />
             </div>
         </figure>
     );
 }
 
 /* The details: the panel beside the video, the sheet under it on a phone. */
-function Detail({ product, post }: { product: Product; post?: string }) {
+function Detail({ product, post, postFrom }: { product: Product; post?: string; postFrom?: Platform }) {
     const { variants, list } = product;
     return (
         <div className="detail">
@@ -274,7 +276,7 @@ function Detail({ product, post }: { product: Product; post?: string }) {
                     ))}
                 </div>
             )}
-            {post && <Post text={post} />}
+            {post && <Post text={post} from={postFrom} />}
             {/* Pinned to the panel's foot, under what scrolls. */}
             <a className="detail-go" data-pg-reels-foot href={product.href} target="_blank" rel="noopener">
                 {list ? "Go to category →" : "Go to product →"}
@@ -283,16 +285,24 @@ function Detail({ product, post }: { product: Product; post?: string }) {
     );
 }
 
+/* A #tag's page, where the post is. */
+const TAG_PAGE: Record<Platform, (tag: string) => string> = {
+    instagram: (tag) => `https://www.instagram.com/explore/tags/${encodeURIComponent(tag)}/`,
+    tiktok: (tag) => `https://www.tiktok.com/tag/${encodeURIComponent(tag)}`,
+    youtube: (tag) => `https://www.youtube.com/hashtag/${encodeURIComponent(tag)}`,
+};
+
 /* The post's text, as on Instagram but without its head: a paragraph a
-   block, each #tag a link to its page there, in a new tab. */
-function Post({ text }: { text: string }) {
+   block, each #tag a link to its page where the post is — Instagram,
+   TikTok or YouTube — in a new tab, nofollow: a link out of the site. */
+function Post({ text, from = "instagram" }: { text: string; from?: Platform }) {
     return (
         <div className="detail-post">
             {text.split("\n\n").map((block, i) => (
                 <p key={i}>
                     {block.split(/(#[\p{L}\p{N}_]+)/u).map((part, j) =>
                         part.startsWith("#") ? (
-                            <a key={j} href={`https://www.instagram.com/explore/tags/${part.slice(1)}/`} target="_blank" rel="noopener">
+                            <a key={j} href={TAG_PAGE[from](part.slice(1))} target="_blank" rel="nofollow noopener">
                                 {part}
                             </a>
                         ) : (

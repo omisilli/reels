@@ -323,7 +323,9 @@ bright again after a minute, an hour, a day or never: `?seen=off`,
 details: its name heading the panel, a big picture at 16:9, small ones
 — nine for the first product, a row that scrolls — the price, variants
 as pills where there are some, a line about it, the post's text with its
-#tags (links to them on Instagram), a link. Under the card the product
+#tags — links to them where the post is: Instagram, TikTok or YouTube —
+a link. Every link out of the site (the profiles, the tags) is
+`rel="nofollow noopener"`. Under the card the product
 shows "In the video" over its name, the name in two lines' room (longer
 ends in "…"), so every row is as tall — no price: it is one press away,
 in the full view; over each clip's caption its category, a link to it
