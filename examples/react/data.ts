@@ -241,7 +241,8 @@ export const reels: Reel[] = [
         "account": {
             "name": "elmacioglu",
             "avatar": "/media/avatar-elmacioglu.jpg",
-            "profile": "https://www.instagram.com/elmacioglu/"
+            "profile": "https://www.instagram.com/elmacioglu/",
+            "verified": true
         },
         "clips": [
             {
@@ -351,7 +352,8 @@ export const reels: Reel[] = [
         "account": {
             "name": "2aaltin",
             "avatar": "/media/avatar-2aaltin.jpg",
-            "profile": "https://www.instagram.com/2aaltin/"
+            "profile": "https://www.instagram.com/2aaltin/",
+            "verified": true
         },
         "clips": [
             {

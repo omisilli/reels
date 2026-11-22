@@ -292,13 +292,28 @@ header > p {
 }
 /* The name: a link to the profile, as the picture and Follow are. */
 .who .name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
     max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     color: inherit;
     text-decoration: none;
     transition: color 0.2s;
+}
+.who .name b {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+/* The blue tick, beside a verified account's name. */
+.who .verified {
+    flex: none;
+    width: 0.875rem;
+    height: 0.875rem;
+}
+.who .verified path {
+    fill: #0095f6;
 }
 /* Under the mouse the name greys a little, the picture fades a little:
    they can be pressed. */
