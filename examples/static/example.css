@@ -472,7 +472,7 @@ header > p {
         border-color: var(--line-hover);
     }
     [data-pg-reels-product]:hover .go {
-        background: var(--fg);
+        background: color-mix(in srgb, var(--fg) 62%, var(--bg));
     }
 }
 [data-pg-reels-product]:active {
@@ -533,8 +533,8 @@ header > p {
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
-    /* A softer black until the mouse comes. */
-    background: color-mix(in srgb, var(--fg) 62%, var(--bg));
+    /* A light grey until the mouse comes, a darker one under it. */
+    background: color-mix(in srgb, var(--fg) 40%, var(--bg));
     color: var(--bg);
     transition:
         background 0.2s,
