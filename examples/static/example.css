@@ -344,11 +344,10 @@ header > p {
 }
 
 /* The bars under the card, the page's colour. The line sits in the
-   middle of its row, and the row has the same margin above and below:
-   the room over the line and under it is the same — thin, or thick
-   under the mouse. */
+   middle of its row; over it, 2px more room than under it — thin, or
+   thick under the mouse. */
 [data-pg-reels-bars] {
-    margin-top: 0.5rem;
+    margin-top: 0.625rem;
     color: var(--fg);
 }
 
