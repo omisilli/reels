@@ -105,7 +105,7 @@
     background-size: 100% 100%;
 }
 /* Under the card: a taller row to press — 1rem, the same room in the
-   page as before — and under the mouse every bar thickens, 2px to 6px. */
+   page as before — and under the mouse every bar thickens, 2px to 4px. */
 [data-pg-reels-bar] {
     height: 1rem;
     margin-block: -0.125rem;
@@ -114,11 +114,11 @@
 }
 @media (hover: hover) {
     [data-pg-reels-bars]:hover > [data-pg-reels-bar] {
-        padding-block: 0.3125rem;
+        padding-block: 0.375rem;
     }
 }
 [data-pg-reels-bars]:has(:focus-visible) > [data-pg-reels-bar] {
-    padding-block: 0.3125rem;
+    padding-block: 0.375rem;
 }
 
 /* A product's details are for the full view only. */
