@@ -37,34 +37,41 @@ export function ReelsInit() {
 }
 
 /* Every ring bright again, at once — no reload. */
-export function ForgetSeen() {
+export function ForgetSeen({ className }: { className?: string }) {
     return (
-        <button type="button" onClick={forgetReelsSeen}>
+        <button type="button" className={className} onClick={forgetReelsSeen}>
             Forget what was seen
         </button>
     );
 }
 
 /*
- * The data — from your CMS, say. A reel is a group of clips; each clip a
- * video (with its poster) or a picture shown for `duration` ms, and each
- * clip with its own product.
+ * The data — from your CMS, say (see data.ts: the static example's six
+ * groups). A reel is a group of clips; each clip a video (with its poster)
+ * or a picture shown for `duration` ms, and each clip with its own product
+ * — or a category in its place.
  */
-type Product = {
-    name: string;
-    size?: string; // "425 g" — under the price, not in the panel's head
-    category: { name: string; href: string };
-    price: string;
+export type Variant = { id: string; label: string; price: string; href: string; images: string[] };
+export type Product = {
+    name: string; // under the card; "Marine Enginar Salatası, 425 g"
+    fullName?: string; // under the price, when it differs from the name
+    category: { name: string; href: string }; // heads the panel
     href: string;
-    image: string;
-    images: string[]; // the details' pictures, the first shown big
+    image: string; // under the card
+    price?: string;
     about?: string;
+    images?: string[]; // the details' pictures, the first shown big
+    // Weights, colours: each its own pictures, price and page.
+    variants?: Variant[];
+    fromPrice?: string; // under the card, when there are variants: "from ₺110"
+    // A category in the product's place: a few of its products.
+    list?: { count: string; items: { name: string; price: string; image: string; href: string }[] };
 };
-type Clip = ({ video: string; poster: string } | { image: string; duration?: number }) & {
+export type Clip = ({ video: string; poster: string } | { image: string; duration?: number }) & {
     caption: string;
     product: Product;
 };
-type Reel = {
+export type Reel = {
     id: string;
     views: { short: string; full: string }; // "12.4K", "12,400" — your own count
     account: { name: string; avatar: string; profile: string };
@@ -73,11 +80,11 @@ type Reel = {
 
 /* Settings are CSS variables: a style prop here, a class or a media query
    in a stylesheet just the same — --pg-reels-show: 1.5 on a phone. */
-type Vars = CSSProperties & Record<`--pg-reels${string}`, string | number>;
+export type Vars = CSSProperties & Record<`--pg-reels${string}`, string | number>;
 
-export function Reels({ reels, label = "Reels" }: { reels: Reel[]; label?: string }) {
+export function Reels({ reels, label = "Reels", style }: { reels: Reel[]; label?: string; style?: Vars }) {
     return (
-        <section data-pg-reels className="reels" aria-label={label} style={{ "--pg-reels-gap": "1rem" } as Vars}>
+        <section data-pg-reels className="reels" aria-label={label} style={style}>
             <button type="button" className="arrow" data-pg-reels-prev aria-controls="reels-strip" aria-label="Previous">
                 <Icon d="m15 5-7 7 7 7" />
             </button>
@@ -100,7 +107,7 @@ export function Reels({ reels, label = "Reels" }: { reels: Reel[]; label?: strin
                                     </a>
                                 </span>
                             </header>
-                            {/* The top right: the view count, the full view's button, the sound under it. */}
+                            {/* The top right: the sound and the full view's button, the view count under them. */}
                             <div className="reel-tools">
                                 <span className="views" data-pg-reels-views aria-label={`${reel.views.full} views`}>
                                     <Icon d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
@@ -119,15 +126,16 @@ export function Reels({ reels, label = "Reels" }: { reels: Reel[]; label?: strin
                         <div data-pg-reels-bars />
                         <div data-pg-reels-products>
                             {reel.clips.map(({ product }, i) => (
-                                <a key={i} data-pg-reels-product href={product.href}>
+                                <a key={i} data-pg-reels-product href={product.href} target="_blank" rel="noopener">
                                     <span className="pg-imageGroup">
                                         <img src={product.image} alt="" loading="lazy" />
                                     </span>
                                     <span>
-                                        <b>{product.name}</b>
                                         {/* Two lines' room for the name in the site's CSS (line-clamp: 2). */}
+                                        <b>{product.name}</b>
                                         <small>
-                                            {product.category.name} · <span className="price">{product.price}</span>
+                                            {product.category.name} ·{" "}
+                                            <span className="price">{product.list ? product.list.count : (product.fromPrice ?? product.price)}</span>
                                         </small>
                                     </span>
                                     <span className="go" aria-hidden="true">
@@ -164,9 +172,9 @@ function ClipView({ clip }: { clip: Clip }) {
                 <img src={clip.image} alt="" loading="lazy" />
             )}
             <figcaption>
-                {/* The product's category: a tag on the video in the full view, a
-                    line over the caption on the card (the site's CSS). */}
-                <a className="tag" href={product.category.href}>
+                {/* The category: a tag on the video in the full view, a line
+                    over the caption on the card (the site's CSS). */}
+                <a className="tag" href={product.category.href} target="_blank" rel="noopener">
                     <Icon d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" />
                     {product.category.name}
                 </a>
@@ -174,41 +182,106 @@ function ClipView({ clip }: { clip: Clip }) {
                 {clip.caption}
             </figcaption>
             <div data-pg-reels-detail hidden>
-                <div className="detail">
-                    {/* Heads the panel; the name is under the price. */}
-                    <a className="detail-cat" data-pg-reels-title href={product.category.href}>
-                        {product.category.name}
-                    </a>
-                    <div className="pg-imageGroup detail-big" data-pg-reels-big>
-                        <img src={product.images[0]} alt="" loading="lazy" />
+                <Detail product={product} />
+            </div>
+        </figure>
+    );
+}
+
+/* The details: the panel beside the video, the sheet under it on a phone. */
+function Detail({ product }: { product: Product }) {
+    const { variants, list } = product;
+    return (
+        <div className="detail">
+            {/* Heads the panel; the name is under the price. */}
+            <a className="detail-cat" data-pg-reels-title href={product.category.href} target="_blank" rel="noopener">
+                {product.category.name}
+            </a>
+            {list && <p className="detail-count">{list.count}</p>}
+            {variants ? (
+                // One gallery a variant; the package shows the chosen one's.
+                variants.map((v, i) => (
+                    <div key={v.id} data-pg-reels-gallery={v.id} data-pg-reels-current={i === 0 ? "" : undefined}>
+                        <Gallery images={v.images} />
                     </div>
-                    <div className="detail-thumbs">
-                        {product.images.map((src, i) => (
+                ))
+            ) : list ? (
+                <div className="pg-imageGroup detail-big">
+                    <img src={product.image} alt="" loading="lazy" />
+                </div>
+            ) : (
+                <Gallery images={product.images ?? [product.image]} />
+            )}
+            {variants ? (
+                <>
+                    <p className="detail-price" data-pg-reels-price>
+                        {variants[0].price}
+                    </p>
+                    <div className="detail-variants" role="group" aria-label="Variant">
+                        {variants.map((v, i) => (
                             <button
-                                key={src}
+                                key={v.id}
                                 type="button"
-                                className="pg-imageGroup"
-                                data-pg-reels-thumb={src}
+                                data-pg-reels-variant={v.id}
+                                data-pg-reels-variant-price={v.price}
+                                data-pg-reels-variant-href={v.href}
                                 data-pg-reels-current={i === 0 ? "" : undefined}
-                                aria-label={`Picture ${i + 1}`}
                             >
-                                <img src={src} alt="" loading="lazy" />
+                                {v.label}
                             </button>
                         ))}
                     </div>
-                    <p className="detail-price">{product.price}</p>
-                    <p className="detail-name">
-                        {product.name}
-                        {product.size && `, ${product.size}`}
-                    </p>
-                    {product.about && <p className="detail-blurb">{product.about}</p>}
-                    {/* Pinned to the panel's foot, under what scrolls. */}
-                    <a className="detail-go" data-pg-reels-foot href={product.href}>
-                        Go to product →
-                    </a>
+                </>
+            ) : (
+                product.price && <p className="detail-price">{product.price}</p>
+            )}
+            {!list && <p className="detail-name">{product.fullName ?? product.name}</p>}
+            {product.about && <p className="detail-blurb">{product.about}</p>}
+            {list && (
+                <div className="detail-list">
+                    {list.items.map((item) => (
+                        <a key={item.name} href={item.href} target="_blank" rel="noopener">
+                            <span className="pg-imageGroup">
+                                <img src={item.image} alt="" loading="lazy" />
+                            </span>
+                            <b>{item.name}</b>
+                            <small>{item.price}</small>
+                        </a>
+                    ))}
                 </div>
+            )}
+            {/* Pinned to the panel's foot, under what scrolls. */}
+            <a className="detail-go" data-pg-reels-foot href={product.href} target="_blank" rel="noopener">
+                {list ? "Go to category →" : "Go to product →"}
+            </a>
+        </div>
+    );
+}
+
+/* A big picture and the small ones that switch it. */
+function Gallery({ images }: { images: string[] }) {
+    return (
+        <>
+            <div className="pg-imageGroup detail-big" data-pg-reels-big>
+                <img src={images[0]} alt="" loading="lazy" />
             </div>
-        </figure>
+            {images.length > 1 && (
+                <div className="detail-thumbs">
+                    {images.map((src, i) => (
+                        <button
+                            key={src}
+                            type="button"
+                            className="pg-imageGroup"
+                            data-pg-reels-thumb={src}
+                            data-pg-reels-current={i === 0 ? "" : undefined}
+                            aria-label={`Picture ${i + 1}`}
+                        >
+                            <img src={src} alt="" loading="lazy" />
+                        </button>
+                    ))}
+                </div>
+            )}
+        </>
     );
 }
 
@@ -219,41 +292,3 @@ function Icon({ d, className }: { d: string; className?: string }) {
         </svg>
     );
 }
-
-/* For example: */
-export const reels: Reel[] = [
-    {
-        id: "studio",
-        views: { short: "12.4K", full: "12,400" },
-        account: { name: "plusguard", avatar: "/media/avatar-plusguard.jpg", profile: "https://www.instagram.com/" },
-        clips: [
-            {
-                video: "/media/bubbles.mp4",
-                poster: "/media/bubbles-poster.jpg",
-                caption: "Blown by hand, one at a time",
-                product: {
-                    name: "Glass pour-over carafe",
-                    category: { name: "Kitchen", href: "/kitchen" },
-                    price: "$34",
-                    href: "/products/carafe",
-                    image: "/media/story-mist.jpg",
-                    images: ["/media/story-mist.jpg", "/media/story-river.jpg", "/media/story-field.jpg"],
-                    about: "Mouth-blown borosilicate, 600 ml.",
-                },
-            },
-            {
-                image: "/media/story-river.jpg",
-                duration: 6000,
-                caption: "Packed for the river",
-                product: {
-                    name: "Linen shirt, relaxed",
-                    category: { name: "Clothing", href: "/clothing" },
-                    price: "$58",
-                    href: "/products/linen-shirt",
-                    image: "/media/story-river.jpg",
-                    images: ["/media/story-river.jpg", "/media/story-canoe.jpg"],
-                },
-            },
-        ],
-    },
-];

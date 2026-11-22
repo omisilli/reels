@@ -1,0 +1,608 @@
+/*
+ * The example's own look — the site's part: the page, the cards, the
+ * products, the full view's head and panel. Shared by the static example
+ * and the React one (examples/react), so both look the same.
+ */
+
+:root {
+    --bg: #f6f6f4;
+    --surface: #ffffff;
+    --fg: #18181b;
+    --muted: #6b6b72;
+    --line: #e4e4e0;
+    --red: #ff0033;
+    color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #111113;
+        --surface: #1b1b1f;
+        --fg: #ededef;
+        --muted: #9a9aa3;
+        --line: #2c2c31;
+    }
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+body {
+    font:
+        16px/1.5 system-ui,
+        -apple-system,
+        "Segoe UI",
+        Roboto,
+        sans-serif;
+    color: var(--fg);
+    background: var(--bg);
+}
+a {
+    color: inherit;
+}
+main {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 3rem 1.25rem 6rem;
+    display: grid;
+    gap: 2rem;
+}
+h1 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    letter-spacing: -0.02em;
+}
+header > p {
+    color: var(--muted);
+    max-width: 40rem;
+}
+
+/* Pictures in their boxes, the house way: the box has the
+   height and the shape, the picture fills it. */
+.pg-imageGroup {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.pg-imageGroup > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* The section: the strip between its arrows. */
+.reels {
+    position: relative;
+    --pg-reels-show: 4;
+    --pg-reels-gap: 1rem;
+}
+/* On a phone: one card and half the next, the strip to the
+   screen's edges — the page's side padding inside it, so the
+   first card starts in line with the text and the next runs
+   off the edge. */
+@media (max-width: 47.99rem) {
+    .reels {
+        --pg-reels-show: 1.5;
+        --pg-reels-gap: 0.75rem;
+    }
+    [data-pg-reels-strip] {
+        margin-inline: -1.25rem;
+        padding-inline: 1.25rem;
+        scroll-padding-inline: 1.25rem;
+    }
+}
+.arrow {
+    position: absolute;
+    top: calc(50% - 4rem);
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--fg);
+    box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 0.12);
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.arrow svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+[data-pg-reels-prev] {
+    left: -1.375rem;
+}
+[data-pg-reels-next] {
+    right: -1.375rem;
+}
+/* At either end, its arrow away. */
+[data-pg-reels-start] [data-pg-reels-prev],
+[data-pg-reels-end] [data-pg-reels-next] {
+    opacity: 0;
+    pointer-events: none;
+}
+@media (max-width: 47.99rem) {
+    .arrow {
+        display: none;
+    }
+}
+
+/* A card: rounded, dark under the clips, shade at the top and
+   the bottom for the words on it. */
+[data-pg-reels-card] {
+    border-radius: 0.75rem;
+    background: #000;
+    color: #fff;
+}
+[data-pg-reels-card]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(rgb(0 0 0 / 0.45), transparent 25%, transparent 60%, rgb(0 0 0 / 0.6));
+}
+[data-pg-reels-clip] figcaption {
+    position: absolute;
+    z-index: 1;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    display: grid;
+    gap: 0.45rem;
+    font-weight: 700;
+    line-height: 1.25;
+    text-shadow: 0 1px 4px rgb(0 0 0 / 0.4);
+}
+[data-pg-reels-clip] figcaption small {
+    font-weight: 500;
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+/* The head: up to the corner's buttons and view count — a long
+   name ends in "…". */
+.reel-head {
+    position: absolute;
+    z-index: 1;
+    top: 0.875rem;
+    left: 0.875rem;
+    max-width: calc(100% - 6.75rem);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+/* The ring round the avatar, as stories' rings: a band of
+   colour while the group is new, a pale one once it has been
+   seen in the full view (data-pg-reels-seen="true") — then a
+   gap the video shows through, then the photo. The band is
+   drawn round the box and cut out in its middle. */
+.reel-head .avatar {
+    --ring: 2px;
+    --gap: 2px;
+    position: relative;
+    flex: none;
+    height: 2.5rem;
+    aspect-ratio: 1;
+    padding: calc(var(--ring) + var(--gap));
+    border-radius: 50%;
+}
+.reel-head .avatar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: var(--ring);
+    border-radius: 50%;
+    background: linear-gradient(45deg, #f9c20c 15%, #f4a012 25%, #f95e1a 41%, #f30863 59%, #df03a8 75%, #cc02c1 85%);
+    mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    transition: background 0.3s;
+}
+.reel-head .avatar img {
+    border-radius: 50%;
+}
+[data-pg-reels-seen="true"] .reel-head .avatar::before {
+    background: rgb(255 255 255 / 0.5);
+}
+
+/* The reset: every ring bright again (forgetReelsSeen). */
+.forget {
+    margin-top: 1rem;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--fg);
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+.forget:hover {
+    border-color: var(--fg);
+}
+.who {
+    min-width: 0;
+    display: grid;
+    justify-items: start;
+    line-height: 1.2;
+    font-size: 0.85rem;
+    text-shadow: 0 1px 4px rgb(0 0 0 / 0.4);
+}
+.who b {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.follow {
+    margin-top: 0.25rem;
+    padding: 0.15rem 0.6rem;
+    border: 1px solid rgb(255 255 255 / 0.7);
+    border-radius: 0.375rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-shadow: none;
+}
+.follow:hover {
+    background: #fff;
+    color: #000;
+}
+/* The top right: the sound and the full view's button, the
+   view count under them — as in the full view. */
+.reel-tools {
+    position: absolute;
+    z-index: 1;
+    top: 0.75rem;
+    right: 0.75rem;
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 0.375rem;
+    pointer-events: none;
+}
+.reel-tools > * {
+    pointer-events: auto;
+}
+.reel-tools [data-pg-reels-sound] {
+    grid-column: 1;
+    grid-row: 1;
+}
+.reel-tools [data-pg-reels-open] {
+    grid-column: 2;
+    grid-row: 1;
+}
+/* The view count — the site's number (data-pg-reels-views) — in
+   the card's corner and, copied, in the full view's. */
+.views {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: end;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.55rem;
+    border-radius: 0.375rem;
+    background: rgb(0 0 0 / 0.35);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+}
+.views svg,
+.reel-tools .views svg {
+    width: 0.95rem;
+    height: 0.95rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.reel-tools button {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(0 0 0 / 0.35);
+    color: #fff;
+    cursor: pointer;
+}
+.reel-tools svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+[data-pg-reels-sound][aria-pressed="true"] .is-off,
+[data-pg-reels-sound]:not([aria-pressed="true"]) .is-on {
+    display: none;
+}
+
+/* The bars under the card, the page's colour. */
+[data-pg-reels-bars] {
+    margin-top: 0.625rem;
+    color: var(--fg);
+}
+
+/* The product under the card: its picture, name, price, an
+   arrow. The playing clip's. */
+[data-pg-reels-products] {
+    margin-top: 0.375rem;
+}
+/* The same room on every side: the picture as tall as the
+   words beside it, its corners following the row's. */
+[data-pg-reels-product] {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem;
+    border: 1px solid var(--line);
+    border-radius: 0.75rem;
+    background: var(--surface);
+    text-decoration: none;
+    transition: border-color 0.2s;
+}
+[data-pg-reels-product]:hover {
+    border-color: var(--fg);
+}
+/* The picture: as tall as the words — two lines of name
+   (2 × 1.0625rem), a gap (0.125rem), a line of category and
+   price (1.25rem). */
+[data-pg-reels-product] .pg-imageGroup {
+    flex: none;
+    height: 3.5rem;
+    aspect-ratio: 1;
+    border-radius: 0.375rem;
+}
+/* The name: always two lines' room, so every row is as tall
+   — a longer name ends in "…". */
+[data-pg-reels-product] b {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    min-height: 2.5em;
+    font-size: 0.85rem;
+    line-height: 1.25;
+}
+[data-pg-reels-product] .price {
+    color: var(--fg);
+    font-weight: 600;
+}
+[data-pg-reels-product] small {
+    display: block;
+    margin-top: 0.125rem;
+    font-size: 0.8125rem;
+    line-height: 1.25rem;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+[data-pg-reels-product] .go {
+    margin-left: auto;
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--fg);
+    color: var(--bg);
+}
+/* ---------- The full view: the site's part ----------
+   The head and the caption as on the card, the category as a
+   tag instead of a line; the product's details in the panel. */
+[data-pg-reels-viewer] .reel-head {
+    position: static;
+    max-width: none;
+}
+[data-pg-reels-viewer] figcaption small {
+    display: none;
+}
+[data-pg-reels-viewer] [data-pg-reels-clip] figcaption {
+    bottom: 1.5rem;
+}
+[data-pg-reels-viewer] [data-pg-reels-panel] {
+    background: var(--surface);
+    color: var(--fg);
+}
+.detail {
+    display: grid;
+    gap: 0.75rem;
+}
+.detail-cat {
+    justify-self: start;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+.detail-cat:hover {
+    color: var(--fg);
+    text-decoration: underline;
+}
+/* The category's tag on the video — in the full view only; on
+   the card it is the line over the caption. */
+.tag {
+    display: none;
+}
+[data-pg-reels-viewer] .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    justify-self: start;
+    padding: 0.35rem 0.75rem 0.35rem 0.55rem;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.92);
+    color: #111;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-shadow: none;
+}
+.tag svg {
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+/* Variants: a row of choices; the chosen one dark. */
+.detail-variants {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.detail-variants button {
+    padding: 0.55rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 0.375rem;
+    background: none;
+    color: inherit;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+.detail-variants button:hover {
+    border-color: var(--fg);
+}
+.detail-variants button[data-pg-reels-current] {
+    border-color: var(--fg);
+    background: var(--fg);
+    color: var(--bg);
+}
+[data-pg-reels-gallery] {
+    display: grid;
+    gap: 0.75rem;
+}
+/* A category's products: two across, each a picture, a name and
+   a price, a link to it. */
+.detail-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+.detail-list a {
+    display: grid;
+    gap: 0.25rem;
+    color: inherit;
+    text-decoration: none;
+}
+.detail-list .pg-imageGroup {
+    aspect-ratio: 1;
+    border-radius: 0.5rem;
+    background: var(--bg);
+}
+.detail-list b {
+    font-size: 0.85rem;
+    line-height: 1.25;
+}
+.detail-list small {
+    color: var(--muted);
+    font-weight: 600;
+}
+.detail-list a:hover b {
+    text-decoration: underline;
+}
+
+/* The name, in the panel's head beside its close. */
+/* The panel's head: the category, a link. */
+[data-pg-reels-panel-title] .detail-cat {
+    color: var(--fg);
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+.detail-count {
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.detail-big {
+    aspect-ratio: 4 / 3;
+    border-radius: 0.75rem;
+    background: var(--bg);
+}
+/* The small pictures: a row that scrolls sideways when there
+   are more than fit. */
+.detail-thumbs {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+    padding-bottom: 0.375rem;
+}
+.detail-thumbs button {
+    flex: none;
+    scroll-snap-align: start;
+    height: 3.5rem;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+.detail-thumbs button[data-pg-reels-current] {
+    border-color: var(--fg);
+}
+.detail-price {
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+.detail-name {
+    margin-top: -0.6rem;
+    font-weight: 600;
+}
+.detail-blurb {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+/* The link: pinned to the panel's foot (data-pg-reels-foot). */
+.detail-go {
+    display: block;
+    padding: 0.8rem 1rem;
+    border-radius: 999px;
+    background: var(--fg);
+    color: var(--bg);
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+}
+/* Below 1024px (the full view's phone layout): the band is the
+   card's product; the panel is already the band, so the
+   product's own border goes. */
+@media (max-width: 63.99rem) {
+    [data-pg-reels-viewer] [data-pg-reels-panel] [data-pg-reels-product] {
+        padding: 0;
+        border: 0;
+        background: none;
+    }
+    /* The caption above the band, clear of its Details. */
+    [data-pg-reels-viewer] [data-pg-reels-clip] figcaption {
+        right: 7rem;
+        bottom: calc(var(--pg-reels-band, 0px) + 1rem);
+    }
+}

@@ -295,7 +295,23 @@ So in React they go in the clip, as an element kept hidden:
 
 Give its pictures `loading="lazy"`: hidden, they load when the full view
 shows them. See [`examples/react/Example.tsx`](examples/react/Example.tsx)
-— the section from data, and `pg-reels:open` counted.
+— the section from data (variants and categories too), and
+`pg-reels:open` counted.
+
+### The React example, running
+
+[`examples/react`](examples/react) is a small Vite app: the static
+example's six groups ([`data.ts`](examples/react/data.ts)) rendered with
+`Example.tsx`, the static example's look
+([`examples/static/example.css`](examples/static/example.css)) and its
+media. It imports the package from its source (`../../index.ts`), so an
+edit to the package shows at once — no build, no release.
+
+```sh
+cd examples/react
+npm install
+npm run dev   # http://localhost:5110
+```
 
 ## Example
 
