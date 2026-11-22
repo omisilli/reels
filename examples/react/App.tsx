@@ -1,5 +1,6 @@
 import { ForgetSeen, Reels, ReelsInit, type Vars } from "./Example";
 import { reels } from "./data";
+import { SchemeSwitch } from "./Scheme";
 
 /*
  * The React example, running: the static example's page, built from data
@@ -23,6 +24,7 @@ export function App() {
                     The React example: the same six groups as the static one, rendered from data. Every card in
                     sight plays, muted; press a card for the full view.
                 </p>
+                <SchemeSwitch />
                 <ForgetSeen className="forget" />
             </header>
             <Reels reels={reels} style={style} />

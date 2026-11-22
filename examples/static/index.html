@@ -9,6 +9,18 @@
         <title>reels — example</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@plusguard/reels@1.7.0/index.css" />
         <link rel="stylesheet" href="./example.css" />
+        <script>
+            // Light or dark before the first paint: the switch's choice — one for
+            // every example — or the system's.
+            (() => {
+                let choice = "system";
+                try {
+                    choice = localStorage.getItem("pg-example-scheme") || "system";
+                } catch {}
+                const dark = choice === "dark" || (choice === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
+                document.documentElement.dataset.scheme = dark ? "dark" : "light";
+            })();
+        </script>
     </head>
     <body>
         <main>
@@ -22,6 +34,11 @@
                     product beside it; on a phone, under it. A group whose every clip has been seen in the full view has its ring go pale —
                     remembered in this browser for a day (?seen-for=1h, ?seen=off).
                 </p>
+                <div class="scheme" role="group" aria-label="Colour scheme">
+                    <button type="button" data-scheme-choice="system">System</button>
+                    <button type="button" data-scheme-choice="light">Light</button>
+                    <button type="button" data-scheme-choice="dark">Dark</button>
+                </div>
                 <button type="button" class="forget" id="forget">Forget what was seen</button>
             </header>
 
@@ -737,6 +754,41 @@
 
             // Every ring bright again, at once — no reload.
             document.getElementById("forget").addEventListener("click", forgetReelsSeen);
+        </script>
+        <script>
+            // The colour-scheme switch: one choice for every example, kept in this
+            // browser — an example open in another tab follows it.
+            (() => {
+                const key = "pg-example-scheme";
+                const root = document.documentElement;
+                const system = matchMedia("(prefers-color-scheme: dark)");
+                const buttons = document.querySelectorAll("[data-scheme-choice]");
+                let choice = "system";
+                try {
+                    choice = localStorage.getItem(key) || "system";
+                } catch {}
+                const apply = () => {
+                    const dark = choice === "dark" || (choice === "system" && system.matches);
+                    root.dataset.scheme = dark ? "dark" : "light";
+                    buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.schemeChoice === choice)));
+                };
+                buttons.forEach((b) =>
+                    b.addEventListener("click", () => {
+                        choice = b.dataset.schemeChoice;
+                        try {
+                            localStorage.setItem(key, choice);
+                        } catch {}
+                        apply();
+                    }),
+                );
+                system.addEventListener("change", apply);
+                addEventListener("storage", (e) => {
+                    if (e.key !== key) return;
+                    choice = e.newValue || "system";
+                    apply();
+                });
+                apply();
+            })();
         </script>
     </body>
 </html>

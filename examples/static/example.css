@@ -11,16 +11,16 @@
     --muted: #6b6b72;
     --line: #e4e4e0;
     --red: #ff0033;
-    color-scheme: light dark;
+    color-scheme: light;
 }
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg: #111113;
-        --surface: #1b1b1f;
-        --fg: #ededef;
-        --muted: #9a9aa3;
-        --line: #2c2c31;
-    }
+/* Dark: as the switch says — or the system, its default. */
+:root[data-scheme="dark"] {
+    --bg: #111113;
+    --surface: #1b1b1f;
+    --fg: #ededef;
+    --muted: #9a9aa3;
+    --line: #2c2c31;
+    color-scheme: dark;
 }
 * {
     box-sizing: border-box;
@@ -605,4 +605,30 @@ header > p {
         right: 7rem;
         bottom: calc(var(--pg-reels-band, 0px) + 1rem);
     }
+}
+/* The colour-scheme switch. */
+.scheme {
+    display: inline-flex;
+    width: fit-content;
+    gap: 0.25rem;
+    margin-top: 1rem;
+    padding: 0.25rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+}
+.scheme button {
+    padding: 0.35rem 0.8rem;
+    margin: 0;
+    border: 0;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 0.8125rem;
+    line-height: 1.2;
+    color: var(--muted);
+    background: none;
+    cursor: pointer;
+}
+.scheme button[aria-pressed="true"] {
+    color: var(--bg);
+    background: var(--fg);
 }
