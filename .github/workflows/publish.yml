@@ -1,7 +1,7 @@
-# A version tag pushed (v1.4.1) publishes that version to npm — through
+# A version tag pushed (vX.Y.Z) publishes that version to npm — through
 # npm's trusted publishing: GitHub and npm vouch for each other, so no token
 # and no one-time code. Set once on npmjs.com, the package's Settings →
-# Trusted Publisher: GitHub Actions, omisilli / reels, publish.yml.
+# Trusted Publisher: GitHub Actions, omisilli / <this repo>, publish.yml.
 name: Publish to npm
 
 on:
@@ -37,5 +37,16 @@ jobs:
             exit 1
           fi
 
+      # Published already — by hand, the first time: nothing to do.
+      - name: Already on npm?
+        id: published
+        run: |
+          spec="$(node -p "require('./package.json').name")@$(node -p "require('./package.json').version")"
+          if npm view "$spec" version > /dev/null 2>&1; then
+            echo "$spec is on npm already."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
       # dist is built and committed with each release: published as it is.
-      - run: npm publish --access public
+      - if: steps.published.outputs.skip != 'true'
+        run: npm publish --access public
