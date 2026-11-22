@@ -158,11 +158,13 @@ in it, copies of the site's markup: the clip, the group's
   links; the rest of the clip passes presses to the taps under it.
 - **Held down** — a finger, the mouse — it stands still, the controls
   out of the way; let go and it goes on. Its play / pause button, Space.
-- **Its corner:** the sound and play / pause at the video's top right,
-  the group's view count under them — the card's `data-pg-reels-views`
-  element, copied, so it looks as in the card. The number is the site's
-  (from its own counting); the package shows it. The close is a plain ✕ at
-  the window's top right, the ↑ ↓ at the window's left.
+- **Its corner:** the sound, play / pause and close at the video's top
+  right, the group's view count under them — the card's
+  `data-pg-reels-views` element, copied, so it looks as in the card. The
+  number is the site's (from its own counting); the package shows it. On
+  a computer a second close, a plain ✕, at the window's top right, and
+  the ↑ ↓ at the window's left, their names on their right under the
+  mouse.
 - **The product:** on a computer, a panel beside the video, touching it
   as a post opened on Instagram (no corners where they meet, small ones
   outside), from its top to the window's foot, about a third of the

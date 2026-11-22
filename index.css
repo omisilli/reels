@@ -376,12 +376,12 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-side] svg {
 [data-pg-reels-view-head] {
     min-width: 0;
 }
-/* The video's top right: the sound and play / pause, the group's view
-   count under them. Only the buttons take a press: the rest of the corner
+/* The video's top right: the sound, play / pause and close, the group's
+   view count under them. Only the buttons take a press: the rest of the corner
    is the video's. */
 [data-pg-reels-view-row] > [data-pg-reels-view-tools] {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto auto;
     gap: 0.375rem;
     pointer-events: none;
 }
@@ -420,8 +420,8 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-side] svg {
     display: block;
 }
 
-/* ↑ ↓: the group before, the next — left of the video, at its middle,
-   round and grey, their name beside them under the mouse. */
+/* ↑ ↓: the group before, the next — at the window's left, at the video's
+   middle, round and grey, their name on their right under the mouse. */
 [data-pg-reels-view-steps] {
     position: absolute;
     left: 1.25rem;
@@ -432,8 +432,8 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-side] svg {
     gap: 1rem;
 }
 
-/* The close: the window's top right, a plain ✕ as on Instagram. */
-dialog[data-pg-reels-viewer] [data-pg-reels-view-close] {
+/* A second close at the window's top right, a plain ✕ as on Instagram. */
+dialog[data-pg-reels-viewer] [data-pg-reels-close] {
     position: absolute;
     z-index: 3;
     top: 0.75rem;
@@ -450,10 +450,10 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-close] {
     cursor: pointer;
     transition: background-color 0.15s;
 }
-dialog[data-pg-reels-viewer] [data-pg-reels-view-close]:hover {
+dialog[data-pg-reels-viewer] [data-pg-reels-close]:hover {
     background: rgb(255 255 255 / 0.12);
 }
-dialog[data-pg-reels-viewer] [data-pg-reels-view-close] svg {
+dialog[data-pg-reels-viewer] [data-pg-reels-close] svg {
     width: 1.75rem;
     height: 1.75rem;
 }
@@ -477,7 +477,7 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-steps] svg {
 [data-pg-reels-view-steps] > button::after {
     content: attr(aria-label);
     position: absolute;
-    right: calc(100% + 0.75rem);
+    left: calc(100% + 0.75rem);
     top: 50%;
     translate: 0 -50%;
     padding: 0.5rem 0.625rem;
@@ -566,13 +566,9 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-steps] svg {
         display: block;
         padding: 0;
     }
-    /* The close over the video's top right; the sound and pause beside it. */
-    dialog[data-pg-reels-viewer] [data-pg-reels-view-close] {
-        top: max(0.5rem, env(safe-area-inset-top));
-        right: 0.375rem;
-    }
-    [data-pg-reels-view-row] > [data-pg-reels-view-tools] {
-        margin-right: 2.75rem;
+    /* The video fills the window: its own close is the one. */
+    dialog[data-pg-reels-viewer] [data-pg-reels-close] {
+        display: none;
     }
     [data-pg-reels-pair] {
         display: contents;
