@@ -33,8 +33,10 @@
  * data-pg-reels-duration;
  * the bars under it fill as each plays. A bar pressed is that clip at
  * once. The clip playing shows its product: the products under the card
- * are one per clip, and only the playing one's shows. The others wait on
- * their posters. Out of sight, nothing plays.
+ * are one per clip, and only the playing one's shows. So with view
+ * counts: one data-pg-reels-views a clip, in order, and only the playing
+ * clip's shows — or one for the whole group, always shown. The others wait
+ * on their posters. Out of sight, nothing plays.
  *
  * The strip scrolls sideways — a finger, a wheel, its arrows; it never
  * moves by itself. data-pg-reels-start / -end on the section while it
@@ -55,7 +57,7 @@
  * group's last clip, the next group. The product changes once it has
  * landed. Held
  * down — a finger, the mouse — it stands still; its sound, play / pause
- * and close at the video's top right, the group's view count under them
+ * and close at the video's top right, the clip's view count under them
  * (its data-pg-reels-views, the site's); a close at the window's top
  * right too, on a computer.
  * Esc, Back, the dark around it close it too. The
@@ -198,6 +200,8 @@ function partsOf(el, root) {
     const own = (x) => x.closest(`[${GROUP}]`) === el;
     const clips = [...el.querySelectorAll(`[${CLIP}]`)].filter(own);
     const products = [...el.querySelectorAll(`[${PRODUCT}]`)].filter(own);
+    // A view count a clip, in order — or one, the group's.
+    const views = [...el.querySelectorAll(`[${VIEWS}]`)].filter(own);
     const holder = [...el.querySelectorAll(`[${BARS}]`)].find(own);
     // One bar a clip — made here, in the empty holder, once.
     let bars = [];
@@ -215,7 +219,7 @@ function partsOf(el, root) {
         bars = [...holder.children];
     }
     const current = clips.findIndex((c) => c.hasAttribute(CURRENT));
-    return { el, root, clips, products, bars, at: Math.max(0, current), ratio: 0, shown: 0, since: 0 };
+    return { el, root, clips, products, views, bars, at: Math.max(0, current), ratio: 0, shown: 0, since: 0 };
 }
 /* Show clip `i` of the group: its clip, its product, its bar. */
 function show(g, i) {
@@ -235,6 +239,7 @@ function show(g, i) {
     g.since = performance.now();
     g.clips.forEach((c, k) => c.toggleAttribute(CURRENT, k === g.at));
     g.products.forEach((p, k) => p.toggleAttribute(CURRENT, k === g.at));
+    g.views.forEach((v, k) => v.toggleAttribute(CURRENT, g.views.length === 1 || k === g.at));
     g.bars.forEach((b, k) => {
         b.toggleAttribute(DONE, k < g.at);
         if (k === g.at)
@@ -702,9 +707,9 @@ export function initReels() {
         viewVideo()?.pause();
         const head = g.el.querySelector(`[${HEAD}]`);
         part("view-head").replaceChildren(...(head ? [copyOf(head)] : []));
-        // The group's view count — the site's, written in its card — left
-        // of the close.
-        const views = g.el.querySelector(`[${VIEWS}]`);
+        // The clip's view count — the site's, written in its card — under
+        // the close; the group's, when the card has only one.
+        const views = g.views.length === 1 ? g.views[0] : g.views[view.ci];
         part("view-views").replaceChildren(...(views ? [copyOf(views)] : []));
         // The head as it was before this group was looked at — its ring
         // bright the first time, through all its clips — and from now on,

@@ -159,7 +159,7 @@ in it, copies of the site's markup: the clip, the group's
 - **Held down** — a finger, the mouse — it stands still, the controls
   out of the way; let go and it goes on. Its play / pause button, Space.
 - **Its corner:** the sound, play / pause and close at the video's top
-  right, the group's view count under them — the card's
+  right, the playing clip's view count under them — the card's
   `data-pg-reels-views` element, copied, so it looks as in the card. The
   number is the site's (from its own counting); the package shows it. On
   a computer a second close, a plain ✕, at the window's top right, and
@@ -233,7 +233,7 @@ and videos: the box has the shape, what is inside is 100% of it.
 | `data-pg-reels-strip` | the row | Scrolls sideways |
 | `data-pg-reels-group` | each group | A card and what is under it |
 | `data-pg-reels-id` | a group | Its name, for what was seen to be remembered in this browser |
-| `data-pg-reels-views` | in the card | The group's view count, the site's — copied into the full view, under the close |
+| `data-pg-reels-views` | in the card | A clip's view count, the site's — one a clip, in order, as the products: only the playing clip's shows, and it is copied into the full view, under the close. Only one in the card: the group's, always shown |
 | `data-pg-reels-seen` | a group, the full view's head | Written: `"true"` once seen in the full view, `"false"` before |
 | `data-pg-reels-card` | the card | The shape; its clips fill it |
 | `data-pg-reels-clip` | each clip | A video with its poster, or a picture |

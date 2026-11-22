@@ -110,8 +110,9 @@
     display: none !important;
 }
 
-/* The products: only the playing clip's shows. */
-[data-pg-reels-group] [data-pg-reels-product]:not([data-pg-reels-current]) {
+/* The products and the view counts: only the playing clip's show. */
+[data-pg-reels-group] [data-pg-reels-product]:not([data-pg-reels-current]),
+[data-pg-reels-group] [data-pg-reels-views]:not([data-pg-reels-current]) {
     display: none !important;
 }
 

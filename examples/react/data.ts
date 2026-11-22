@@ -7,10 +7,6 @@ import type { Reel } from "./Example";
 export const reels: Reel[] = [
     {
         "id": "enginar",
-        "views": {
-            "short": "12.4K",
-            "full": "12,400"
-        },
         "account": {
             "name": "enginardunyasi",
             "avatar": "/media/avatar-enginardunyasi.jpg",
@@ -42,6 +38,10 @@ export const reels: Reel[] = [
                         "/media/photo-artichoke-7.jpg",
                         "/media/photo-artichoke-8.jpg"
                     ]
+                },
+                "views": {
+                    "short": "12.4K",
+                    "full": "12,400"
                 }
             },
             {
@@ -64,6 +64,10 @@ export const reels: Reel[] = [
                         "/media/photo-fig-2.jpg",
                         "/media/photo-fig-3.jpg"
                     ]
+                },
+                "views": {
+                    "short": "8.1K",
+                    "full": "8,100"
                 }
             },
             {
@@ -86,16 +90,16 @@ export const reels: Reel[] = [
                         "/media/photo-tomato-sauce-2.jpg",
                         "/media/photo-tomato-sauce-3.jpg"
                     ]
+                },
+                "views": {
+                    "short": "5.6K",
+                    "full": "5,600"
                 }
             }
         ]
     },
     {
         "id": "esarp",
-        "views": {
-            "short": "3.1K",
-            "full": "3,100"
-        },
         "account": {
             "name": "nuverascarfs",
             "avatar": "/media/avatar-nuverascarfs.jpg",
@@ -120,6 +124,10 @@ export const reels: Reel[] = [
                         "/media/product-esarp-1.webp",
                         "/media/esarp-1-poster.jpg"
                     ]
+                },
+                "views": {
+                    "short": "3.1K",
+                    "full": "3,100"
                 }
             },
             {
@@ -140,6 +148,10 @@ export const reels: Reel[] = [
                         "/media/product-esarp-2.webp",
                         "/media/esarp-2-poster.jpg"
                     ]
+                },
+                "views": {
+                    "short": "18.7K",
+                    "full": "18,700"
                 }
             },
             {
@@ -160,6 +172,10 @@ export const reels: Reel[] = [
                         "/media/product-esarp-3.webp",
                         "/media/esarp-3-poster.jpg"
                     ]
+                },
+                "views": {
+                    "short": "2.4K",
+                    "full": "2,400"
                 }
             },
             {
@@ -180,6 +196,10 @@ export const reels: Reel[] = [
                         "/media/product-esarp-4.webp",
                         "/media/esarp-4-poster.jpg"
                     ]
+                },
+                "views": {
+                    "short": "9.8K",
+                    "full": "9,800"
                 }
             },
             {
@@ -200,16 +220,16 @@ export const reels: Reel[] = [
                         "/media/product-esarp-5.webp",
                         "/media/esarp-5-poster.jpg"
                     ]
+                },
+                "views": {
+                    "short": "1.2K",
+                    "full": "1,200"
                 }
             }
         ]
     },
     {
         "id": "elmacioglu",
-        "views": {
-            "short": "860",
-            "full": "860"
-        },
         "account": {
             "name": "elmacioglu",
             "avatar": "/media/avatar-elmacioglu.jpg",
@@ -234,6 +254,10 @@ export const reels: Reel[] = [
                         "/media/product-elmaci-1.webp",
                         "/media/elmaci-1-poster.jpg"
                     ]
+                },
+                "views": {
+                    "short": "860",
+                    "full": "860"
                 }
             },
             {
@@ -254,6 +278,10 @@ export const reels: Reel[] = [
                         "/media/product-elmaci-2.webp",
                         "/media/elmaci-2-poster.jpg"
                     ]
+                },
+                "views": {
+                    "short": "10.2K",
+                    "full": "10,200"
                 }
             },
             {
@@ -274,6 +302,10 @@ export const reels: Reel[] = [
                         "/media/product-elmaci-3.webp",
                         "/media/elmaci-3-poster.jpg"
                     ]
+                },
+                "views": {
+                    "short": "37.1K",
+                    "full": "37,100"
                 }
             },
             {
@@ -294,16 +326,16 @@ export const reels: Reel[] = [
                         "/media/product-elmaci-4.webp",
                         "/media/elmaci-4-poster.jpg"
                     ]
+                },
+                "views": {
+                    "short": "82.4K",
+                    "full": "82,400"
                 }
             }
         ]
     },
     {
         "id": "2aaltin",
-        "views": {
-            "short": "27K",
-            "full": "27,000"
-        },
         "account": {
             "name": "2aaltin",
             "avatar": "/media/avatar-2aaltin.jpg",
@@ -328,6 +360,10 @@ export const reels: Reel[] = [
                         "/media/product-altin-1.webp",
                         "/media/altin-1-poster.jpg"
                     ]
+                },
+                "views": {
+                    "short": "27K",
+                    "full": "27,000"
                 }
             },
             {
@@ -348,6 +384,10 @@ export const reels: Reel[] = [
                         "/media/product-altin-2.webp",
                         "/media/altin-2-poster.jpg"
                     ]
+                },
+                "views": {
+                    "short": "14.3K",
+                    "full": "14,300"
                 }
             },
             {
@@ -368,6 +408,10 @@ export const reels: Reel[] = [
                         "/media/product-altin-3.webp",
                         "/media/altin-3-poster.jpg"
                     ]
+                },
+                "views": {
+                    "short": "6.9K",
+                    "full": "6,900"
                 }
             },
             {
@@ -388,16 +432,16 @@ export const reels: Reel[] = [
                         "/media/product-altin-4.webp",
                         "/media/altin-4-poster.jpg"
                     ]
+                },
+                "views": {
+                    "short": "41.2K",
+                    "full": "41,200"
                 }
             }
         ]
     },
     {
         "id": "peskur",
-        "views": {
-            "short": "5.2K",
-            "full": "5,200"
-        },
         "account": {
             "name": "peskurkuruyemis",
             "avatar": "/media/avatar-peskurkuruyemis.jpg",
@@ -465,6 +509,10 @@ export const reels: Reel[] = [
                         }
                     ],
                     "fromPrice": "from ₺110"
+                },
+                "views": {
+                    "short": "5.2K",
+                    "full": "5,200"
                 }
             },
             {
@@ -512,6 +560,10 @@ export const reels: Reel[] = [
                             }
                         ]
                     }
+                },
+                "views": {
+                    "short": "2.8K",
+                    "full": "2,800"
                 }
             },
             {
@@ -559,6 +611,10 @@ export const reels: Reel[] = [
                             }
                         ]
                     }
+                },
+                "views": {
+                    "short": "11.6K",
+                    "full": "11,600"
                 }
             },
             {
@@ -606,16 +662,16 @@ export const reels: Reel[] = [
                             }
                         ]
                     }
+                },
+                "views": {
+                    "short": "4.1K",
+                    "full": "4,100"
                 }
             }
         ]
     },
     {
         "id": "sadopastirma",
-        "views": {
-            "short": "1.9K",
-            "full": "1,900"
-        },
         "account": {
             "name": "sadopastirma",
             "avatar": "/media/avatar-sadopastirma.jpg",
@@ -641,6 +697,10 @@ export const reels: Reel[] = [
                         "/media/product-kaleonu-1.jpg",
                         "/media/kaleonu-1-poster.jpg"
                     ]
+                },
+                "views": {
+                    "short": "1.9K",
+                    "full": "1,900"
                 }
             },
             {
@@ -661,6 +721,10 @@ export const reels: Reel[] = [
                         "/media/product-kaleonu-2.jpg",
                         "/media/kaleonu-2-poster.jpg"
                     ]
+                },
+                "views": {
+                    "short": "7.3K",
+                    "full": "7,300"
                 }
             },
             {
@@ -681,6 +745,10 @@ export const reels: Reel[] = [
                         "/media/product-kaleonu-3.jpg",
                         "/media/kaleonu-3-poster.jpg"
                     ]
+                },
+                "views": {
+                    "short": "3.5K",
+                    "full": "3,500"
                 }
             }
         ]

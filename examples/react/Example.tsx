@@ -69,11 +69,11 @@ export type Product = {
 };
 export type Clip = ({ video: string; poster: string } | { image: string; duration?: number }) & {
     caption: string;
+    views: { short: string; full: string }; // "12.4K", "12,400" — this clip's, your own count
     product: Product;
 };
 export type Reel = {
     id: string;
-    views: { short: string; full: string }; // "12.4K", "12,400" — your own count
     account: { name: string; avatar: string; profile: string };
     clips: Clip[];
 };
@@ -107,16 +107,19 @@ export function Reels({ reels, label = "Reels", style }: { reels: Reel[]; label?
                                     </a>
                                 </span>
                             </header>
-                            {/* The top right: the sound and the full view's button, the view count under them. */}
+                            {/* The top right: the sound and the full view's button, the view
+                                count under them — one a clip, in order: the playing clip's shows. */}
                             <div className="reel-tools">
-                                <span className="views" data-pg-reels-views aria-label={`${reel.views.full} views`}>
-                                    {/* Instagram's eye: the pupil filled. */}
-                                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                                        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
-                                        <circle cx="12" cy="12" r="3" />
-                                    </svg>
-                                    {reel.views.short}
-                                </span>
+                                {reel.clips.map(({ views }, i) => (
+                                    <span key={i} className="views" data-pg-reels-views aria-label={`${views.full} views`}>
+                                        {/* Instagram's eye: the pupil filled. */}
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
+                                            <circle cx="12" cy="12" r="3" />
+                                        </svg>
+                                        {views.short}
+                                    </span>
+                                ))}
                                 <button type="button" data-pg-reels-open aria-label="Enlarge">
                                     <Icon d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
                                 </button>
