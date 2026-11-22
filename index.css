@@ -95,10 +95,20 @@
 }
 [data-pg-reels-bar] > span,
 [data-pg-reels-view-bar] > span {
+    --rest: color-mix(in srgb, currentColor 25%, transparent);
     display: block;
     height: 100%;
     border-radius: 999px;
-    background: linear-gradient(currentColor, currentColor) no-repeat left / calc(var(--pg-reels-progress, 0) * 100%) 100%, color-mix(in srgb, currentColor 25%, transparent);
+    background: linear-gradient(currentColor, currentColor) no-repeat left / calc(var(--pg-reels-progress, 0) * 100%) 100%, var(--rest);
+    transition: background-color 0.15s;
+}
+/* The bar under the mouse: its part still to play a shade between the
+   played and the rest — this one can be pressed. */
+@media (hover: hover) {
+    [data-pg-reels-bar]:hover > span,
+    [data-pg-reels-view-bar]:hover > span {
+        --rest: color-mix(in srgb, currentColor 55%, transparent);
+    }
 }
 [data-pg-reels-bar][data-pg-reels-done] > span,
 [data-pg-reels-view-bar][data-pg-reels-done] > span {
@@ -311,23 +321,13 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-side] svg {
     overflow: hidden;
     background: #000;
     color: #fff;
-    opacity: 0.5;
     cursor: pointer;
-    transition: opacity 0.2s;
 }
 [data-pg-reels-view-peek="before"] {
     position: absolute;
     left: 0;
     right: 0;
     bottom: calc(100% + var(--gap));
-}
-[data-pg-reels-sliding] [data-pg-reels-view-peek] {
-    opacity: 1;
-}
-@media (hover: hover) {
-    [data-pg-reels-view-peek]:hover {
-        opacity: 1;
-    }
 }
 [data-pg-reels-view-peek][hidden] {
     display: block;
@@ -635,7 +635,6 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-steps] svg {
         height: 100%;
         aspect-ratio: auto;
         border-radius: 0;
-        opacity: 1;
     }
     [data-pg-reels-view-peek="before"] {
         bottom: 100%;
