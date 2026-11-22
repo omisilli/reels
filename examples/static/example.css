@@ -529,6 +529,12 @@ header > p {
         background: rgb(0 0 0 / 0.55);
     }
 }
+/* In the full view, as tall as the view count and the buttons. */
+[data-pg-reels-viewer] .tag {
+    height: 2.5rem;
+    padding: 0 0.875rem 0 0.75rem;
+    font-size: 0.8125rem;
+}
 .tag svg {
     width: 1rem;
     height: 1rem;
