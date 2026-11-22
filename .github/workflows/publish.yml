@@ -1,0 +1,41 @@
+# A version tag pushed (v1.4.1) publishes that version to npm — through
+# npm's trusted publishing: GitHub and npm vouch for each other, so no token
+# and no one-time code. Set once on npmjs.com, the package's Settings →
+# Trusted Publisher: GitHub Actions, omisilli / reels, publish.yml.
+name: Publish to npm
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  id-token: write # for npm's trusted publishing
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false
+
+      # Trusted publishing needs npm 11.5.1 or later.
+      - run: npm install -g npm@latest
+
+      # The tag and package.json must name the same version.
+      - name: Tag matches package.json
+        run: |
+          version="v$(node -p "require('./package.json').version")"
+          if [ "$version" != "$GITHUB_REF_NAME" ]; then
+            echo "Tag $GITHUB_REF_NAME, but package.json says $version" >&2
+            exit 1
+          fi
+
+      # dist is built and committed with each release: published as it is.
+      - run: npm publish --access public
