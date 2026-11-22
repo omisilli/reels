@@ -171,11 +171,14 @@
                 font-size: 0.75rem;
                 opacity: 0.8;
             }
+            /* The head: up to the corner's buttons and view count — a long
+               name ends in "…". */
             .reel-head {
                 position: absolute;
                 z-index: 1;
                 top: 0.875rem;
                 left: 0.875rem;
+                max-width: calc(100% - 8.75rem);
                 display: flex;
                 align-items: center;
                 gap: 0.5rem;
@@ -231,11 +234,18 @@
                 border-color: var(--fg);
             }
             .who {
+                min-width: 0;
                 display: grid;
                 justify-items: start;
                 line-height: 1.2;
                 font-size: 0.85rem;
                 text-shadow: 0 1px 4px rgb(0 0 0 / 0.4);
+            }
+            .who b {
+                max-width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
             .follow {
                 margin-top: 0.25rem;
@@ -401,6 +411,7 @@
                tag instead of a line; the product's details in the panel. */
             [data-pg-reels-viewer] .reel-head {
                 position: static;
+                max-width: none;
             }
             [data-pg-reels-viewer] figcaption small {
                 display: none;
@@ -566,7 +577,7 @@
                             </figure>
                         <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-plusguard.jpg" alt="" /></span>
-                            <span class="who"><b>plusguard</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
+                            <span class="who"><b>enginardunyasi</b><a href="https://www.instagram.com/enginardunyasi/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
                         <div class="reel-tools">
                             <span class="views" data-pg-reels-views aria-label="12,400 views"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>12.4K</span>
@@ -673,7 +684,7 @@
                             </figure>
                         <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-plusguard.jpg" alt="" /></span>
-                            <span class="who"><b>plusguard</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
+                            <span class="who"><b>nuverascarfs</b><a href="https://www.instagram.com/nuverascarfs/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
                         <div class="reel-tools">
                             <span class="views" data-pg-reels-views aria-label="3,100 views"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>3.1K</span>
@@ -805,7 +816,7 @@
                             </figure>
                         <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-plusguard.jpg" alt="" /></span>
-                            <span class="who"><b>plusguard</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
+                            <span class="who"><b>elmacioglu</b><a href="https://www.instagram.com/elmacioglu/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
                         <div class="reel-tools">
                             <span class="views" data-pg-reels-views aria-label="860 views"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>860</span>
@@ -910,7 +921,7 @@
                             </figure>
                         <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-plusguard.jpg" alt="" /></span>
-                            <span class="who"><b>plusguard</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
+                            <span class="who"><b>2aaltin</b><a href="https://www.instagram.com/2aaltin/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
                         <div class="reel-tools">
                             <span class="views" data-pg-reels-views aria-label="27,000 views"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>27K</span>
@@ -972,7 +983,7 @@
                             </figure>
                         <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-mavi-cafe.jpg" alt="" /></span>
-                            <span class="who"><b>mavi.cafe</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
+                            <span class="who"><b>peskurkuruyemis</b><a href="https://www.instagram.com/peskurkuruyemis/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
                         <div class="reel-tools">
                             <span class="views" data-pg-reels-views aria-label="5,200 views"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>5.2K</span>
@@ -1022,7 +1033,7 @@
                             </figure>
                         <header class="reel-head" data-pg-reels-head>
                             <span class="pg-imageGroup avatar"><img src="./media/avatar-kerem.jpg" alt="" /></span>
-                            <span class="who"><b>kerem</b><a href="https://www.instagram.com/" target="_blank" rel="noopener" class="follow">Follow</a></span>
+                            <span class="who"><b>sadopastirma</b><a href="https://www.instagram.com/sadopastirma/" target="_blank" rel="noopener" class="follow">Follow</a></span>
                         </header>
                         <div class="reel-tools">
                             <span class="views" data-pg-reels-views aria-label="1,900 views"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>1.9K</span>
