@@ -709,9 +709,33 @@ export function initReels(): () => void {
     const current = (): Group => view.list[view.gi];
     let headOf: Group | null = null;
 
+    // A clip's still: a video's poster, or the picture itself.
+    const stillOf = (clip: HTMLElement | undefined): string =>
+        clip?.querySelector("video")?.getAttribute("poster") || clip?.querySelector("img")?.getAttribute("src") || "";
+    // The stills shown next — the groups beside the one shown, the ones
+    // beside those, the clip after this one — fetched and decoded ahead: a
+    // group sliding in, the one coming in under it, the next clip, are
+    // never blank first.
+    const warmed = new Set<string>();
+    const warm = (clip: HTMLElement | undefined): void => {
+        const src = stillOf(clip);
+        if (!src || warmed.has(src)) return;
+        warmed.add(src);
+        const img = new Image();
+        img.src = src;
+        img.decode?.().catch(() => {});
+    };
+    // Its still behind it too, painted at once from the cache, until the
+    // video's own poster and frames are there.
+    const backed = (holder: HTMLElement, clip: HTMLElement | undefined): void => {
+        const src = stillOf(clip);
+        holder.style.background = src ? `#000 url(${JSON.stringify(src)}) center / cover no-repeat` : "";
+    };
+
     // A group's first clip, for the video above or under the one shown:
     // a picture, or a video on its poster — never playing.
     const peekOf = (holder: HTMLElement, g: Group | undefined): void => {
+        backed(holder, g?.clips[0]);
         holder.replaceChildren(...(g ? [copyOf(g.clips[0])] : []));
         holder.hidden = !g;
         holder.querySelectorAll("video").forEach((x) => {
@@ -770,9 +794,12 @@ export function initReels(): () => void {
             v.preload = "auto";
             v.loop = false;
         }
+        backed(media, clip);
         media.replaceChildren(copy);
         peekOf(before, view.list[view.gi - 1]);
         peekOf(after, view.list[view.gi + 1]);
+        [-2, -1, 1, 2].forEach((d) => warm(view.list[view.gi + d]?.clips[0]));
+        warm(g.clips[view.ci + 1]);
 
         const product = g.products[view.ci];
         part("panel-summary").replaceChildren(...(product ? [copyOf(product)] : []));
