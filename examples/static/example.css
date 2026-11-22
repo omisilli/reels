@@ -413,6 +413,10 @@ header > p {
 [data-pg-reels-product] > span:not(.pg-imageGroup, .go) {
     flex: 1 1 0%;
     min-width: 0;
+    /* "In the video" on top; under it two lines' room for the name, so
+       every row is as tall — a one-line name in the middle of it. */
+    display: grid;
+    grid-template-rows: auto 2.125rem;
 }
 /* Over the name: what this is — the product in the video. */
 [data-pg-reels-product] .label {
@@ -425,15 +429,14 @@ header > p {
     text-transform: uppercase;
     color: var(--muted);
 }
-/* The name: always two lines' room, so every row is as tall
-   — a longer name ends in "…". */
+/* The name: two lines at most — a longer one ends in "…". */
 [data-pg-reels-product] b {
+    align-self: center;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     line-clamp: 2;
     overflow: hidden;
-    min-height: 2.5em;
     font-size: 0.85rem;
     line-height: 1.25;
 }
