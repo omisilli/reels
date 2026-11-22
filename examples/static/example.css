@@ -225,8 +225,10 @@ header > p {
     font-size: 0.85rem;
     cursor: pointer;
 }
-.forget:hover {
-    border-color: var(--line-hover);
+@media (hover: hover) {
+    .forget:hover {
+        border-color: var(--line-hover);
+    }
 }
 .who {
     min-width: 0;
@@ -248,14 +250,18 @@ header > p {
 }
 /* Under the mouse the name greys a little, the picture fades a little:
    they can be pressed. */
-.who .name:hover {
-    color: rgb(255 255 255 / 0.75);
+@media (hover: hover) {
+    .who .name:hover {
+        color: rgb(255 255 255 / 0.75);
+    }
 }
 .reel-head .avatar {
     transition: opacity 0.2s;
 }
-.reel-head .avatar:hover {
-    opacity: 0.85;
+@media (hover: hover) {
+    .reel-head .avatar:hover {
+        opacity: 0.85;
+    }
 }
 .follow {
     margin-top: 0.25rem;
@@ -267,9 +273,11 @@ header > p {
     text-decoration: none;
     text-shadow: none;
 }
-.follow:hover {
-    background: #fff;
-    color: #000;
+@media (hover: hover) {
+    .follow:hover {
+        background: #fff;
+        color: #000;
+    }
 }
 /* The top right: the sound and the full view's button, the
    view count under them — as in the full view. */
@@ -479,9 +487,11 @@ header > p {
     text-transform: uppercase;
     text-decoration: none;
 }
-.detail-cat:hover {
-    color: var(--fg);
-    text-decoration: underline;
+@media (hover: hover) {
+    .detail-cat:hover {
+        color: var(--fg);
+        text-decoration: underline;
+    }
 }
 /* The category over the caption, a link to it (a new tab): on the
    card a dark pill, as the view count's; in the full view a white
@@ -502,8 +512,10 @@ header > p {
     text-shadow: none;
     transition: background 0.2s;
 }
-.tag:hover {
-    background: rgb(0 0 0 / 0.55);
+@media (hover: hover) {
+    .tag:hover {
+        background: rgb(0 0 0 / 0.55);
+    }
 }
 [data-pg-reels-viewer] .tag {
     height: auto;
@@ -512,8 +524,10 @@ header > p {
     color: #111;
     font-size: 0.8rem;
 }
-[data-pg-reels-viewer] .tag:hover {
-    background: #fff;
+@media (hover: hover) {
+    [data-pg-reels-viewer] .tag:hover {
+        background: #fff;
+    }
 }
 .tag svg {
     width: 1rem;
@@ -541,8 +555,10 @@ header > p {
     font-weight: 600;
     cursor: pointer;
 }
-.detail-variants button:hover {
-    border-color: var(--fg);
+@media (hover: hover) {
+    .detail-variants button:hover {
+        border-color: var(--fg);
+    }
 }
 .detail-variants button[data-pg-reels-current] {
     border-color: var(--fg);
@@ -579,8 +595,10 @@ header > p {
     color: var(--muted);
     font-weight: 600;
 }
-.detail-list a:hover b {
-    text-decoration: underline;
+@media (hover: hover) {
+    .detail-list a:hover b {
+        text-decoration: underline;
+    }
 }
 
 /* The name, in the panel's head beside its close. */
