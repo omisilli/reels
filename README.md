@@ -97,8 +97,8 @@ below).
 - **Sound is one card's.** A sound button pressed gives the sound to its
   card — every other card is muted; pressed again, off. The card going out
   of sight takes the sound with it. The full view takes
-  it over while open, and gives it back on closing if the card last seen
-  there is the one that plays.
+  it over while open — from the card it opened on, if that one had it —
+  and keeps it: closed, every card is muted again.
 - **The strip scrolls sideways** — a finger, a wheel, its arrows, one card
   a press. It never moves by itself. `data-pg-reels-start` / `-end` on the
   section while it stands at either end, for the arrows.

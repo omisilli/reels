@@ -988,8 +988,10 @@ export function initReels() {
         const g = current();
         if (g)
             show(g, view.ci);
-        // Its sound goes on with the card last seen, if that one plays.
-        owner = g ?? null;
+        // Closed, the cards are all muted again — the full view's sound
+        // stays in it, whichever card it came from.
+        sound = false;
+        owner = null;
         if (dialog.open)
             dialog.close();
         media.replaceChildren();
