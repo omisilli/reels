@@ -175,10 +175,10 @@ function ClipView({ clip }: { clip: Clip }) {
             </figcaption>
             <div data-pg-reels-detail hidden>
                 <div className="detail">
-                    <a className="detail-cat" href={product.category.href}>
+                    {/* Heads the panel; the name is under the price. */}
+                    <a className="detail-cat" data-pg-reels-title href={product.category.href}>
                         {product.category.name}
                     </a>
-                    <h2 data-pg-reels-title>{product.name}</h2>
                     <div className="pg-imageGroup detail-big" data-pg-reels-big>
                         <img src={product.images[0]} alt="" loading="lazy" />
                     </div>

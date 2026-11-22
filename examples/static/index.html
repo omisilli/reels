@@ -7,7 +7,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>reels — example</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@plusguard/reels@1.6.0/index.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@plusguard/reels@1.7.0/index.css" />
         <style>
             :root {
                 --bg: #f6f6f4;
@@ -178,7 +178,7 @@
                 z-index: 1;
                 top: 0.875rem;
                 left: 0.875rem;
-                max-width: calc(100% - 8.75rem);
+                max-width: calc(100% - 6.75rem);
                 display: flex;
                 align-items: center;
                 gap: 0.5rem;
@@ -261,8 +261,8 @@
                 background: #fff;
                 color: #000;
             }
-            /* The top right: the full view's button, the sound under it,
-               the view count on its left. */
+            /* The top right: the sound and the full view's button, the
+               view count under them — as in the full view. */
             .reel-tools {
                 position: absolute;
                 z-index: 1;
@@ -276,15 +276,20 @@
             .reel-tools > * {
                 pointer-events: auto;
             }
-            .reel-tools button {
+            .reel-tools [data-pg-reels-sound] {
+                grid-column: 1;
+                grid-row: 1;
+            }
+            .reel-tools [data-pg-reels-open] {
                 grid-column: 2;
+                grid-row: 1;
             }
             /* The view count — the site's number (data-pg-reels-views) — in
                the card's corner and, copied, in the full view's. */
             .views {
-                grid-column: 1;
-                grid-row: 1;
-                align-self: center;
+                grid-column: 1 / -1;
+                grid-row: 2;
+                justify-self: end;
                 display: inline-flex;
                 align-items: center;
                 gap: 0.3rem;
@@ -528,9 +533,16 @@
             }
 
             /* The name, in the panel's head beside its close. */
-            [data-pg-reels-panel-title] h2 {
-                font-size: 1.15rem;
-                line-height: 1.3;
+            /* The panel's head: the category, a link. */
+            [data-pg-reels-panel-title] .detail-cat {
+                color: var(--fg);
+                font-size: 0.95rem;
+                font-weight: 700;
+            }
+            .detail-count {
+                color: var(--muted);
+                font-size: 0.85rem;
+                font-weight: 600;
             }
             .detail-big {
                 aspect-ratio: 4 / 3;
@@ -584,9 +596,10 @@
                 text-align: center;
                 text-decoration: none;
             }
-            /* On a phone: the band is the card's product; the panel is
-               already the band, so the product's own border goes. */
-            @media (max-width: 47.99rem) {
+            /* Below 1024px (the full view's phone layout): the band is the
+               card's product; the panel is already the band, so the
+               product's own border goes. */
+            @media (max-width: 63.99rem) {
                 [data-pg-reels-viewer] [data-pg-reels-panel] [data-pg-reels-product] {
                     padding: 0;
                     border: 0;
@@ -652,8 +665,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Preserves</a>
-                                    <h2 data-pg-reels-title>Marine Enginar Salatası</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Preserves</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-enginar.webp" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-enginar.webp" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-enginar.webp" alt="" loading="lazy" /></button>
@@ -679,8 +691,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Dried fruit</a>
-                                    <h2 data-pg-reels-title>Nazilli Bebek Dağ İnciri (Natürel)</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Dried fruit</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-incir.webp" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-incir.webp" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-incir.webp" alt="" loading="lazy" /></button>
@@ -701,8 +712,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Sauces</a>
-                                    <h2 data-pg-reels-title>Domates Sosu (Doğranmış)</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Sauces</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-domates-sosu.webp" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-domates-sosu.webp" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-domates-sosu.webp" alt="" loading="lazy" /></button>
@@ -759,8 +769,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Scarves</a>
-                                    <h2 data-pg-reels-title>Vual Pamuk Puantiye Desen</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Scarves</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-esarp-1.webp" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-esarp-1.webp" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-esarp-1.webp" alt="" loading="lazy" /></button>
@@ -779,8 +788,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Shawls</a>
-                                    <h2 data-pg-reels-title>Naia Pamuk Şal</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Shawls</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-esarp-2.webp" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-esarp-2.webp" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-esarp-2.webp" alt="" loading="lazy" /></button>
@@ -799,8 +807,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Scarves</a>
-                                    <h2 data-pg-reels-title>Modal Degrade Desen</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Scarves</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-esarp-3.webp" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-esarp-3.webp" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-esarp-3.webp" alt="" loading="lazy" /></button>
@@ -819,8 +826,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Shawls</a>
-                                    <h2 data-pg-reels-title>Naia Vera Desen</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Shawls</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-esarp-4.webp" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-esarp-4.webp" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-esarp-4.webp" alt="" loading="lazy" /></button>
@@ -839,8 +845,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Shawls</a>
-                                    <h2 data-pg-reels-title>İpeksi Elegance Şal</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Shawls</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-esarp-5.webp" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-esarp-5.webp" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-esarp-5.webp" alt="" loading="lazy" /></button>
@@ -891,8 +896,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Soups</a>
-                                    <h2 data-pg-reels-title>Elmacıoğlu Un Çorbası</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Soups</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-elmaci-1.webp" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-elmaci-1.webp" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-elmaci-1.webp" alt="" loading="lazy" /></button>
@@ -911,8 +915,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Noodles</a>
-                                    <h2 data-pg-reels-title>Kayseri Erişte</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Noodles</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-elmaci-2.webp" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-elmaci-2.webp" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-elmaci-2.webp" alt="" loading="lazy" /></button>
@@ -931,8 +934,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Mantı</a>
-                                    <h2 data-pg-reels-title>Yumacık Mantı</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Mantı</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-elmaci-3.webp" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-elmaci-3.webp" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-elmaci-3.webp" alt="" loading="lazy" /></button>
@@ -951,8 +953,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Mantı</a>
-                                    <h2 data-pg-reels-title>Bohça Mantı</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Mantı</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-elmaci-4.webp" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-elmaci-4.webp" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-elmaci-4.webp" alt="" loading="lazy" /></button>
@@ -1003,8 +1004,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Bangles</a>
-                                    <h2 data-pg-reels-title>14 Ayar Altın Bilezik</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Bangles</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-altin-1.webp" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-altin-1.webp" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-altin-1.webp" alt="" loading="lazy" /></button>
@@ -1023,8 +1023,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Necklaces</a>
-                                    <h2 data-pg-reels-title>22 Ayar Külçe Altın Kolye</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Necklaces</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-altin-2.webp" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-altin-2.webp" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-altin-2.webp" alt="" loading="lazy" /></button>
@@ -1043,8 +1042,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Rings</a>
-                                    <h2 data-pg-reels-title>14 Ayar Altın Yüzük</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Rings</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-altin-3.webp" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-altin-3.webp" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-altin-3.webp" alt="" loading="lazy" /></button>
@@ -1063,8 +1061,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Bracelets</a>
-                                    <h2 data-pg-reels-title>14 Ayar Pırlantalı Zincir Bileklik</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Bracelets</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-altin-4.webp" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-altin-4.webp" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-altin-4.webp" alt="" loading="lazy" /></button>
@@ -1117,8 +1114,7 @@
                                  data-pg-reels-gallery of the same name) and its link. -->
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Coffee</a>
-                                    <h2 data-pg-reels-title>Peşeker Türk Kahvesi</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Coffee</a>
                                     <div data-pg-reels-gallery="1kg" data-pg-reels-current>
                                         <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/peskur-kahve-1kg-1.jpg" alt="" loading="lazy" /></div>
                                         <div class="detail-thumbs">
@@ -1171,8 +1167,8 @@
                                  products, and the foot goes to the category. -->
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">6 products</a>
-                                    <h2 data-pg-reels-title>Tahin Çeşitleri</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Tahin Çeşitleri</a>
+                                    <p class="detail-count">6 products</p>
                                     <div class="pg-imageGroup detail-big"><img src="./media/product-peskur-tahin.jpg" alt="" loading="lazy" /></div>
                                     <p class="detail-blurb">Geleneksel lezzet, modern farklar — stone-ground sesame, single and double roasted.</p>
                                     <div class="detail-list">
@@ -1193,8 +1189,8 @@
                                  products, and the foot goes to the category. -->
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">39 products</a>
-                                    <h2 data-pg-reels-title>Kurutulmuş Meyveler</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Kurutulmuş Meyveler</a>
+                                    <p class="detail-count">39 products</p>
                                     <div class="pg-imageGroup detail-big"><img src="./media/product-peskur-meyve.jpg" alt="" loading="lazy" /></div>
                                     <p class="detail-blurb">Tatlı ve doğal atıştırmalıklar — fruit dried slowly, nothing added.</p>
                                     <div class="detail-list">
@@ -1215,8 +1211,8 @@
                                  products, and the foot goes to the category. -->
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">98 products</a>
-                                    <h2 data-pg-reels-title>Çikolata ve Şekerleme</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Çikolata ve Şekerleme</a>
+                                    <p class="detail-count">98 products</p>
                                     <div class="pg-imageGroup detail-big"><img src="./media/product-peskur-cikolata.jpg" alt="" loading="lazy" /></div>
                                     <p class="detail-blurb">Tatlı ihtiyacınızı karşılayın — dragées, pralines and gift boxes.</p>
                                     <div class="detail-list">
@@ -1263,8 +1259,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Pastırma</a>
-                                    <h2 data-pg-reels-title>Kayseri Pastırma</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Pastırma</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/kaleonu-photo.jpg" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/kaleonu-photo.jpg" data-pg-reels-current aria-label="Picture 1"><img src="./media/kaleonu-photo.jpg" alt="" loading="lazy" /></button>
@@ -1284,8 +1279,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Sucuk</a>
-                                    <h2 data-pg-reels-title>Kayseri Sucuk</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Sucuk</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-kaleonu-2.jpg" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-kaleonu-2.jpg" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-kaleonu-2.jpg" alt="" loading="lazy" /></button>
@@ -1304,8 +1298,7 @@
                             <span class="go" aria-hidden="true">→</span>
                             <template data-pg-reels-detail>
                                 <div class="detail">
-                                    <a class="detail-cat" href="https://www.google.com" target="_blank" rel="noopener">Sucuk</a>
-                                    <h2 data-pg-reels-title>Kasap Sucuk</h2>
+                                    <a class="detail-cat" data-pg-reels-title href="https://www.google.com" target="_blank" rel="noopener">Sucuk</a>
                                     <div class="pg-imageGroup detail-big" data-pg-reels-big><img src="./media/product-kaleonu-3.jpg" alt="" /></div>
                                     <div class="detail-thumbs">
                                         <button type="button" class="pg-imageGroup" data-pg-reels-thumb="./media/product-kaleonu-3.jpg" data-pg-reels-current aria-label="Picture 1"><img src="./media/product-kaleonu-3.jpg" alt="" loading="lazy" /></button>
@@ -1329,7 +1322,7 @@
         </main>
 
         <script type="module">
-            import { initReels, forgetReelsSeen } from "https://cdn.jsdelivr.net/npm/@plusguard/reels@1.6.0/dist/index.js";
+            import { initReels, forgetReelsSeen } from "https://cdn.jsdelivr.net/npm/@plusguard/reels@1.7.0/dist/index.js";
 
             // ?duration=2s — a picture's time, through --pg-reels-duration
             // (5s by default; a clip's own data-pg-reels-duration wins). The

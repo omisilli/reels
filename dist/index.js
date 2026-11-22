@@ -54,10 +54,10 @@
  * goes on or back — its ↑ and ↓ buttons, a wheel, ↑ and ↓; after a
  * group's last clip, the next group. The product changes once it has
  * landed. Held
- * down — a finger, the mouse — it stands still; its own play / pause, its
- * sound, its close — under the close; left of it, the group's view count
- * (its data-pg-reels-views, the site's). Esc, Back, the dark around it
- * close it too. The
+ * down — a finger, the mouse — it stands still; its sound and play /
+ * pause at the video's top right, the group's view count under them (its
+ * data-pg-reels-views, the site's); its close at the window's top right.
+ * Esc, Back, the dark around it close it too. The
  * product: on a computer a panel beside the video — the product's
  * <template data-pg-reels-detail>, the site's markup: a title (its
  * data-pg-reels-title goes to the panel's head, beside the close), a big
@@ -596,6 +596,7 @@ export function initReels() {
     // keys work at once, no ring on a button nobody chose.
     dialog.tabIndex = -1;
     dialog.innerHTML = `
+        <button type="button" data-pg-reels-view-close aria-label="Close">${svg(ICONS.close)}</button>
         <div data-pg-reels-stage>
             <div data-pg-reels-view-steps>
                 <button type="button" data-pg-reels-view-up aria-label="Previous reel">${svg(ICONS.up)}</button>
@@ -615,10 +616,9 @@ export function initReels() {
                     <div data-pg-reels-view-row>
                         <div data-pg-reels-view-head></div>
                         <div data-pg-reels-view-tools>
-                            <div data-pg-reels-view-views></div>
-                            <button type="button" data-pg-reels-view-close aria-label="Close">${svg(ICONS.close)}</button>
                             <button type="button" ${SOUND} aria-pressed="false" aria-label="Sound">${svg(ICONS.soundOff)}${svg(ICONS.soundOn)}</button>
                             <button type="button" data-pg-reels-view-play aria-label="Pause">${svg(ICONS.pause)}${svg(ICONS.play)}</button>
+                            <div data-pg-reels-view-views></div>
                         </div>
                     </div>
                 </div>
@@ -629,7 +629,6 @@ export function initReels() {
             <aside data-pg-reels-panel>
                 <div data-pg-reels-panel-head>
                     <div data-pg-reels-panel-title></div>
-                    <button type="button" data-pg-reels-panel-close aria-label="Close">${svg(ICONS.close)}</button>
                 </div>
                 <div data-pg-reels-panel-band>
                     <div data-pg-reels-panel-summary></div>
@@ -980,7 +979,7 @@ export function initReels() {
         // The dark around it.
         if (t === dialog || t.hasAttribute("data-pg-reels-stage"))
             return closeView();
-        if (t.closest("[data-pg-reels-view-close], [data-pg-reels-panel-close]"))
+        if (t.closest("[data-pg-reels-view-close]"))
             return closeView();
         if (sliding)
             return;

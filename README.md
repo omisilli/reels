@@ -23,9 +23,9 @@ From npm, through jsDelivr — the npm package is the code alone (about
 jsDelivr's GitHub route.
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@plusguard/reels@1.6.0/index.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@plusguard/reels@1.7.0/index.css" />
 <script type="module">
-    import { initReels } from "https://cdn.jsdelivr.net/npm/@plusguard/reels@1.6.0/dist/index.js";
+    import { initReels } from "https://cdn.jsdelivr.net/npm/@plusguard/reels@1.7.0/dist/index.js";
     initReels();
 </script>
 ```
@@ -158,22 +158,24 @@ in it, copies of the site's markup: the clip, the group's
   links; the rest of the clip passes presses to the taps under it.
 - **Held down** — a finger, the mouse — it stands still, the controls
   out of the way; let go and it goes on. Its play / pause button, Space.
-- **Its corner:** the close at the top right, the sound and play / pause
-  under it; on the close's left the group's view count — the card's
-  `data-pg-reels-views` element, copied, so it looks as in the card. The
-  number is the site's (from its own counting); the package shows it.
+- **Its corner:** the sound and play / pause at the video's top right,
+  the group's view count under them — the card's `data-pg-reels-views`
+  element, copied, so it looks as in the card. The number is the site's
+  (from its own counting); the package shows it. The close is a plain ✕ at
+  the window's top right, the ↑ ↓ at the window's left.
 - **The product:** on a computer, a panel beside the video, touching it
-  as a post opened on Instagram (no corners where they meet), from its top
-  to the window's foot, 9:16 like it: a head — the template's
-  `data-pg-reels-title`, moved there, and the close; a long name takes a
-  second line, the close stays at the top — a line under it; at the
+  as a post opened on Instagram (no corners where they meet, small ones
+  outside), from its top to the window's foot, about a third of the
+  window wide: a head — the template's `data-pg-reels-title`, moved there
+  (the example puts the category there) — a line under it; at the
   bottom a foot — the template's `data-pg-reels-foot`, the link to the
   product, always in sight; and between them the rest of the template,
   scrolling.
   The template is the product's `data-pg-reels-detail`, the site's markup: a
   `data-pg-reels-thumb` pressed puts its picture (the attribute's value, or
   its own `<img>`) into `data-pg-reels-big`, and is
-  `data-pg-reels-current`. On a phone the video fills the screen; the
+  `data-pg-reels-current`. Below 1024px (Tailwind's `lg`) — a phone, a
+  tablet, a narrow window — the video fills the screen; the
   product, as on the card, is a band at its foot, and a Details button
   above the band's right opens the template under it. A clip without a
   product: no panel.
@@ -212,7 +214,7 @@ in it, copies of the site's markup: the clip, the group's
 | `--pg-reels-gap` | `1rem` | Between the cards |
 | `--pg-reels-ratio` | `9 / 16` | The card's shape |
 | `--pg-reels-duration` | `5s` | A picture's time |
-| `--pg-reels-panel` | 9:16 of its height, 20–30rem | The full view: the product panel's width on a computer |
+| `--pg-reels-panel` | `30vw`, 21–31rem | The full view: the product panel's width on a computer |
 | `--pg-reels-seen` | `all` | `all`: a group is seen once all its clips have been shown in the full view · `off`: never |
 | `--pg-reels-seen-for` | `24h` | How long a group stays seen — `1h`, `30m`, `7d`, `forever` — then its ring is bright again |
 | `--pg-reels-peek` | `2rem` | The full view: how much of the next group shows under the video on a computer |
@@ -238,7 +240,7 @@ and videos: the box has the shape, what is inside is 100% of it.
 | `data-pg-reels-bars` | under the card, empty | Its bars are written here, one a clip |
 | `data-pg-reels-product` | one a clip | The clip's product |
 | `data-pg-reels-detail` | a `<template>` in a product — or any element, hidden, in the product or the clip | Its details, for the full view |
-| `data-pg-reels-title` | in the template | The product's name: shown in the panel's head, beside the close — short; the size or weight is better on a line below |
+| `data-pg-reels-title` | in the template | What heads the panel — the category in the example; the product's name under the price |
 | `data-pg-reels-foot` | in the template | The link to the product: pinned to the panel's foot; on a phone, under the opened details |
 | `data-pg-reels-variant`, `-variant-price`, `-variant-href` | buttons in the template | A variant: chosen, its gallery, price and link |
 | `data-pg-reels-gallery` | in the template | A variant's pictures: shown while its variant is chosen |

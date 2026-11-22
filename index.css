@@ -126,7 +126,8 @@ html:has(dialog[data-pg-reels-viewer][open]) {
 dialog[data-pg-reels-viewer] {
     /* The panel 9:16, as the video: its width from its height — but at
        most half the room beside the arrows, and 20rem to 30rem. */
-    --pg-reels-panel: clamp(20rem, min(calc((100dvh - 2rem) * 9 / 16), calc((100vw - 14rem) / 2)), 30rem);
+    /* The panel as on Instagram: a third of the window, 21rem to 31rem. */
+    --pg-reels-panel: clamp(21rem, 30vw, 31rem);
     --pg-reels-peek: 2rem;
     position: fixed;
     inset: 0;
@@ -160,13 +161,15 @@ dialog[data-pg-reels-viewer] svg {
    it (--pg-reels-peek) — and low enough to leave room for the panel. */
 [data-pg-reels-stage] {
     --gap: 1rem;
-    --h: min(calc(100dvh - 2 * var(--gap) - var(--pg-reels-peek)), 56rem, calc((100vw - var(--pg-reels-panel) - 14rem) * 16 / 9));
+    --h: min(calc(100dvh - 2 * var(--gap) - var(--pg-reels-peek)), 56rem, calc((100vw - var(--pg-reels-panel) - 15rem) * 16 / 9));
+    position: relative;
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    gap: 1.5rem;
     height: 100%;
-    padding: var(--gap) 1.5rem 0;
+    /* Room at the sides: the ↑ ↓ at the window's left, the close at its
+       right. */
+    padding: var(--gap) 5rem 0;
     box-sizing: border-box;
 }
 
@@ -221,7 +224,7 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-side] svg {
 }
 /* Where they touch, no corners: the video's and the next one's right,
    the panel's left. */
-@media (min-width: 48rem) {
+@media (min-width: 64rem) {
     [data-pg-reels-pair] [data-pg-reels-screen],
     [data-pg-reels-pair] [data-pg-reels-view-peek] {
         border-top-right-radius: 0;
@@ -251,7 +254,7 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-side] svg {
     flex: none;
     height: var(--h);
     aspect-ratio: var(--pg-reels-ratio, 9 / 16);
-    border-radius: 0.75rem;
+    border-radius: 0.25rem;
     overflow: hidden;
     background: #000;
     isolation: isolate;
@@ -285,7 +288,7 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-side] svg {
     aspect-ratio: var(--pg-reels-ratio, 9 / 16);
     padding: 0;
     border: 0;
-    border-radius: 0.75rem;
+    border-radius: 0.25rem;
     overflow: hidden;
     background: #000;
     color: #fff;
@@ -373,9 +376,9 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-side] svg {
 [data-pg-reels-view-head] {
     min-width: 0;
 }
-/* The close at the top right, the sound and play / pause under it, the
-   group's view count on its left. Only the buttons take a press: the rest
-   of the corner is the video's. */
+/* The video's top right: the sound and play / pause, the group's view
+   count under them. Only the buttons take a press: the rest of the corner
+   is the video's. */
 [data-pg-reels-view-row] > [data-pg-reels-view-tools] {
     display: grid;
     grid-template-columns: auto auto;
@@ -383,20 +386,17 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-side] svg {
     pointer-events: none;
 }
 [data-pg-reels-view-tools] > button {
-    grid-column: 2;
     pointer-events: auto;
 }
 [data-pg-reels-view-views] {
-    grid-column: 1;
-    grid-row: 1;
-    align-self: center;
+    grid-column: 1 / -1;
+    justify-self: end;
 }
 [data-pg-reels-view-views]:empty {
     display: none;
 }
 [data-pg-reels-view-tools] > button,
-[data-pg-reels-view-steps] > button,
-[data-pg-reels-panel-close] {
+[data-pg-reels-view-steps] > button {
     position: relative;
     display: grid;
     place-items: center;
@@ -423,10 +423,39 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-side] svg {
 /* ↑ ↓: the group before, the next — left of the video, at its middle,
    round and grey, their name beside them under the mouse. */
 [data-pg-reels-view-steps] {
+    position: absolute;
+    left: 1.25rem;
+    top: calc(var(--gap) + var(--h) / 2);
+    translate: 0 -50%;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    margin-top: calc(var(--h) / 2 - 4rem);
+}
+
+/* The close: the window's top right, a plain ✕ as on Instagram. */
+dialog[data-pg-reels-viewer] [data-pg-reels-view-close] {
+    position: absolute;
+    z-index: 3;
+    top: 0.75rem;
+    right: 0.75rem;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+dialog[data-pg-reels-viewer] [data-pg-reels-view-close]:hover {
+    background: rgb(255 255 255 / 0.12);
+}
+dialog[data-pg-reels-viewer] [data-pg-reels-view-close] svg {
+    width: 1.75rem;
+    height: 1.75rem;
 }
 dialog[data-pg-reels-viewer] [data-pg-reels-view-steps] > button {
     width: 3.5rem;
@@ -480,7 +509,7 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-steps] svg {
     box-sizing: border-box;
     width: var(--pg-reels-panel);
     height: calc(100dvh - 2 * var(--gap));
-    border-radius: 0.75rem;
+    border-radius: 0.25rem;
     background: #fff;
     color: #111;
     overflow: hidden;
@@ -493,25 +522,14 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-steps] svg {
     align-items: flex-start;
     gap: 0.75rem;
     flex: none;
-    padding: 0.875rem 0.875rem 0.875rem 1.25rem;
+    padding: 1rem 1.25rem;
     border-bottom: 1px solid color-mix(in srgb, currentColor 14%, transparent);
 }
 [data-pg-reels-panel-title] {
     flex: 1 1 auto;
     min-width: 0;
     align-self: center;
-}
-dialog[data-pg-reels-viewer] [data-pg-reels-panel-close] {
-    flex: none;
-    background: color-mix(in srgb, currentColor 10%, transparent);
-    transition: background-color 0.15s;
-}
-dialog[data-pg-reels-viewer] [data-pg-reels-panel-close]:hover {
-    background: color-mix(in srgb, currentColor 18%, transparent);
-}
-dialog[data-pg-reels-viewer] [data-pg-reels-panel-close] svg {
-    width: 1.5rem;
-    height: 1.5rem;
+    min-height: 1.5rem;
 }
 [data-pg-reels-panel-detail] {
     flex: 1 1 auto;
@@ -539,13 +557,22 @@ dialog[data-pg-reels-viewer] [data-pg-reels-panel-close] svg {
     display: none;
 }
 
-/* ---------- On a phone: the video fills the screen ----------
-   The groups above and under it wait out of sight, full size, for the
-   finger; the product is a band at the foot. */
-@media (max-width: 47.99rem) {
+/* ---------- Below 1024px (Tailwind's lg): the video fills the screen ----------
+   A phone, a tablet, a narrow window. The groups above and under it wait
+   out of sight, full size, for the finger; the product is a band at the
+   foot, its content centred and no wider than 40rem. */
+@media (max-width: 63.99rem) {
     [data-pg-reels-stage] {
         display: block;
         padding: 0;
+    }
+    /* The close over the video's top right; the sound and pause beside it. */
+    dialog[data-pg-reels-viewer] [data-pg-reels-view-close] {
+        top: max(0.5rem, env(safe-area-inset-top));
+        right: 0.375rem;
+    }
+    [data-pg-reels-view-row] > [data-pg-reels-view-tools] {
+        margin-right: 2.75rem;
     }
     [data-pg-reels-pair] {
         display: contents;
@@ -606,6 +633,10 @@ dialog[data-pg-reels-viewer] [data-pg-reels-panel-close] svg {
     }
     [data-pg-reels-no-product] [data-pg-reels-panel] {
         display: none;
+    }
+    [data-pg-reels-panel] > * {
+        max-width: 40rem;
+        margin-inline: auto;
     }
     [data-pg-reels-panel-band] {
         display: block;
