@@ -211,6 +211,48 @@ header > p {
     background: rgb(255 255 255 / 0.5);
 }
 
+/* The rings' switches: a row each, as the colour switch looks. */
+.settings {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+.settings > div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+}
+.settings > div > span {
+    min-width: 8.5rem;
+    font-size: 0.8125rem;
+    color: var(--muted);
+}
+.choices {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+}
+.choices a {
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    line-height: 1.2;
+    color: var(--muted);
+    text-decoration: none;
+}
+.choices a[aria-current="true"] {
+    color: var(--bg);
+    background: var(--fg);
+}
+@media (hover: hover) {
+    .choices a:not([aria-current="true"]):hover {
+        color: var(--fg);
+    }
+}
 /* The reset: every ring bright again (forgetReelsSeen). */
 .forget {
     display: block;

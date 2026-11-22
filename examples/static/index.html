@@ -39,6 +39,18 @@
                     <button type="button" data-scheme-choice="light">Light</button>
                     <button type="button" data-scheme-choice="dark">Dark</button>
                 </div>
+                <!-- The rings: switches for --pg-reels-seen and --pg-reels-seen-for,
+                     through the address (?seen=off, ?seen-for=1h). -->
+                <div class="settings">
+                    <div>
+                        <span>Rings once seen</span>
+                        <div class="choices"><a data-q="seen" data-v="">go pale</a><a data-q="seen" data-v="off">stay bright</a></div>
+                    </div>
+                    <div>
+                        <span>Bright again after</span>
+                        <div class="choices"><a data-q="seen-for" data-v="1m">1 minute</a><a data-q="seen-for" data-v="1h">1 hour</a><a data-q="seen-for" data-v="">24 hours</a><a data-q="seen-for" data-v="forever">never</a></div>
+                    </div>
+                </div>
                 <button type="button" class="forget" id="forget">Forget what was seen</button>
             </header>
 
@@ -772,6 +784,16 @@
             // group is bright again after an hour (24h by default).
             if (query.get("seen")) section.style.setProperty("--pg-reels-seen", query.get("seen"));
             if (query.get("seen-for")) section.style.setProperty("--pg-reels-seen-for", query.get("seen-for"));
+
+            // The switches: each a link to this page with its setting, the
+            // chosen one marked.
+            document.querySelectorAll(".settings [data-q]").forEach((a) => {
+                const next = new URLSearchParams(location.search);
+                if (a.dataset.v) next.set(a.dataset.q, a.dataset.v);
+                else next.delete(a.dataset.q);
+                a.href = `?${next}`;
+                a.setAttribute("aria-current", String((query.get(a.dataset.q) ?? "") === a.dataset.v));
+            });
 
             initReels();
 

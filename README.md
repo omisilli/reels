@@ -316,8 +316,10 @@ npm run dev   # http://localhost:5110
 ## Example
 
 [`examples/static/index.html`](examples/static/index.html) — six groups of
-three to five clips, videos (`?duration=2s` sets a picture's time; `?seen=off`,
-`?seen-for=1h` for the rings), each clip with a product and its
+three to five clips, videos (`?duration=2s` sets a picture's time; the
+switches at the top for the rings — pale once seen or always bright, and
+bright again after a minute, an hour, a day or never: `?seen=off`,
+`?seen-for=1h`), each clip with a product and its
 details: its category (a link), its name in the panel's head, a big
 picture at 4:3, small ones — nine for the first product, a row that
 scrolls — the price, a line about it, a link. Under the card the product
