@@ -167,7 +167,7 @@ in it, copies of the site's markup: the clip, the group's
   mouse.
 - **The product:** on a computer, a panel beside the video, touching it
   as a post opened on Instagram (no corners where they meet, rounded ones
-  outside), from its top to the window's foot, about a third of the
+  outside), as tall as the video, about a third of the
   window wide: a head — the template's `data-pg-reels-title`, moved there
   (the example puts the category there) — a line under it; at the
   bottom a foot — the template's `data-pg-reels-foot`, the link to the

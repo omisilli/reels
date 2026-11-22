@@ -10,6 +10,8 @@
     --fg: #18181b;
     --muted: #6b6b72;
     --line: #e4e4e0;
+    /* A line under the mouse: a shade darker than --line, not black. */
+    --line-hover: #c8c8c2;
     --red: #ff0033;
     color-scheme: light;
 }
@@ -20,6 +22,7 @@
     --fg: #ededef;
     --muted: #9a9aa3;
     --line: #2c2c31;
+    --line-hover: #4a4a52;
     color-scheme: dark;
 }
 * {
@@ -228,7 +231,7 @@ header > p {
     cursor: pointer;
 }
 .forget:hover {
-    border-color: var(--fg);
+    border-color: var(--line-hover);
 }
 .who {
     min-width: 0;
@@ -365,7 +368,7 @@ header > p {
     transition: border-color 0.2s;
 }
 [data-pg-reels-product]:hover {
-    border-color: var(--fg);
+    border-color: var(--line-hover);
 }
 /* The picture: as tall as the words — two lines of name
    (2 × 1.0625rem), a gap (0.125rem), a line of category and

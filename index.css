@@ -497,7 +497,7 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-steps] svg {
     transition-delay: 0.4s;
 }
 
-/* The product: a panel from the video's top to the window's foot — a head with the product's
+/* The product: a panel beside the video, as tall as it — a head with the product's
    name (the template's data-pg-reels-title) and the close, a line under
    it, the rest of the template under that, scrolling. A long name goes
    onto a second line; the close stays at the top. */
@@ -509,7 +509,7 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-steps] svg {
     flex: none;
     box-sizing: border-box;
     width: var(--pg-reels-panel);
-    height: calc(100dvh - 2 * var(--gap));
+    height: var(--h);
     border-radius: 0.75rem;
     background: #fff;
     color: #111;
