@@ -14,13 +14,13 @@ export const reels: Reel[] = [
         },
         "clips": [
             {
-                "caption": "Enginarın en lezzetli hâli",
+                "caption": "Artichokes at their tastiest",
                 "video": "/media/enginar-1.mp4",
                 "poster": "/media/enginar-1-poster.jpg",
                 "product": {
-                    "name": "Marine Enginar Salatası, 425 g",
+                    "name": "Marinated Artichoke Salad, 425 g",
                     "category": {
-                        "name": "Preserves",
+                        "name": "Pantry",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -45,13 +45,13 @@ export const reels: Reel[] = [
                 }
             },
             {
-                "caption": "Nazilli'den, güneşte kurutulmuş",
+                "caption": "From Nazilli, dried in the sun",
                 "video": "/media/enginar-2.mp4",
                 "poster": "/media/enginar-2-poster.jpg",
                 "product": {
-                    "name": "Nazilli Bebek Dağ İnciri (Natürel), 5 kg",
+                    "name": "Nazilli Baby Mountain Figs (Natural), 5 kg",
                     "category": {
-                        "name": "Dried fruit",
+                        "name": "Pantry",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -71,13 +71,13 @@ export const reels: Reel[] = [
                 }
             },
             {
-                "caption": "Tarla domatesinden, doğranmış",
+                "caption": "Field tomatoes, chopped",
                 "video": "/media/enginar-3.mp4",
                 "poster": "/media/enginar-3-poster.jpg",
                 "product": {
-                    "name": "Domates Sosu (Doğranmış), 400 g × 6",
+                    "name": "Chopped Tomato Sauce, 400 g × 6",
                     "category": {
-                        "name": "Sauces",
+                        "name": "Pantry",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -107,13 +107,13 @@ export const reels: Reel[] = [
         },
         "clips": [
             {
-                "caption": "Puantiyenin en zarif hâli",
+                "caption": "Polka dots at their most elegant",
                 "video": "/media/esarp-1.mp4",
                 "poster": "/media/esarp-1-poster.jpg",
                 "product": {
-                    "name": "Vual Pamuk Puantiye Desen",
+                    "name": "Cotton Voile Polka Dot Scarf",
                     "category": {
-                        "name": "Scarves",
+                        "name": "Scarves & shawls",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -131,13 +131,13 @@ export const reels: Reel[] = [
                 }
             },
             {
-                "caption": "Naia pamuk, yumuşacık",
+                "caption": "Naia cotton, so soft",
                 "video": "/media/esarp-2.mp4",
                 "poster": "/media/esarp-2-poster.jpg",
                 "product": {
-                    "name": "Naia Pamuk Şal",
+                    "name": "Naia Cotton Shawl",
                     "category": {
-                        "name": "Shawls",
+                        "name": "Scarves & shawls",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -155,13 +155,13 @@ export const reels: Reel[] = [
                 }
             },
             {
-                "caption": "Modal degrade, ışıltılı",
+                "caption": "Modal ombré, with a sheen",
                 "video": "/media/esarp-3.mp4",
                 "poster": "/media/esarp-3-poster.jpg",
                 "product": {
-                    "name": "Modal Degrade Desen",
+                    "name": "Modal Ombré Scarf",
                     "category": {
-                        "name": "Scarves",
+                        "name": "Scarves & shawls",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -179,13 +179,13 @@ export const reels: Reel[] = [
                 }
             },
             {
-                "caption": "Naia Vera, bordo",
+                "caption": "Naia Vera, in burgundy",
                 "video": "/media/esarp-4.mp4",
                 "poster": "/media/esarp-4-poster.jpg",
                 "product": {
-                    "name": "Naia Vera Desen",
+                    "name": "Naia Vera Shawl",
                     "category": {
-                        "name": "Shawls",
+                        "name": "Scarves & shawls",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -203,13 +203,13 @@ export const reels: Reel[] = [
                 }
             },
             {
-                "caption": "İpeksi Elegance",
+                "caption": "Silky Elegance",
                 "video": "/media/esarp-5.mp4",
                 "poster": "/media/esarp-5-poster.jpg",
                 "product": {
-                    "name": "İpeksi Elegance Şal",
+                    "name": "Silky Elegance Shawl",
                     "category": {
-                        "name": "Shawls",
+                        "name": "Scarves & shawls",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -237,13 +237,13 @@ export const reels: Reel[] = [
         },
         "clips": [
             {
-                "caption": "Un çorbası nasıl yapılır?",
+                "caption": "How to make flour soup",
                 "video": "/media/elmaci-1.mp4",
                 "poster": "/media/elmaci-1-poster.jpg",
                 "product": {
-                    "name": "Elmacıoğlu Un Çorbası",
+                    "name": "Elmacıoğlu Flour Soup",
                     "category": {
-                        "name": "Soups",
+                        "name": "Home cooking",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -261,13 +261,13 @@ export const reels: Reel[] = [
                 }
             },
             {
-                "caption": "Kayseri eriştesi nasıl yapılır?",
+                "caption": "How to make Kayseri noodles",
                 "video": "/media/elmaci-2.mp4",
                 "poster": "/media/elmaci-2-poster.jpg",
                 "product": {
-                    "name": "Kayseri Erişte",
+                    "name": "Kayseri Egg Noodles",
                     "category": {
-                        "name": "Noodles",
+                        "name": "Home cooking",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -285,13 +285,13 @@ export const reels: Reel[] = [
                 }
             },
             {
-                "caption": "Yumacık mantı nasıl yapılır?",
+                "caption": "How to make yumacık mantı",
                 "video": "/media/elmaci-3.mp4",
                 "poster": "/media/elmaci-3-poster.jpg",
                 "product": {
                     "name": "Yumacık Mantı",
                     "category": {
-                        "name": "Mantı",
+                        "name": "Home cooking",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -309,13 +309,13 @@ export const reels: Reel[] = [
                 }
             },
             {
-                "caption": "Bohça mantı nasıl yapılır?",
+                "caption": "How to make bohça mantı",
                 "video": "/media/elmaci-4.mp4",
                 "poster": "/media/elmaci-4-poster.jpg",
                 "product": {
                     "name": "Bohça Mantı",
                     "category": {
-                        "name": "Mantı",
+                        "name": "Home cooking",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -343,13 +343,13 @@ export const reels: Reel[] = [
         },
         "clips": [
             {
-                "caption": "Zarif ve modern bilezikler",
+                "caption": "Elegant, modern bangles",
                 "video": "/media/altin-1.mp4",
                 "poster": "/media/altin-1-poster.jpg",
                 "product": {
-                    "name": "14 Ayar Altın Bilezik, 2,32 g",
+                    "name": "14K Gold Bangle, 2.32 g",
                     "category": {
-                        "name": "Bangles",
+                        "name": "Gold jewellery",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -367,13 +367,13 @@ export const reels: Reel[] = [
                 }
             },
             {
-                "caption": "Geleceğiniz için değerli yatırım",
+                "caption": "A precious investment in your future",
                 "video": "/media/altin-2.mp4",
                 "poster": "/media/altin-2-poster.jpg",
                 "product": {
-                    "name": "22 Ayar Külçe Altın Kolye, 1,50 g",
+                    "name": "22K Gold Bar Necklace, 1.50 g",
                     "category": {
-                        "name": "Necklaces",
+                        "name": "Gold jewellery",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -391,13 +391,13 @@ export const reels: Reel[] = [
                 }
             },
             {
-                "caption": "Günlük şıklığınız için tasarlandı",
+                "caption": "Made for everyday elegance",
                 "video": "/media/altin-3.mp4",
                 "poster": "/media/altin-3-poster.jpg",
                 "product": {
-                    "name": "14 Ayar Altın Yüzük",
+                    "name": "14K Gold Ring",
                     "category": {
-                        "name": "Rings",
+                        "name": "Gold jewellery",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -415,13 +415,13 @@ export const reels: Reel[] = [
                 }
             },
             {
-                "caption": "Özel anlar için el yapımı pırlanta ışıltısı",
+                "caption": "Handmade diamond sparkle for special moments",
                 "video": "/media/altin-4.mp4",
                 "poster": "/media/altin-4-poster.jpg",
                 "product": {
-                    "name": "14 Ayar Pırlantalı Zincir Bileklik, 10,92 g",
+                    "name": "14K Diamond Chain Bracelet, 10.92 g",
                     "category": {
-                        "name": "Bracelets",
+                        "name": "Gold jewellery",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -449,13 +449,13 @@ export const reels: Reel[] = [
         },
         "clips": [
             {
-                "caption": "Dededen toruna Türk kahvesi",
+                "caption": "Turkish coffee, from grandfather to grandson",
                 "video": "/media/peskur-1.mp4",
                 "poster": "/media/peskur-1-poster.jpg",
                 "product": {
-                    "name": "Peşeker Türk Kahvesi",
+                    "name": "Peşeker Turkish Coffee",
                     "category": {
-                        "name": "Coffee",
+                        "name": "Delicatessen",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -465,7 +465,7 @@ export const reels: Reel[] = [
                     "variants": [
                         {
                             "id": "1kg",
-                            "label": "1 Kg",
+                            "label": "1 kg",
                             "price": "₺850",
                             "href": "https://www.google.com/search?q=peseker+turk+kahvesi+1kg",
                             "images": [
@@ -476,7 +476,7 @@ export const reels: Reel[] = [
                         },
                         {
                             "id": "500g",
-                            "label": "500 Gr",
+                            "label": "500 g",
                             "price": "₺450",
                             "href": "https://www.google.com/search?q=peseker+turk+kahvesi+500g",
                             "images": [
@@ -487,7 +487,7 @@ export const reels: Reel[] = [
                         },
                         {
                             "id": "250g",
-                            "label": "250 Gr",
+                            "label": "250 g",
                             "price": "₺240",
                             "href": "https://www.google.com/search?q=peseker+turk+kahvesi+250g",
                             "images": [
@@ -498,7 +498,7 @@ export const reels: Reel[] = [
                         },
                         {
                             "id": "100g",
-                            "label": "100 Gr",
+                            "label": "100 g",
                             "price": "₺110",
                             "href": "https://www.google.com/search?q=peseker+turk+kahvesi+100g",
                             "images": [
@@ -515,18 +515,18 @@ export const reels: Reel[] = [
                 }
             },
             {
-                "caption": "Tahin yedim, midem ağrıdı",
+                "caption": "I ate tahini, and my stomach ached",
                 "video": "/media/peskur-2.mp4",
                 "poster": "/media/peskur-2-poster.jpg",
                 "product": {
-                    "name": "Tahin Çeşitleri",
+                    "name": "Tahini",
                     "category": {
-                        "name": "Tahin Çeşitleri",
+                        "name": "Delicatessen",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
                     "image": "/media/product-peskur-tahin.jpg",
-                    "about": "Geleneksel lezzet, modern farklar — stone-ground sesame, single and double roasted.",
+                    "about": "Traditional taste, modern twists — stone-ground sesame, single and double roasted.",
                     "images": [
                         "/media/product-peskur-tahin.jpg"
                     ],
@@ -534,25 +534,25 @@ export const reels: Reel[] = [
                         "count": "6 products",
                         "items": [
                             {
-                                "name": "Peşkur Tahin, 300 g",
+                                "name": "Peşkur Tahini, 300 g",
                                 "price": "₺180",
                                 "image": "/media/product-peskur-tahin.jpg",
                                 "href": "https://www.google.com"
                             },
                             {
-                                "name": "Peşkur Tahin, 600 g",
+                                "name": "Peşkur Tahini, 600 g",
                                 "price": "₺320",
                                 "image": "/media/product-peskur-tahin.jpg",
                                 "href": "https://www.google.com"
                             },
                             {
-                                "name": "Çifte Kavrulmuş Tahin",
+                                "name": "Double-Roasted Tahini",
                                 "price": "₺260",
                                 "image": "/media/peskur-2-poster.jpg",
                                 "href": "https://www.google.com"
                             },
                             {
-                                "name": "Kepekli Tahin",
+                                "name": "Wholegrain Tahini",
                                 "price": "₺210",
                                 "image": "/media/peskur-2-poster.jpg",
                                 "href": "https://www.google.com"
@@ -566,18 +566,18 @@ export const reels: Reel[] = [
                 }
             },
             {
-                "caption": "Peşkur'a hoş geldiniz",
+                "caption": "Welcome to Peşkur",
                 "video": "/media/peskur-3.mp4",
                 "poster": "/media/peskur-3-poster.jpg",
                 "product": {
-                    "name": "Kurutulmuş Meyveler",
+                    "name": "Dried Fruit",
                     "category": {
-                        "name": "Kurutulmuş Meyveler",
+                        "name": "Delicatessen",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
                     "image": "/media/product-peskur-meyve.jpg",
-                    "about": "Tatlı ve doğal atıştırmalıklar — fruit dried slowly, nothing added.",
+                    "about": "Sweet, natural snacks — fruit dried slowly, nothing added.",
                     "images": [
                         "/media/product-peskur-meyve.jpg"
                     ],
@@ -585,25 +585,25 @@ export const reels: Reel[] = [
                         "count": "39 products",
                         "items": [
                             {
-                                "name": "Kurutulmuş Ananas, 250 g",
+                                "name": "Dried Pineapple, 250 g",
                                 "price": "₺240",
                                 "image": "/media/product-peskur-meyve.jpg",
                                 "href": "https://www.google.com"
                             },
                             {
-                                "name": "Kurutulmuş Çilek, 250 g",
+                                "name": "Dried Strawberries, 250 g",
                                 "price": "₺260",
                                 "image": "/media/product-peskur-meyve.jpg",
                                 "href": "https://www.google.com"
                             },
                             {
-                                "name": "Kurutulmuş Elma, 250 g",
+                                "name": "Dried Apple, 250 g",
                                 "price": "₺190",
                                 "image": "/media/product-peskur-meyve.jpg",
                                 "href": "https://www.google.com"
                             },
                             {
-                                "name": "Kurutulmuş Mango, 250 g",
+                                "name": "Dried Mango, 250 g",
                                 "price": "₺280",
                                 "image": "/media/product-peskur-meyve.jpg",
                                 "href": "https://www.google.com"
@@ -617,18 +617,18 @@ export const reels: Reel[] = [
                 }
             },
             {
-                "caption": "Özenle seçilmiş çikolatalar",
+                "caption": "Chocolates, carefully chosen",
                 "video": "/media/peskur-4.mp4",
                 "poster": "/media/peskur-4-poster.jpg",
                 "product": {
-                    "name": "Çikolata ve Şekerleme",
+                    "name": "Chocolate & Sweets",
                     "category": {
-                        "name": "Çikolata ve Şekerleme",
+                        "name": "Delicatessen",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
                     "image": "/media/product-peskur-cikolata.jpg",
-                    "about": "Tatlı ihtiyacınızı karşılayın — dragées, pralines and gift boxes.",
+                    "about": "For your sweet tooth — dragées, pralines and gift boxes.",
                     "images": [
                         "/media/product-peskur-cikolata.jpg"
                     ],
@@ -636,25 +636,25 @@ export const reels: Reel[] = [
                         "count": "98 products",
                         "items": [
                             {
-                                "name": "Özel Kutu Çikolata",
+                                "name": "Chocolate Gift Box",
                                 "price": "₺650",
                                 "image": "/media/product-peskur-cikolata.jpg",
                                 "href": "https://www.google.com"
                             },
                             {
-                                "name": "Fındıklı Draje, 250 g",
+                                "name": "Hazelnut Dragées, 250 g",
                                 "price": "₺290",
                                 "image": "/media/peskur-4-poster.jpg",
                                 "href": "https://www.google.com"
                             },
                             {
-                                "name": "Pralin Kutusu",
+                                "name": "Praline Box",
                                 "price": "₺480",
                                 "image": "/media/product-peskur-cikolata.jpg",
                                 "href": "https://www.google.com"
                             },
                             {
-                                "name": "Bitter Çikolata",
+                                "name": "Dark Chocolate",
                                 "price": "₺220",
                                 "image": "/media/peskur-4-poster.jpg",
                                 "href": "https://www.google.com"
@@ -678,13 +678,13 @@ export const reels: Reel[] = [
         },
         "clips": [
             {
-                "caption": "Işınlanan adamın da gadasını aldık",
+                "caption": "Even the teleporting man is one of ours",
                 "video": "/media/kaleonu-1.mp4",
                 "poster": "/media/kaleonu-1-poster.jpg",
                 "product": {
                     "name": "Kayseri Pastırma, 250 g",
                     "category": {
-                        "name": "Pastırma",
+                        "name": "Cured meats",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -703,13 +703,13 @@ export const reels: Reel[] = [
                 }
             },
             {
-                "caption": "Sucuklar asılı, seçim sizde",
+                "caption": "The sucuk is hanging — take your pick",
                 "video": "/media/kaleonu-2.mp4",
                 "poster": "/media/kaleonu-2-poster.jpg",
                 "product": {
                     "name": "Kayseri Sucuk, 500 g",
                     "category": {
-                        "name": "Sucuk",
+                        "name": "Cured meats",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",
@@ -727,13 +727,13 @@ export const reels: Reel[] = [
                 }
             },
             {
-                "caption": "Gadasını aldığım sucuğu pişirirken dikkat",
+                "caption": "Careful when you cook this precious sucuk",
                 "video": "/media/kaleonu-3.mp4",
                 "poster": "/media/kaleonu-3-poster.jpg",
                 "product": {
-                    "name": "Kasap Sucuk, 500 g",
+                    "name": "Butcher's Sucuk, 500 g",
                     "category": {
-                        "name": "Sucuk",
+                        "name": "Cured meats",
                         "href": "https://www.google.com"
                     },
                     "href": "https://www.google.com",

@@ -53,9 +53,9 @@ export function ForgetSeen({ className }: { className?: string }) {
  */
 export type Variant = { id: string; label: string; price: string; href: string; images: string[] };
 export type Product = {
-    name: string; // under the card; "Marine Enginar Salatası, 425 g"
+    name: string; // under the card; "Marinated Artichoke Salad, 425 g"
     fullName?: string; // under the price, when it differs from the name
-    category: { name: string; href: string }; // heads the panel
+    category: { name: string; href: string }; // the group's: on the video, heading the panel
     href: string;
     image: string; // under the card
     price?: string;
@@ -195,9 +195,10 @@ function Detail({ product }: { product: Product }) {
     const { variants, list } = product;
     return (
         <div className="detail">
-            {/* Heads the panel; the name is under the price. */}
-            <a className="detail-cat" data-pg-reels-title href={product.category.href} target="_blank" rel="noopener">
-                {product.category.name}
+            {/* Heads the panel: the group's category — a category clip's own
+                name for one; a product's name is under the price. */}
+            <a className="detail-cat" data-pg-reels-title href={list ? product.href : product.category.href} target="_blank" rel="noopener">
+                {list ? product.name : product.category.name}
             </a>
             {list && <p className="detail-count">{list.count}</p>}
             {variants ? (
