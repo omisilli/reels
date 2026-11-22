@@ -169,7 +169,7 @@ in it, copies of the site's markup: the clip, the group's
   as a post opened on Instagram (no corners where they meet, rounded ones
   outside), as tall as the video, about a third of the
   window wide: a head — the template's `data-pg-reels-title`, moved there
-  (the example puts the category there) — a line under it; at the
+  (the example puts the product's name there) — a line under it; at the
   bottom a foot — the template's `data-pg-reels-foot`, the link to the
   product, always in sight; and between them the rest of the template,
   scrolling.
@@ -320,9 +320,10 @@ three to five clips, videos (`?duration=2s` sets a picture's time; the
 switches at the top for the rings — pale once seen or always bright, and
 bright again after a minute, an hour, a day or never: `?seen=off`,
 `?seen-for=1h`), each clip with a product and its
-details: its category (a link), its name in the panel's head, a big
-picture at 4:3, small ones — nine for the first product, a row that
-scrolls — the price, a line about it, a link. Under the card the product
+details: its name heading the panel, a big picture at 16:9, small ones
+— nine for the first product, a row that scrolls — the price, variants
+as pills where there are some, a line about it, the post's text with its
+#tags (links to them on Instagram), a link. Under the card the product
 shows "In the video" over its name, the name in two lines' room (longer
 ends in "…"), so every row is as tall — no price: it is one press away,
 in the full view; over each clip's caption its category, a link to it

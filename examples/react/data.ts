@@ -42,7 +42,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "12.4K",
                     "full": "12,400"
-                }
+                },
+                "post": "Our artichoke salad: hearts marinated in olive oil and lemon, ready the moment you open the jar.\n\n#artichoke #oliveoil #pantry"
             },
             {
                 "caption": "From Nazilli, dried in the sun",
@@ -68,7 +69,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "8.1K",
                     "full": "8,100"
-                }
+                },
+                "post": "Baby figs from the hills of Nazilli, dried in the sun with nothing added. A 5 kg box, shipped free.\n\n#figs #nazilli #driedfruit"
             },
             {
                 "caption": "Field tomatoes, chopped",
@@ -94,7 +96,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "5.6K",
                     "full": "5,600"
-                }
+                },
+                "post": "Tomatoes from our own fields, chopped and cooked down — six jars for the winter.\n\n#tomatosauce #homemade #pantry"
             }
         ]
     },
@@ -128,7 +131,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "3.1K",
                     "full": "3,100"
-                }
+                },
+                "post": "Red and white polka dots on light cotton voile — our most elegant scarf yet.\n\n#scarf #polkadot #cottonvoile"
             },
             {
                 "caption": "Naia cotton, so soft",
@@ -152,7 +156,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "18.7K",
                     "full": "18,700"
-                }
+                },
+                "post": "Naia cotton: soft and warm, with a weave that catches the light.\n\n#shawl #cotton #naia"
             },
             {
                 "caption": "Modal ombré, with a sheen",
@@ -176,7 +181,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "2.4K",
                     "full": "2,400"
-                }
+                },
+                "post": "Modal with a satin sheen, its colour fading from one edge to the other. Our favourites, reviewed.\n\n#modal #ombre #scarf"
             },
             {
                 "caption": "Naia Vera, in burgundy",
@@ -200,7 +206,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "9.8K",
                     "full": "9,800"
-                }
+                },
+                "post": "Naia Vera in deep burgundy — it drapes beautifully and holds its shape all day.\n\n#burgundy #shawl #naiavera"
             },
             {
                 "caption": "Silky Elegance",
@@ -224,7 +231,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "1.2K",
                     "full": "1,200"
-                }
+                },
+                "post": "Silky Elegance: a fine texture and soft fringed ends, for the evenings that matter.\n\n#silk #elegance #shawl"
             }
         ]
     },
@@ -258,7 +266,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "860",
                     "full": "860"
-                }
+                },
+                "post": "Elmacıoğlu's legendary flour soup — how is it made? Our chef Osman shows you, step by step.\n\nWant to make it at home? Order from our online shop.\n\n#elmacıoğlu #kayseri #soup"
             },
             {
                 "caption": "How to make Kayseri noodles",
@@ -282,7 +291,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "10.2K",
                     "full": "10,200"
-                }
+                },
+                "post": "Kayseri egg noodles, rolled and cut by hand and dried slowly. Cook them, then toss with butter.\n\n#kayseri #noodles #erişte"
             },
             {
                 "caption": "How to make yumacık mantı",
@@ -306,7 +316,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "37.1K",
                     "full": "37,100"
-                }
+                },
+                "post": "Yumacık mantı: small, round, folded one by one. Serve with yoghurt and red pepper butter.\n\n#mantı #kayseri #homecooking"
             },
             {
                 "caption": "How to make bohça mantı",
@@ -330,7 +341,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "82.4K",
                     "full": "82,400"
-                }
+                },
+                "post": "Bohça mantı, baked then simmered — the Kayseri classic for a table of guests.\n\n#mantı #bohça #kayseri"
             }
         ]
     },
@@ -364,7 +376,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "27K",
                     "full": "27,000"
-                }
+                },
+                "post": "Slim 14K gold bangles with a finely engraved edge. Which is yours — for you, for your daughter, or for a bride? Tell us in the comments.\n\n#gold #bangles #14k"
             },
             {
                 "caption": "A precious investment in your future",
@@ -388,7 +401,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "14.3K",
                     "full": "14,300"
-                }
+                },
+                "post": "A 22K gold bar pendant, 999.9 fine. Jewellery or an investment — what do you think?\n\n#gold #investment #22k"
             },
             {
                 "caption": "Made for everyday elegance",
@@ -412,7 +426,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "6.9K",
                     "full": "6,900"
-                }
+                },
+                "post": "A plain 14K gold band with a softly faceted edge, made to be worn every day.\n\n#goldring #everyday #14k"
             },
             {
                 "caption": "Handmade diamond sparkle for special moments",
@@ -436,7 +451,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "41.2K",
                     "full": "41,200"
-                }
+                },
+                "post": "A handmade 14K curb chain bracelet with a stone-set clasp, for the moments that matter.\n\n#bracelet #diamond #handmade"
             }
         ]
     },
@@ -512,7 +528,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "5.2K",
                     "full": "5,200"
-                }
+                },
+                "post": "From grandfather to grandson since 1948: Turkish coffee roasted and ground the old way.\n\n#turkishcoffee #peşeker #coffee"
             },
             {
                 "caption": "I ate tahini, and my stomach ached",
@@ -563,7 +580,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "2.8K",
                     "full": "2,800"
-                }
+                },
+                "post": "Stone-ground sesame, single or double roasted — have you tried them all?\n\n#tahini #sesame #peşkur"
             },
             {
                 "caption": "Welcome to Peşkur",
@@ -614,7 +632,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "11.6K",
                     "full": "11,600"
-                }
+                },
+                "post": "Welcome to Peşkur! Fruit dried slowly with nothing added — 39 kinds to choose from.\n\n#driedfruit #snacks #peşkur"
             },
             {
                 "caption": "Chocolates, carefully chosen",
@@ -665,7 +684,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "4.1K",
                     "full": "4,100"
-                }
+                },
+                "post": "Chocolates, carefully chosen: dragées, pralines and gift boxes for every sweet tooth.\n\n#chocolate #gifts #peşkur"
             }
         ]
     },
@@ -700,7 +720,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "1.9K",
                     "full": "1,900"
-                }
+                },
+                "post": "Kayseri pastırma, cured and coated in çemen the old way, sliced thin for your table.\n\n#pastırma #kayseri #curedmeat"
             },
             {
                 "caption": "The sucuk is hanging — take your pick",
@@ -724,7 +745,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "7.3K",
                     "full": "7,300"
-                }
+                },
+                "post": "The sucuk is hanging — take your pick. Beef, garlic and red pepper, dried right here in the shop.\n\n#sucuk #kayseri #breakfast"
             },
             {
                 "caption": "Careful when you cook this precious sucuk",
@@ -748,7 +770,8 @@ export const reels: Reel[] = [
                 "views": {
                     "short": "3.5K",
                     "full": "3,500"
-                }
+                },
+                "post": "Our butcher's sucuk: coarser and juicier. Cook it slowly in its own fat — carefully!\n\n#sucuk #butcher #kayseri"
             }
         ]
     }

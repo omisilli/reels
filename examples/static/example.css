@@ -12,6 +12,7 @@
     --line: #e4e4e0;
     /* A line under the mouse: a shade darker than --line, not black. */
     --line-hover: #c8c8c2;
+    --link: #00376b;
     --red: #ff0033;
     color-scheme: light;
 }
@@ -23,6 +24,7 @@
     --muted: #9a9aa3;
     --line: #2c2c31;
     --line-hover: #4a4a52;
+    --link: #a8c7fa;
     color-scheme: dark;
 }
 * {
@@ -601,9 +603,10 @@ header > p {
     gap: 0.5rem;
 }
 .detail-variants button {
-    padding: 0.55rem 0.9rem;
+    height: 2.5rem;
+    padding: 0 1rem;
     border: 1px solid var(--line);
-    border-radius: 0.375rem;
+    border-radius: 999px;
     background: none;
     color: inherit;
     font: inherit;
@@ -670,7 +673,7 @@ header > p {
     font-weight: 600;
 }
 .detail-big {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 9;
     border-radius: 0.75rem;
     background: var(--bg);
 }
@@ -702,9 +705,28 @@ header > p {
     font-size: 1.4rem;
     font-weight: 700;
 }
-.detail-name {
-    margin-top: -0.6rem;
-    font-weight: 600;
+/* The name heads the panel, in place of a category. */
+[data-pg-reels-panel-title] .detail-name {
+    color: var(--fg);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+/* The post's text, a paragraph a block; its #tags links. */
+.detail-post {
+    display: grid;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+.detail-post a {
+    color: var(--link);
+    text-decoration: none;
+}
+@media (hover: hover) {
+    .detail-post a:hover {
+        text-decoration: underline;
+    }
 }
 .detail-blurb {
     color: var(--muted);

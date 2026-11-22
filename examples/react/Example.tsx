@@ -68,6 +68,7 @@ export type Product = {
 };
 export type Clip = ({ video: string; poster: string } | { image: string; duration?: number }) & {
     caption: string;
+    post?: string; // the post's text, in the panel: paragraphs by blank lines, #tags linked
     views: { short: string; full: string }; // "12.4K", "12,400" — this clip's, your own count
     product: Product;
 };
@@ -192,22 +193,28 @@ function ClipView({ clip }: { clip: Clip }) {
                 {clip.caption}
             </figcaption>
             <div data-pg-reels-detail hidden>
-                <Detail product={product} />
+                <Detail product={product} post={clip.post} />
             </div>
         </figure>
     );
 }
 
 /* The details: the panel beside the video, the sheet under it on a phone. */
-function Detail({ product }: { product: Product }) {
+function Detail({ product, post }: { product: Product; post?: string }) {
     const { variants, list } = product;
     return (
         <div className="detail">
-            {/* Heads the panel: the group's category — a category clip's own
-                name for one; a product's name is under the price. */}
-            <a className="detail-cat" data-pg-reels-title href={list ? product.href : product.category.href} target="_blank" rel="noopener">
-                {list ? product.name : product.category.name}
-            </a>
+            {/* Heads the panel: the product's name — a category clip's own
+                name, a link to it, for one. */}
+            {list ? (
+                <a className="detail-cat" data-pg-reels-title href={product.href} target="_blank" rel="noopener">
+                    {product.name}
+                </a>
+            ) : (
+                <p className="detail-name" data-pg-reels-title>
+                    {product.fullName ?? product.name}
+                </p>
+            )}
             {list && <p className="detail-count">{list.count}</p>}
             {variants ? (
                 // One gallery a variant; the package shows the chosen one's.
@@ -246,7 +253,6 @@ function Detail({ product }: { product: Product }) {
             ) : (
                 product.price && <p className="detail-price">{product.price}</p>
             )}
-            {!list && <p className="detail-name">{product.fullName ?? product.name}</p>}
             {product.about && <p className="detail-blurb">{product.about}</p>}
             {list && (
                 <div className="detail-list">
@@ -261,10 +267,33 @@ function Detail({ product }: { product: Product }) {
                     ))}
                 </div>
             )}
+            {post && <Post text={post} />}
             {/* Pinned to the panel's foot, under what scrolls. */}
             <a className="detail-go" data-pg-reels-foot href={product.href} target="_blank" rel="noopener">
                 {list ? "Go to category →" : "Go to product →"}
             </a>
+        </div>
+    );
+}
+
+/* The post's text, as on Instagram but without its head: a paragraph a
+   block, each #tag a link to its page there, in a new tab. */
+function Post({ text }: { text: string }) {
+    return (
+        <div className="detail-post">
+            {text.split("\n\n").map((block, i) => (
+                <p key={i}>
+                    {block.split(/(#[\p{L}\p{N}_]+)/u).map((part, j) =>
+                        part.startsWith("#") ? (
+                            <a key={j} href={`https://www.instagram.com/explore/tags/${part.slice(1)}/`} target="_blank" rel="noopener">
+                                {part}
+                            </a>
+                        ) : (
+                            part
+                        ),
+                    )}
+                </p>
+            ))}
         </div>
     );
 }
