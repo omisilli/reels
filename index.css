@@ -107,7 +107,7 @@
 @media (hover: hover) {
     [data-pg-reels-bar]:hover > span,
     [data-pg-reels-view-bar]:hover > span {
-        --rest: color-mix(in srgb, currentColor 55%, transparent);
+        --rest: color-mix(in srgb, currentColor 40%, transparent);
     }
 }
 [data-pg-reels-bar][data-pg-reels-done] > span,
