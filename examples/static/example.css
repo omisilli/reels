@@ -164,11 +164,6 @@ header > p {
     line-height: 1.25;
     text-shadow: 0 1px 4px rgb(0 0 0 / 0.4);
 }
-[data-pg-reels-clip] figcaption small {
-    font-weight: 500;
-    font-size: 0.75rem;
-    opacity: 0.8;
-}
 /* The head: up to the corner's buttons and view count — a long
    name ends in "…". */
 .reel-head {
@@ -457,14 +452,11 @@ header > p {
         color 0.2s;
 }
 /* ---------- The full view: the site's part ----------
-   The head and the caption as on the card, the category as a
-   tag instead of a line; the product's details in the panel. */
+   The head and the caption as on the card, the category a white
+   tag; the product's details in the panel. */
 [data-pg-reels-viewer] .reel-head {
     position: static;
     max-width: none;
-}
-[data-pg-reels-viewer] figcaption small {
-    display: none;
 }
 [data-pg-reels-viewer] [data-pg-reels-clip] figcaption {
     bottom: 1.5rem;
@@ -490,24 +482,37 @@ header > p {
     color: var(--fg);
     text-decoration: underline;
 }
-/* The category's tag on the video — in the full view only; on
-   the card it is the line over the caption. */
+/* The category over the caption, a link to it (a new tab): on the
+   card a dark pill, as the view count's; in the full view a white
+   tag. */
 .tag {
-    display: none;
-}
-[data-pg-reels-viewer] .tag {
     display: inline-flex;
     align-items: center;
     gap: 0.375rem;
     justify-self: start;
-    padding: 0.35rem 0.75rem 0.35rem 0.55rem;
+    height: 2rem;
+    padding: 0 0.75rem 0 0.6rem;
     border-radius: 999px;
-    background: rgb(255 255 255 / 0.92);
-    color: #111;
-    font-size: 0.8rem;
+    background: rgb(0 0 0 / 0.35);
+    color: #fff;
+    font-size: 0.75rem;
     font-weight: 600;
     text-decoration: none;
     text-shadow: none;
+    transition: background 0.2s;
+}
+.tag:hover {
+    background: rgb(0 0 0 / 0.55);
+}
+[data-pg-reels-viewer] .tag {
+    height: auto;
+    padding: 0.35rem 0.75rem 0.35rem 0.55rem;
+    background: rgb(255 255 255 / 0.92);
+    color: #111;
+    font-size: 0.8rem;
+}
+[data-pg-reels-viewer] .tag:hover {
+    background: #fff;
 }
 .tag svg {
     width: 1rem;

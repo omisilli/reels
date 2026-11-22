@@ -175,13 +175,12 @@ function ClipView({ clip }: { clip: Clip }) {
                 <img src={clip.image} alt="" loading="lazy" />
             )}
             <figcaption>
-                {/* The category: a tag on the video in the full view, a line
-                    over the caption on the card (the site's CSS). */}
+                {/* The category, a link to it in a new tab: a dark pill over the
+                    caption on the card, a white tag in the full view (the site's CSS). */}
                 <a className="tag" href={product.category.href} target="_blank" rel="noopener">
                     <Icon d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" />
                     {product.category.name}
                 </a>
-                <small>{product.category.name}</small>
                 {clip.caption}
             </figcaption>
             <div data-pg-reels-detail hidden>
