@@ -343,16 +343,19 @@ header > p {
     display: none;
 }
 
-/* The bars under the card, the page's colour. */
+/* The bars under the card, the page's colour. The line sits in the
+   middle of its row, and the row has the same margin above and below:
+   the room over the line and under it is the same — thin, or thick
+   under the mouse. */
 [data-pg-reels-bars] {
-    margin-top: 0.625rem;
+    margin-top: 0.5rem;
     color: var(--fg);
 }
 
 /* The product under the card: its picture, name, price, an
    arrow. The playing clip's. */
 [data-pg-reels-products] {
-    margin-top: 0.375rem;
+    margin-top: 0.5rem;
 }
 /* The same room on every side: the picture as tall as the
    words beside it, its corners following the row's. */
