@@ -279,7 +279,10 @@ function Detail({ product, post, postFrom }: { product: Product; post?: string; 
             {post && <Post text={post} from={postFrom} />}
             {/* Pinned to the panel's foot, under what scrolls. */}
             <a className="detail-go" data-pg-reels-foot href={product.href} target="_blank" rel="noopener">
-                {list ? "Go to category →" : "Go to product →"}
+                {list ? "Go to category" : "Go to product"}{" "}
+                <span className="go-arrow" aria-hidden="true">
+                    →
+                </span>
             </a>
         </div>
     );
