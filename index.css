@@ -430,6 +430,13 @@ dialog[data-pg-reels-viewer] [data-pg-reels-view-side] svg {
     border-radius: 50%;
     background: rgb(0 0 0 / 0.35);
     cursor: pointer;
+    transition: background-color 0.2s;
+}
+/* The video's own buttons a shade darker under the mouse. */
+@media (hover: hover) {
+    [data-pg-reels-view-tools] > button:hover {
+        background: rgb(0 0 0 / 0.55);
+    }
 }
 /* Each button its two pictures: sound off / on, pause / play. */
 [data-pg-reels-viewer] [data-pg-reels-sound] > svg:last-child,
