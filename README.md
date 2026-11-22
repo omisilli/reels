@@ -23,9 +23,9 @@ From npm, through jsDelivr — the npm package is the code alone (about
 jsDelivr's GitHub route.
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@plusguard/reels@1.5.0/index.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@plusguard/reels@1.6.0/index.css" />
 <script type="module">
-    import { initReels } from "https://cdn.jsdelivr.net/npm/@plusguard/reels@1.5.0/dist/index.js";
+    import { initReels } from "https://cdn.jsdelivr.net/npm/@plusguard/reels@1.6.0/dist/index.js";
     initReels();
 </script>
 ```
@@ -139,9 +139,9 @@ in it, copies of the site's markup: the clip, the group's
 `data-pg-reels-head`, the clip's product and its details.
 
 - **Within a group:** the bars on top (none for a single clip), a press on
-  the video's right or left third, the ‹ › on either side of the video on
-  a computer — none before the very first clip, none after the very last
-  — → and ←. Its clips play on, a video to
+  the video's right or left third, the ‹ › on a computer — outside the video
+  and its panel, small and see-through, white under the mouse; none
+  before the very first clip, none after the very last — → and ←. Its clips play on, a video to
   its end, a picture for its time; after the group's last clip, the next
   group — after the last group, the first.
 - **Between groups:** a finger — or the mouse — dragging the video up or
@@ -162,7 +162,8 @@ in it, copies of the site's markup: the clip, the group's
   under it; on the close's left the group's view count — the card's
   `data-pg-reels-views` element, copied, so it looks as in the card. The
   number is the site's (from its own counting); the package shows it.
-- **The product:** on a computer, a panel beside the video, from its top
+- **The product:** on a computer, a panel beside the video, touching it
+  as a post opened on Instagram (no corners where they meet), from its top
   to the window's foot, 9:16 like it: a head — the template's
   `data-pg-reels-title`, moved there, and the close; a long name takes a
   second line, the close stays at the top — a line under it; at the

@@ -48,8 +48,8 @@
  * The full view — a <dialog>, built here on <body>, its contents copies:
  * the clip playing, the group's data-pg-reels-head, the clip's product.
  * Within a group: the bars on top, a press on the video's right or left,
- * the ‹ › beside it (none before the first clip or after the last), → and
- * ←. Between groups: a finger (or the mouse) dragging the video up
+ * the ‹ › on either side of the video and its panel (none before the
+ * first clip or after the last), → and ←. Between groups: a finger (or the mouse) dragging the video up
  * or down — it follows, the next group coming in under it, and let go
  * goes on or back — its ↑ and ↓ buttons, a wheel, ↑ and ↓; after a
  * group's last clip, the next group. The product changes once it has
@@ -601,8 +601,9 @@ export function initReels() {
                 <button type="button" data-pg-reels-view-up aria-label="Previous reel">${svg(ICONS.up)}</button>
                 <button type="button" data-pg-reels-view-down aria-label="Next reel">${svg(ICONS.down)}</button>
             </div>
-            <div data-pg-reels-column>
+            <div data-pg-reels-pair>
             <button type="button" data-pg-reels-view-side="prev" aria-label="Previous">${svg(ICONS.prev)}</button>
+            <div data-pg-reels-column>
             <div data-pg-reels-feed>
             <div data-pg-reels-view-peek="before" aria-hidden="true" hidden></div>
             <div data-pg-reels-screen>
@@ -624,7 +625,6 @@ export function initReels() {
             </div>
             <button type="button" data-pg-reels-view-peek="after" tabindex="-1" aria-label="Next reel" hidden></button>
             </div>
-            <button type="button" data-pg-reels-view-side="next" aria-label="Next">${svg(ICONS.next)}</button>
             </div>
             <aside data-pg-reels-panel>
                 <div data-pg-reels-panel-head>
@@ -638,6 +638,8 @@ export function initReels() {
                 <div data-pg-reels-panel-detail></div>
                 <div data-pg-reels-panel-foot></div>
             </aside>
+            <button type="button" data-pg-reels-view-side="next" aria-label="Next">${svg(ICONS.next)}</button>
+            </div>
         </div>`;
     const part = (name) => dialog.querySelector(`[data-pg-reels-${name}]`);
     const media = part("view-media");
