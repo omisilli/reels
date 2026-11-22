@@ -180,7 +180,13 @@ function ClipView({ clip }: { clip: Clip }) {
                 {/* The category, a link to it in a new tab: a dark pill over the
                     caption on the card, a white tag in the full view (the site's CSS). */}
                 <a className="tag" href={product.category.href} target="_blank" rel="noopener">
-                    <Icon d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0" />
+                    {/* A category: four squares, as a shop's categories menu draws it. */}
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="4" y="4" width="6.5" height="6.5" rx="1.5" />
+                        <rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5" />
+                        <rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5" />
+                        <rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5" />
+                    </svg>
                     {product.category.name}
                 </a>
                 {clip.caption}
