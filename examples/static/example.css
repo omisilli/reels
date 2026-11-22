@@ -399,12 +399,11 @@ header > p {
         translate: none;
     }
 }
-/* The picture: as tall as the words — two lines of name
-   (2 × 1.0625rem), a gap (0.125rem), a line of category and
-   price (1.25rem). */
+/* The picture: as tall as the words — "In the video" (1rem),
+   two lines of name (2 × 1.0625rem), a line of price (1.25rem). */
 [data-pg-reels-product] .pg-imageGroup {
     flex: none;
-    height: 3.5rem;
+    height: 4.375rem;
     aspect-ratio: 1;
     border-radius: 0.375rem;
 }
@@ -413,6 +412,16 @@ header > p {
 [data-pg-reels-product] > span:not(.pg-imageGroup, .go) {
     flex: 1 1 0%;
     min-width: 0;
+}
+/* Over the name: what this is — the product in the video. */
+[data-pg-reels-product] .label {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    line-height: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
 }
 /* The name: always two lines' room, so every row is as tall
    — a longer name ends in "…". */
@@ -432,7 +441,6 @@ header > p {
 }
 [data-pg-reels-product] small {
     display: block;
-    margin-top: 0.125rem;
     font-size: 0.8125rem;
     line-height: 1.25rem;
     color: var(--muted);

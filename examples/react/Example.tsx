@@ -138,10 +138,10 @@ export function Reels({ reels, label = "Reels", style }: { reels: Reel[]; label?
                                         <img src={product.image} alt="" loading="lazy" />
                                     </span>
                                     <span>
+                                        <span className="label">In the video</span>
                                         {/* Two lines' room for the name in the site's CSS (line-clamp: 2). */}
                                         <b>{product.name}</b>
                                         <small>
-                                            {product.category.name} ·{" "}
                                             <span className="price">{product.list ? product.list.count : (product.fromPrice ?? product.price)}</span>
                                         </small>
                                     </span>

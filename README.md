@@ -321,8 +321,9 @@ three to five clips, videos (`?duration=2s` sets a picture's time; `?seen=off`,
 details: its category (a link), its name in the panel's head, a big
 picture at 4:3, small ones — nine for the first product, a row that
 scrolls — the price, a line about it, a link. Under the card the product
-shows its category and price, its name in two lines' room (longer ends in
-"…"), so every row is as tall; the line over each clip's caption is the
+shows "In the video" over its name, the name in two lines' room (longer
+ends in "…"), so every row is as tall, and its price under it; the line
+over each clip's caption is the
 category too; in
 the full view the category is a tag on the video. The first group is
 three clips from a food shop, the second five from a scarf shop, the
