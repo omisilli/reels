@@ -236,11 +236,17 @@ header > p {
     font-size: 0.85rem;
     text-shadow: 0 1px 4px rgb(0 0 0 / 0.4);
 }
-.who b {
+/* The name: a link to the profile, as the picture and Follow are. */
+.who .name {
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: inherit;
+    text-decoration: none;
+}
+.who .name:hover {
+    text-decoration: underline;
 }
 .follow {
     margin-top: 0.25rem;

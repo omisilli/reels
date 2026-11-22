@@ -96,11 +96,14 @@ export function Reels({ reels, label = "Reels", style }: { reels: Reel[]; label?
                                 <ClipView key={i} clip={clip} />
                             ))}
                             <header className="reel-head" data-pg-reels-head>
-                                <span className="pg-imageGroup avatar">
+                                {/* The picture, the name and Follow: each the profile, in a new tab. */}
+                                <a className="pg-imageGroup avatar" href={reel.account.profile} target="_blank" rel="noopener" aria-label={`${reel.account.name} on Instagram`}>
                                     <img src={reel.account.avatar} alt="" />
-                                </span>
+                                </a>
                                 <span className="who">
-                                    <b>{reel.account.name}</b>
+                                    <a className="name" href={reel.account.profile} target="_blank" rel="noopener">
+                                        <b>{reel.account.name}</b>
+                                    </a>
                                     <a href={reel.account.profile} target="_blank" rel="noopener" className="follow">
                                         Follow
                                     </a>
