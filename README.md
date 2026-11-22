@@ -23,9 +23,9 @@ From npm, through jsDelivr — the npm package is the code alone (about
 jsDelivr's GitHub route.
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@plusguard/reels@1.3.1/index.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@plusguard/reels@1.4.0/index.css" />
 <script type="module">
-    import { initReels } from "https://cdn.jsdelivr.net/npm/@plusguard/reels@1.3.1/dist/index.js";
+    import { initReels } from "https://cdn.jsdelivr.net/npm/@plusguard/reels@1.4.0/dist/index.js";
     initReels();
 </script>
 ```
@@ -107,11 +107,16 @@ below).
   event `pg-reels:open` on the section, with `detail.group` and
   `detail.clip`; `preventDefault()` on it and the site opens its own.
 - **Reduced motion:** nothing plays by itself; a bar pressed shows its clip.
-- **Seen.** A group shown in the full view is seen:
-  `data-pg-reels-seen="true"` on it (`"false"` until then), for the ring
-  round its avatar to go pale — stories' rings, in the site's CSS. With a
-  `data-pg-reels-id` it is remembered in this browser (`localStorage`,
-  `pg-reels-seen`); without, for this visit. In the full view the head's
+- **Seen.** A group is seen once **every one of its clips** has been shown
+  in the full view — one clip watched, and it is not; the rest watched
+  later in the same visit, and it is: `data-pg-reels-seen="true"` on it
+  (`"false"` until then), for the ring round its avatar to go pale —
+  stories' rings, in the site's CSS. It stays seen for
+  `--pg-reels-seen-for` (`24h` by default; `1h`, `30m`, `7d`, or `forever`)
+  and is bright again after; `--pg-reels-seen: off` and the rings never go
+  pale. With a `data-pg-reels-id` it is remembered in this browser
+  (`localStorage`, `pg-reels-seen`, with the time); without, for this
+  visit. In the full view the head's
   copy keeps the ring as it was when the group came in, through all its
   clips. `forgetReelsSeen()` forgets it all — every ring bright again, at
   once, no reload.
@@ -205,6 +210,8 @@ in it, copies of the site's markup: the clip, the group's
 | `--pg-reels-ratio` | `9 / 16` | The card's shape |
 | `--pg-reels-duration` | `5s` | A picture's time |
 | `--pg-reels-panel` | 9:16 of its height, 20–30rem | The full view: the product panel's width on a computer |
+| `--pg-reels-seen` | `all` | `all`: a group is seen once all its clips have been shown in the full view · `off`: never |
+| `--pg-reels-seen-for` | `24h` | How long a group stays seen — `1h`, `30m`, `7d`, `forever` — then its ring is bright again |
 | `--pg-reels-peek` | `2rem` | The full view: how much of the next group shows under the video on a computer |
 | `--pg-reels-band` | — | Written by the script on the view: the band's height at a phone's foot (0 on a computer) — to keep a caption above it |
 
@@ -287,7 +294,7 @@ shows them. See [`examples/react/Example.tsx`](examples/react/Example.tsx)
 
 [`examples/static/index.html`](examples/static/index.html) — six groups of
 one to five clips, videos and a picture (its own time, 4s; `?duration=2s` for
-pictures without one), each clip with a product and its
+pictures without one; `?seen=off`, `?seen-for=1h` for the rings), each clip with a product and its
 details: its category (a link), its name in the panel's head, a big
 picture at 4:3, small ones — nine for the first product, a row that
 scrolls — the price, a line about it, a link. Under the card the product

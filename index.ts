@@ -72,10 +72,12 @@
  * on the group that plays; aria-current on its bar, data-pg-reels-done on
  * the bars before it, and --pg-reels-progress (0 to 1) on the bar playing.
  *
- * Seen: a group shown in the full view is seen — data-pg-reels-seen="true"
- * on it ("false" before), for its ring to go grey as stories' do. With a
- * data-pg-reels-id on the group it is remembered in this browser;
- * forgetReelsSeen() forgets it all — every ring bright again, at once.
+ * Seen: a group whose every clip has been shown in the full view is seen —
+ * data-pg-reels-seen="true" on it ("false" before), for its ring to go
+ * pale as stories' do; for --pg-reels-seen-for (24h by default), then
+ * bright again; --pg-reels-seen: off and never. With a data-pg-reels-id on
+ * the group it is remembered in this browser; forgetReelsSeen() forgets it
+ * all — every ring bright again, at once.
  *
  * CSS, per screen size: --pg-reels-show (cards across: 4; 1.5 on a phone
  * shows one and half the next), --pg-reels-gap, --pg-reels-duration (a
@@ -265,46 +267,78 @@ function show(g: Group, i: number): void {
     });
 }
 
-/* ---------- Seen, kept in this browser ---------- */
+/* ---------- Seen, kept in this browser ----------
+   A group is seen once every one of its clips has been shown in the full
+   view. Set on the section or above:
+     --pg-reels-seen       all (default) · off: the rings never go pale
+     --pg-reels-seen-for   how long it stays seen: 24h (default), 1h, 30m,
+                           7d — then bright again; forever: until forgotten */
 
-// Groups with a data-pg-reels-id: in localStorage. Without: this visit.
-const seenHere = new WeakSet<Element>();
+// Groups with a data-pg-reels-id: in localStorage, as { id: when }.
+// Without: this visit only.
+const seenHere = new WeakMap<Element, number>();
+const SEEN_FOR_DEFAULT = 24 * 60 * 60 * 1000;
 
-function seenSet(): Set<string> {
+function seenMap(): Record<string, number> {
     try {
-        return new Set(JSON.parse(localStorage.getItem(SEEN_KEY) || "[]") as string[]);
+        const kept = JSON.parse(localStorage.getItem(SEEN_KEY) || "{}") as unknown;
+        // An older list of ids: seen now.
+        if (Array.isArray(kept)) return Object.fromEntries(kept.map((id) => [String(id), Date.now()]));
+        return kept && typeof kept === "object" ? (kept as Record<string, number>) : {};
     } catch {
-        return new Set();
+        return {};
     }
 }
 
-function isSeen(el: Element, set = seenSet()): boolean {
+/* "24h", "30m", "90s", "500ms", "7d" → ms; "forever" → Infinity. */
+function spanOf(raw: string): number {
+    const text = raw.trim().toLowerCase();
+    if (!text) return SEEN_FOR_DEFAULT;
+    if (text === "forever" || text === "none") return Infinity;
+    const m = /^(-?[\d.]+)\s*(ms|s|m|h|d)?$/.exec(text);
+    if (!m) return SEEN_FOR_DEFAULT;
+    const n = Number(m[1]);
+    const unit = { ms: 1, s: 1000, m: 60000, h: 3600000, d: 86400000 }[(m[2] ?? "ms") as "ms" | "s" | "m" | "h" | "d"];
+    return Number.isFinite(n) ? Math.max(0, n * unit) : SEEN_FOR_DEFAULT;
+}
+
+function seenRules(el: Element): { off: boolean; span: number } {
+    const cs = getComputedStyle(el);
+    return {
+        off: cs.getPropertyValue("--pg-reels-seen").trim() === "off",
+        span: spanOf(cs.getPropertyValue("--pg-reels-seen-for")),
+    };
+}
+
+function isSeen(el: Element, map = seenMap()): boolean {
+    const { off, span } = seenRules(el);
+    if (off) return false;
     const id = el.getAttribute(ID);
-    return id ? set.has(id) : seenHere.has(el);
+    const when = id ? map[id] : seenHere.get(el);
+    return typeof when === "number" && Date.now() - when < span;
 }
 
 function markSeen(el: Element): void {
+    if (seenRules(el).off) return;
     const id = el.getAttribute(ID);
-    if (!id) seenHere.add(el);
+    if (!id) seenHere.set(el, Date.now());
     else {
-        const set = seenSet();
-        if (!set.has(id)) {
-            set.add(id);
-            try {
-                localStorage.setItem(SEEN_KEY, JSON.stringify([...set]));
-            } catch {
-                // Private mode, or storage full: seen for this visit only.
-                seenHere.add(el);
-            }
+        const map = seenMap();
+        map[id] = Date.now();
+        try {
+            localStorage.setItem(SEEN_KEY, JSON.stringify(map));
+        } catch {
+            // Private mode, or storage full: seen for this visit only.
+            seenHere.set(el, Date.now());
         }
     }
     paintSeen();
 }
 
 function paintSeen(): void {
-    const set = seenSet();
+    const map = seenMap();
     document.querySelectorAll<HTMLElement>(`[${GROUP}]`).forEach((el) => {
-        const value = String(isSeen(el, set));
+        const value = String(isSeen(el, map));
         if (el.getAttribute(SEEN) !== value) el.setAttribute(SEEN, value);
     });
 }
@@ -318,8 +352,12 @@ export function forgetReelsSeen(): void {
         // Storage blocked: nothing kept, nothing to forget.
     }
     document.querySelectorAll(`[${GROUP}]`).forEach((el) => seenHere.delete(el));
+    watched = new WeakMap();
     paintSeen();
 }
+
+// The clips of each group shown in the full view so far, this visit.
+let watched = new WeakMap<Element, Set<number>>();
 
 /* ---------- Everything on the page ---------- */
 
@@ -686,7 +724,11 @@ export function initReels(): () => void {
             headOf = g;
             part("view-head").setAttribute(SEEN, String(isSeen(g.el)));
         }
-        markSeen(g.el);
+        // This clip shown; every clip of the group shown: seen.
+        const shown = watched.get(g.el) ?? new Set<number>();
+        shown.add(view.ci);
+        watched.set(g.el, shown);
+        if (shown.size >= n) markSeen(g.el);
 
         viewBars.replaceChildren(
             ...g.clips.map((_, i) => {
@@ -919,6 +961,7 @@ export function initReels(): () => void {
         view.pushed = false;
         choose();
         applySound();
+        paintSeen();
     };
 
     const onViewClick = (event: MouseEvent): void => {
@@ -1122,6 +1165,8 @@ export function initReels(): () => void {
             return;
         }
         playing.forEach(document.hidden ? stop : start);
+        // Back after a while: what was seen may have run out.
+        if (!document.hidden) paintSeen();
     };
     document.addEventListener("visibilitychange", onHidden);
 

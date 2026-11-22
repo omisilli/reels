@@ -10,6 +10,10 @@
  *   --pg-reels-gap        between the cards (default 1rem)
  *   --pg-reels-ratio      the card's shape (default 9 / 16)
  *   --pg-reels-duration   a picture's time (default 5s)
+ *   --pg-reels-seen       all (default): a group is seen once all its
+ *                         clips have been shown in the full view · off
+ *   --pg-reels-seen-for   how long it stays seen (default 24h; 1h, 30m,
+ *                         7d, forever)
  *   --pg-reels-panel      the full view: the product panel's width on a
  *                         computer (default: 9:16 of its height, as the
  *                         video; 20rem to 30rem)
