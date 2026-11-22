@@ -288,6 +288,7 @@ header > p {
     grid-column: 1 / -1;
     grid-row: 2;
     justify-self: end;
+    margin-top: 0.5rem;
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
