@@ -316,7 +316,7 @@ header > p {
     height: 1.125rem;
     fill: none;
     stroke: currentColor;
-    stroke-width: 2;
+    stroke-width: 2.25;
     stroke-linecap: round;
     stroke-linejoin: round;
 }

@@ -112,10 +112,10 @@ export function Reels({ reels, label = "Reels", style }: { reels: Reel[]; label?
                                 {reel.clips.map(({ views }, i) => (
                                     <span key={i} className="views" data-pg-reels-views aria-label={`${views.full} views`}>
                                         {views.short}
-                                        {/* An eye, after the number: the pupil filled, a glint in it. */}
+                                        {/* An eye, after the number, as Instagram's looks: the upper lid, a round pupil under it with a glint. */}
                                         <svg viewBox="0 0 24 24" aria-hidden="true">
-                                            <path d="M1.75 12C3.9 7.6 7.6 5 12 5s8.1 2.6 10.25 7C20.1 16.4 16.4 19 12 19S3.9 16.4 1.75 12z" />
-                                            <path className="pupil" d="M12 8.25a3.75 3.75 0 1 1 0 7.5 3.75 3.75 0 0 1 0-7.5zM10.6 9.7a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z" />
+                                            <path d="M2.25 14.5C4.4 9.4 7.9 6.75 12 6.75s7.6 2.65 9.75 7.75" />
+                                            <path className="pupil" d="M12 10a4.25 4.25 0 1 1 0 8.5 4.25 4.25 0 0 1 0-8.5zM10.4 11.6a1.35 1.35 0 1 0 0 2.7 1.35 1.35 0 0 0 0-2.7z" />
                                         </svg>
                                     </span>
                                 ))}
